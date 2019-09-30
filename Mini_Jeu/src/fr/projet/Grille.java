@@ -45,7 +45,7 @@ public void CopierGrille(Grille g) {
 		for(int i=0;i<g.imax;i++) {
 			for(int j=0;j<g.jmax;i++) {
 				this.t[i][j].setModifiable(g.t[i][j].isModifiable());
-				this.t[i][j].setValeur(g.t[i][j].getValeur());
+				this.t[i][j].setValeur(g.t[i][j].getVal());
 			}
 		}
 		
@@ -64,7 +64,7 @@ int i; int j;
 		System.out.print(i + "  "); 
 		for( j=0;j<9;j++) {
 			
-			System.out.print("| " + this.t[i][j].getValeur() + " |"); if(j==2 || j==5 ) System.out.print("    ");
+			System.out.print("| " + this.t[i][j].getVal() + " |"); if(j==2 || j==5 ) System.out.print("    ");
 		}
 		
 		System.out.println("\n\t\t\t\t\t   -----------------------------------------------------");
@@ -76,10 +76,10 @@ int i; int j;
 public  static void main(String args[] ){
 	
 	Grille g=new Grille(9,9);
-	g.t[0][0].setValeur('1');
-	g.t[1][1].setValeur('4');
-	g.t[0][1].setValeur('2');
-	g.t[1][0].setValeur('3'); 
+	g.t[0][0].setVal('1');
+	g.t[1][1].setVal('4');
+	g.t[0][1].setVal('2');
+	g.t[1][0].setVal('3'); 
 	//Grille Copieg=new Grille(g);
 	g.AfficherGrille(); 
 	/*System.out.print(g.t[0][0].valeur);*/

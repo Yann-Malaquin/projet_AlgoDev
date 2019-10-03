@@ -21,7 +21,7 @@ public class GrilleSudoku extends Grille {
 		for (Case[] c : this.t) {
 			for (Case elem : c) {
 				elem.setModifiable(true);
-				elem.setValeur(' ');
+				elem.setVal(' ');
 
 			}
 
@@ -40,7 +40,7 @@ public class GrilleSudoku extends Grille {
 				if (valeurUtilisateur != null) {
 					char valeurEntree = valeurUtilisateur.charAt(0);
 					if ((valeurEntree >= '1' && valeurEntree<='9') ||  valeurEntree == ' ') {
-						this.t[y][x].setValeur(valeurEntree);
+						this.t[y][x].setVal(valeurEntree);
 						valeurValide = true;
 
 					}
@@ -54,7 +54,7 @@ public class GrilleSudoku extends Grille {
 	// Vérifie que la valeur d'une case de paramètre donnée soit une valeur allant
 	// de 1 à 9
 	public boolean valeurCaseValide(int x, int y) {
-		if ((this.t[y][x].getValeur() >= '1' && this.t[y][x].getValeur()<='9'))
+		if ((this.t[y][x].getVal() >= '1' && this.t[y][x].getVal()<='9'))
 			return false;
 		return true;
 
@@ -75,17 +75,17 @@ public class GrilleSudoku extends Grille {
 			for (int x = 0; x < 9; x++) {
 				if (!this.valeurCaseValide(x, y))
 					return 0;
-				char ValeurCaseEnVerif = t[y][x].getValeur();
+				char ValeurCaseEnVerif = t[y][x].getVal();
 				cptcolonne = 0;
 				cptligne = 0;
 				i = 0;
 
 				while (grilleValide && i < 9) {
 					// verif ligne on garde la ligne y
-					if (t[y][i].getValeur() == ValeurCaseEnVerif)
+					if (t[y][i].getVal() == ValeurCaseEnVerif)
 						cptligne++;
 					// verif colonne, on garde la colonne x
-					if (t[i][x].getValeur() == ValeurCaseEnVerif)
+					if (t[i][x].getVal() == ValeurCaseEnVerif)
 						cptcolonne++;
 
 					i++;

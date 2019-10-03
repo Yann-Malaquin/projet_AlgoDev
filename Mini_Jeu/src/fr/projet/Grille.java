@@ -30,7 +30,7 @@ public Case[][] initialiserCaseDeLaGrille() {
 	int i; int j;
 	for(i=0;i<this.imax;i++) {
 		for(j=0;j<this.jmax;j++) {
-			this.t[i][j]=new Case(' ');
+			this.t[i][j]=new Case(' ',true);
 		}
 	}
 	return this.t;
@@ -59,12 +59,12 @@ int i; int j;
 	
 	System.out.println("\t\t\t\t\t     0    1    2        3    4    5        6    7    8     ");
 	System.out.println("\t\t\t\t\t   -----------------------------------------------------");
-	for( i=0;i<9;i++) {
+	for( i=0;i<imax;i++) {
 		System.out.print("\t\t\t\t\t");
 		System.out.print(i + "  "); 
-		for( j=0;j<9;j++) {
+		for( j=0;j<jmax;j++) {
 			
-			System.out.print("| " + this.t[i][j].getValeur() + " |"); if(j==2 || j==5 ) System.out.print("    ");
+			System.out.print("| " + this.t[i][j].getVal() + " |"); if(j==2 || j==5 ) System.out.print("    ");
 		}
 		
 		System.out.println("\n\t\t\t\t\t   -----------------------------------------------------");

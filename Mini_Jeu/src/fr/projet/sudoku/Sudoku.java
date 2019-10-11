@@ -25,7 +25,7 @@ public class Sudoku {
 	{
 
 		Scanner sc = new Scanner(System.in);
-		String nomFichier = "src/Sudoku/listeJoueurs.txt";
+		String nomFichier = "src/fr/sudoku/listeJoueurs.txt";
 
 		int score = 0;
 		boolean continuer = true;

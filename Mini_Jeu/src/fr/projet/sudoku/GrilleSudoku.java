@@ -1,28 +1,30 @@
-package GrilleSudo;
+package fr.projet.sudoku;
 
-import GrilleEtCase.Grille;
+import fr.projet.*;
+
+
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import GrilleEtCase.Case;
+
 
 public class GrilleSudoku extends Grille {
 
 	public GrilleSudoku() {
 		super(9, 9);
-		this.t = new Case[imax][jmax];
-		t = this.initialiserCaseDeLaGrille();
+		//this.t = new Case[this.getImax()][this.getJmax()];
+	//	this.getT() = this.initialiserCaseDeLaGrille();
 
 	}
 
 	// met les valeurs des cases à " ' ' " et les rends modifiables
 	public void resetGrille() {
 
-		for (Case[] c : this.t) {
+		for (Case[] c : this.getT()) {
 			for (Case elem : c) {
 				elem.setModifiable(true);
-				elem.setVal(' ');
+				elem.setVal(" ");
 
 			}
 
@@ -33,45 +35,24 @@ public class GrilleSudoku extends Grille {
 	// pour afficher la solution si abandon du joueur)
 	public void resetValeurCaseModifiableGrille() {
 
-		for (Case[] c : this.t) {
+		for (Case[] c : this.getT()) {
 			for (Case elem : c) {
 				if (elem.isModifiable())
-					elem.setVal(' ');
+					elem.setVal(" ");
 
 			}
 
 		}
 	}
 
-// Permet d'entrer une valeur de 1 à 9 OU ' ', repète la demande tant que c'est pas fait Marche sauf si RIEN n'entré (' ' est différent de RIEN)
-	// -> Faire le try-catch
-	public void modifierValeur(int x, int y) {
-		boolean valeurValide = false;
-		if (this.t[x][y].isModifiable()) {
-			while (valeurValide == false) {
-				Scanner sc = new Scanner(System.in);
-				System.out.println("Valeur à entrer ? (entre 1 et 9)");
-				String valeurUtilisateur = sc.nextLine();
-				if (valeurUtilisateur != null) {
-					char valeurEntree = valeurUtilisateur.charAt(0);
-					if ((valeurEntree >= '1' && valeurEntree <= '9') || valeurEntree == ' ') {
-						this.t[y][x].setVal(valeurEntree);
-						valeurValide = true;
 
-					}
-
-				}
-				sc.close();
-			}
-		}
-
-	}
+	
 
 	// Vérifie que la valeur d'une case de paramètre donnée soit une valeur allant
 	// de 1 à 9
 
 	public boolean valeurCaseValide(int x, int y) {
-		if ((this.t[y][x].getVal() >= '1' && this.t[y][x].getVal() <= '9'))
+		if (this.getT()[y][x].getVal().compareTo("1")==0  || this.getT()[y][x].getVal().compareTo("2")==0  ||this.getT()[y][x].getVal().compareTo("3")==0  ||this.getT()[y][x].getVal().compareTo("4")==0  ||this.getT()[y][x].getVal().compareTo("5")==0  ||this.getT()[y][x].getVal().compareTo("6")==0  ||this.getT()[y][x].getVal().compareTo("7")==0  ||this.getT()[y][x].getVal().compareTo("8")==0  ||this.getT()[y][x].getVal().compareTo("9")==0)
 			return true;
 		return false;
 
@@ -79,14 +60,14 @@ public class GrilleSudoku extends Grille {
 
 	// verifie qu'il n'y ait pas plusieurs doublon des char de 1 à 9 dans les sous
 	// carré 3x3 du sudoku.
-	public boolean verifierCarre3x3PourConstruction(char c, int i, int j) {
+	public boolean verifierCarre3x3PourConstruction(String c, int i, int j) {
 		// plus haute ligne du carre et colonne plus a gauche du carre
 		int PHLC = i - (i % 3);
 		int CPGC = j - (j % 3);
 
 		for (int y = PHLC; y < PHLC + 3; y++) {
 			for (int x = CPGC; x < CPGC + 3; x++) {
-				if (this.t[y][x].getVal() == c)
+				if (this.getT()[y][x].getVal().compareTo(c)==0 )
 					return false;
 			}
 		}
@@ -94,13 +75,13 @@ public class GrilleSudoku extends Grille {
 	}
 
 	// verifie si un char donné est sur la ligne
-	public boolean verifLigneEtColonneCasePourConstruction(char c, int i, int j) {
+	public boolean verifLigneEtColonneCasePourConstruction(String c, int i, int j) {
 		int x;
 
 		for (x = 0; x < 9; x++) {
-			if (this.t[i][x].getVal() == c)
+			if (this.getT()[i][x].getVal().compareTo(c)==0)
 				return false;
-			if (this.t[x][j].getVal() == c)
+			if (this.getT()[x][j].getVal().compareTo(c)==0)
 				return false;
 
 		}
@@ -114,23 +95,28 @@ public class GrilleSudoku extends Grille {
 	// entièrement la grille, elle permet une utilisation plus efficace de la
 	// récursivité
 	public boolean ResoudreSudoku(int position) {
+		String tmp=" ";
+
 		if (position == 9 * 9)
 			return true;
 		// calcul des coordonnées via la position
 		int i = position / 9, j = position % 9;
 		// Si la case n'est pas ' ' on laisse la valeur et on passe a la generation de
 		// case suivante
-		if (this.t[i][j].getVal() != ' ') {
+		if (this.getT()[i][j].getVal().compareTo(" ")!=0 ) {
 			return ResoudreSudoku(position + 1);
 		}
 
 		// On test chaque valeur
 		for (char k = '1'; k <= '9'; k++) {
+			if(k=='1') tmp="1";if(k=='2') tmp="2";if(k=='3') tmp="3";if(k=='4') tmp="4";if(k=='5') tmp="5";if(k=='6') tmp="6";if(k=='7') tmp="7";if(k=='8') tmp="8";if(k=='9') tmp="9";
+			
+			
 			// Si l'une est plaçable, on la place et on passe à la grille suivante
-			if (this.verifLigneEtColonneCasePourConstruction(k, i, j)
-					&& this.verifierCarre3x3PourConstruction(k, i, j)) {
+			if (this.verifLigneEtColonneCasePourConstruction(tmp, i, j)
+					&& this.verifierCarre3x3PourConstruction(tmp, i, j)) {
 
-				this.t[i][j].setVal(k);
+				this.getT()[i][j].setVal(tmp);
 
 				if (ResoudreSudoku(position + 1)) {
 
@@ -139,30 +125,30 @@ public class GrilleSudoku extends Grille {
 			}
 		}
 
-		this.t[i][j].setVal(' ');
+		this.getT()[i][j].setVal(" ");
 		return false;
 	}
 
 	
 	public void retournerGrilleHorizontalement() {
-		char tmp;
+		String tmp;
 		for(int i=0;i<4;i++) {
 			for(int j=0;j<9;j++) {
-				 tmp=this.t[i][j].getVal();
-				 this.t[i][j].setVal(this.t[8-i][j].getVal());
-				 this.t[8-i][j].setVal(tmp);
+				 tmp=this.getT()[i][j].getVal();
+				 this.getT()[i][j].setVal(this.getT()[8-i][j].getVal());
+				 this.getT()[8-i][j].setVal(tmp);
 			}
 		}
 		
 	}
 	
 	public void retournerGrilleVerticalement() {
-		char tmp;
+		String tmp;
 		for(int i=0;i<9;i++) {
 			for(int j=0;j<4;j++) {
-				 tmp=this.t[i][j].getVal();
-				 this.t[i][j].setVal(this.t[i][8-j].getVal());
-				 this.t[i][8-j].setVal(tmp);
+				 tmp=this.getT()[i][j].getVal();
+				 this.getT()[i][j].setVal(this.getT()[i][8-j].getVal());
+				 this.getT()[i][8-j].setVal(tmp);
 			}
 		}
 		
@@ -175,9 +161,12 @@ public class GrilleSudoku extends Grille {
 	public void GenererGrille() {
 		char cpt = '1';
 		String tmp= "123456789";
+		String tmp2=" ";
+		String tmp3=" ";
 		int rand=(int)(Math.random()*9);
 		char randchar=tmp.charAt(rand);
-		this.t[0][0].setVal(randchar);
+		if(randchar=='1') tmp2="1";if(randchar=='2') tmp2="2";if(randchar=='3') tmp2="3";if(randchar=='4') tmp2="4";if(randchar=='5') tmp2="5";if(randchar=='6') tmp2="6";if(randchar=='7') tmp2="7";if(randchar=='8') tmp2="8";if(randchar=='9') tmp2="9";
+		this.getT()[0][0].setVal(tmp2);
 		boolean ok=false;
 		
 		while (cpt < '4') {
@@ -185,9 +174,9 @@ public class GrilleSudoku extends Grille {
 			while(!ok) {
 			int randi = (int) (Math.random() * 9);
 			int randj = (int) (Math.random() * 9);
-
-			if(this.verifierCarre3x3PourConstruction(cpt, randi, randj) && this.verifLigneEtColonneCasePourConstruction(cpt, randi, randj)) 
-					this.t[randi][randj].setVal(cpt);
+			if(cpt=='1') tmp3="1";if(cpt=='2') tmp3="2";if(cpt=='3') tmp3="3";if(cpt=='4') tmp3="4";if(cpt=='5') tmp3="5";if(cpt=='6') tmp3="6";if(cpt=='7') tmp3="7";if(cpt=='8') tmp3="8";if(cpt=='9') tmp3="9";;
+			if(this.verifierCarre3x3PourConstruction(tmp3, randi, randj) && this.verifLigneEtColonneCasePourConstruction(tmp3, randi, randj)) 
+					this.getT()[randi][randj].setVal(tmp3);
 					ok=true;
 }
 cpt++;
@@ -206,12 +195,12 @@ ok=false;
 				if(!this.valeurCaseValide(i, j)) return false;
 				for (int x = 0; x < 9; x++) {
 
-					if (this.t[x][j] != this.t[i][j]) {
-						if (this.t[x][j].getVal() == this.t[i][j].getVal())
+					if (this.getT()[x][j] != this.getT()[i][j]) {
+						if (this.getT()[x][j].getVal().compareTo( this.getT()[i][j].getVal())==0)
 							return false;
 					}
-					if (this.t[i][x] != this.t[i][j]) {
-						if (this.t[i][x].getVal() == this.t[i][j].getVal())
+					if (this.getT()[i][x] != this.getT()[i][j]) {
+						if (this.getT()[i][x].getVal().compareTo( this.getT()[i][j].getVal())==0)
 							return false;
 					}
 				}
@@ -231,8 +220,8 @@ ok=false;
 				CPGC = j - (j % 3);
 				for (int y = PHLC; y < PHLC + 3; y++) {
 					for (int x = CPGC; x < CPGC + 3; x++) {
-						if (this.t[y][x] != this.t[i][j]) {
-							if (this.t[y][x].getVal() == this.t[i][j].getVal())
+						if (this.getT()[y][x] != this.getT()[i][j]) {
+							if (this.getT()[y][x].getVal().compareTo(this.getT()[i][j].getVal())==0)
 								return false;
 						}
 					}
@@ -269,12 +258,12 @@ ok=false;
 
 		System.out.println("\t\t\t\t\t     0    1    2        3    4    5        6    7    8     ");
 		System.out.println("\t\t\t\t\t   -----------------------------------------------------");
-		for (i = 0; i < imax; i++) {
+		for (i = 0; i < this.getImax(); i++) {
 			System.out.print("\t\t\t\t\t");
 			System.out.print(i + "  ");
-			for (j = 0; j < jmax; j++) {
+			for (j = 0; j < this.getJmax(); j++) {
 
-				System.out.print("| " + this.t[i][j].getVal() + " |");
+				System.out.print("| " + this.getT()[i][j].getVal() + " |");
 				if (j == 2 || j == 5)
 					System.out.print("    ");
 			}
@@ -288,6 +277,9 @@ ok=false;
 	public static void main(String args[]) {
 
 		GrilleSudoku g = new GrilleSudoku();
+		
+		
+	
 		for(int i=0;i<20;i++) {
 		g.GenererGrille();
 		g.retournerGrilleVerticalement();
@@ -297,6 +289,7 @@ ok=false;
 		g.AfficherGrille();
 		g.resetGrille();
 		}
+
 
 	System.out.println("FINI");	
 	} 

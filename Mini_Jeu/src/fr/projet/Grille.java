@@ -30,7 +30,7 @@ public Case[][] initialiserCaseDeLaGrille() {
 	int i; int j;
 	for(i=0;i<this.imax;i++) {
 		for(j=0;j<this.jmax;j++) {
-			this.t[i][j]=new Case(' ',true);
+			this.t[i][j]=new Case(" ",true);
 		}
 	}
 	return this.t;

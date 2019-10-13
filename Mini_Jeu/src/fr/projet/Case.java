@@ -1,22 +1,22 @@
 package fr.projet;
 
 public class Case {
-	 private char val;
+	 private String val;
 	 private boolean modifiable;
 
 	 public Case() {
-		  setVal('0');
+		  setVal("0");
 		  setModifiable(true); }
 
-	public Case(char val, boolean modifiable) {
+	public Case(String val, boolean modifiable) {
 		  this.setVal(val);
 		  this.setModifiable(modifiable); }
 
-	public char getVal() {
+	public String getVal() {
 		return val;
 	}
 
-	public void setVal(char val) {
+	public void setVal(String val) {
 		this.val = val;
 	}
 

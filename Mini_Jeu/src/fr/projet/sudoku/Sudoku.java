@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Sudoku {
@@ -35,6 +36,8 @@ public class Sudoku {
 
 		File f = new File(nomFichier);
 		if (!f.exists()) {
+			nomFichier = "listeJoueurs.txt";
+			f = new File(nomFichier);
 			f.createNewFile();
 		}
 
@@ -52,12 +55,11 @@ public class Sudoku {
 				pseudoInvalide = false;
 		}
 		Joueur joueur = new Joueur(pseudo);
-		
+
 		/*
-		 * On creer une grille pleine,
-		 *  que l'on copie dans grille valide afin de nous servir de solution 
-		 *  cela eviter des calculs inutiles
-		 *  On rend egalement la grille valide non modifiable par precaution
+		 * On creer une grille pleine, que l'on copie dans grille valide afin de nous
+		 * servir de solution cela eviter des calculs inutiles On rend egalement la
+		 * grille valide non modifiable par precaution
 		 */
 		GrilleSudoku grille = new GrilleSudoku();
 		grille.GenererGrille();
@@ -73,7 +75,6 @@ public class Sudoku {
 
 		gestionDifficulte(difficulte, grille);
 
-		
 		/*
 		 * On lance la partie
 		 */
@@ -83,7 +84,7 @@ public class Sudoku {
 		System.out.println("Vous pouvez faire jusqu'a " + erreurMax + " erreurs.");
 
 		int i = 0, j = 0;
-		char val = ' ';
+		String val = " ";
 
 		boolean identique = false;
 
@@ -95,25 +96,30 @@ public class Sudoku {
 				System.out.println("Vous avez actuellement " + erreur + " erreurs.");
 				boolean saisieCorrect = false;
 				while (!saisieCorrect) {
-					System.out.println("Entrer la ligne :");
-					i = sc.nextInt();
-					System.out.println("Entrer la colonne :");
-					j = sc.nextInt();
-					sc.nextLine();
-					System.out.println("Entrer la valeur :");
-					String valeur = sc.nextLine();
 					try {
-						val = valeur.charAt(0);
+						sc = new Scanner(System.in);
+						System.out.println("Entrer la ligne :");
+						i = sc.nextInt();
+						System.out.println("Entrer la colonne :");
+						j = sc.nextInt();
+						sc.nextLine();
+						System.out.println("Entrer la valeur :");
+						val = sc.nextLine();
+					} catch (InputMismatchException e) {
+						System.err.println("Merci d'entrer une reponse valide");
 					} catch (IndexOutOfBoundsException e) {
 						e.printStackTrace();
 						System.err.println("N'appuyer pas sur Entrer pauvre fou !!!");
 					}
+
 					if (i >= 0 && i < 9 && j >= 0 && j < 9
-							&& ((val == '1') || (val == '2') || (val == '3') || (val == '4') || (val == '5')
-									|| (val == '6') || (val == '7') || (val == '8') || (val == '9'))) {
+							&& ((val.equals("1")) || (val.equals("2")) || (val.equals("3")) || (val.equals("4"))
+									|| (val.equals("5")) || (val.equals("6")) || (val.equals("7")) || (val.equals("8"))
+									|| (val.equals("9")))) {
 						saisieCorrect = true;
 					} else
 						System.out.println("Erreur lors de la saisie d'une des 3 entrees");
+
 				}
 
 				/*
@@ -123,7 +129,7 @@ public class Sudoku {
 				 * demande a nouveau la valeur
 				 */
 				if ((grille.getT()[i][j].isModifiable())) {
-					if ((grilleValide.getT()[i][j].getVal() == val)) {
+					if ((grilleValide.getT()[i][j].getVal().equals(val))) {
 						grille.getT()[i][j].setVal(val);
 						System.out.println("Correct !!!!");
 						grille.AfficherGrille();
@@ -131,7 +137,7 @@ public class Sudoku {
 						boolean compare = true;
 						for (int x = 0; x < 9; x++) {
 							for (int y = 0; y < 9; y++) {
-								if (grilleValide.getT()[x][y].getVal() != grille.getT()[x][y].getVal())
+								if (!grilleValide.getT()[x][y].getVal().equals(grille.getT()[x][y].getVal()))
 									compare = false;
 							}
 						}
@@ -142,7 +148,7 @@ public class Sudoku {
 						if (compare) {
 							identique = true;
 							System.out.println("Wow ! Tu as fini ! Felicitations !");
-							score += calculScore(erreur,difficulte);
+							score += calculScore(erreur, difficulte);
 							joueur.setScore(score);
 							System.out.println(
 									"Voulez vous rejouer pour augmenter votre score ?\nEntrer 1 pour oui et 0 pour non");
@@ -166,23 +172,24 @@ public class Sudoku {
 					System.out.println("Erreur : la case selectionnee n'est pas remplissable");
 
 			}
+
 		}
 
 	}
+
 	/*
-	 * Calcule le score d'un joueur en fonction des parametres predefini
-	 * La maniere de calculer un score peut etre modifier
+	 * Calcule le score d'un joueur en fonction des parametres predefini La maniere
+	 * de calculer un score peut etre modifier
 	 */
-	public int calculScore (int erreurs,int difficulte)
-	{
-		return (50 - erreurs/difficulte);
+	public int calculScore(int erreurs, int difficulte) {
+		return (50 - erreurs / difficulte);
 	}
 
 	/*
 	 * Retourne un boolean qui definit si la valeur entree est valide
 	 */
 	public boolean valeurValide(GrilleSudoku grille, char val, int i, int j) {
-		if (grille.getT()[i][j].getVal() == val)
+		if (grille.getT()[i][j].getVal().equals(val))
 			return true;
 		else
 			return false;
@@ -228,9 +235,9 @@ public class Sudoku {
 		while (compteur < max) {
 			for (int y = A; y < A + 3; y++) {
 				for (int x = B; x < B + 3; x++) {
-					if (((int) (1 + Math.random() * (3)) == 2) && (grille.getT()[y][x].getVal() != ' ')) {
+					if (((int) (1 + Math.random() * (3)) == 2) && (!grille.getT()[y][x].getVal().contentEquals(" "))) {
 						compteur++;
-						grille.getT()[y][x].setVal(' ');
+						grille.getT()[y][x].setVal(" ");
 						grille.getT()[y][x].setModifiable(true);
 					}
 				}
@@ -340,6 +347,11 @@ public class Sudoku {
 		try {
 			f = new FileReader(nomFichier);
 			br = new BufferedReader(f);
+			if (!f.ready()) {
+				File fs = new File(nomFichier);
+				fs.createNewFile();
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -351,6 +363,114 @@ public class Sudoku {
 		}
 		br.close();
 
+	}
+
+	/*
+	 * Programme de test afin de mettre en valeur ce que l'on peut faire avec ce
+	 * programme
+	 */
+	public void Demo() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Bonjour ! Bienvenue dans cette demo");
+		System.out.println("Regardez. On peut generer une grille");
+		GrilleSudoku grille = new GrilleSudoku();
+		grille.GenererGrille();
+		grille.AfficherGrille();
+
+		GrilleSudoku grille1 = new GrilleSudoku();
+		GrilleSudoku grille2 = new GrilleSudoku();
+		GrilleSudoku grille3 = new GrilleSudoku();
+
+		for (int a = 0; a < 9; a++)
+			for (int b = 0; b < 9; b++) {
+				grille1.getT()[a][b].setVal(grille.getT()[a][b].getVal());
+				grille2.getT()[a][b].setVal(grille.getT()[a][b].getVal());
+				grille3.getT()[a][b].setVal(grille.getT()[a][b].getVal());
+				grille1.getT()[a][b].setModifiable(false);
+				grille2.getT()[a][b].setModifiable(false);
+				grille3.getT()[a][b].setModifiable(false);
+			}
+
+		gestionDifficulte(1, grille1);
+		gestionDifficulte(1, grille2);
+		gestionDifficulte(1, grille3);
+		System.out.println("Voici une grille 'facile'");
+		grille1.AfficherGrille();
+		System.out.println("Voici une grille 'moyenne'");
+		grille2.AfficherGrille();
+		System.out.println("Voici une grille 'difficile'");
+		grille3.AfficherGrille();
+		System.out.println("On peut facilement ajouter une difficulte ou en modifier une.");
+		System.out.println("De votre coté vous etes un joueur, essayer d'entrer un pseudo");
+
+		boolean pseudoInvalide = true;
+		String pseudo = "defaut";
+		while (pseudoInvalide) {
+			System.out.println("Bonjour ! Entrer un pseudo s'il vous plait");
+			pseudo = sc.nextLine();
+
+			if ((pseudo != null) && (pseudo.length() > 0))
+				pseudoInvalide = false;
+		}
+		Joueur joueur = new Joueur(pseudo);
+		System.out.println(
+				"A la fin de votre partie le pseudo du joueur ainsi que son score sera sauvegarder dans un fichier");
+		System.out.println("Essayons de remplir une case");
+
+		grille.AfficherGrille();
+		System.out.println(" ");
+		grille1.AfficherGrille();
+
+		int i = 0, j = 0;
+		String val = " ";
+		boolean saisieCorrect = false;
+		while (!saisieCorrect) {
+
+			try {
+				sc = new Scanner(System.in);
+				System.out.println("Entrer la ligne :");
+				i = sc.nextInt();
+				System.out.println("Entrer la colonne :");
+				j = sc.nextInt();
+				sc.nextLine();
+				System.out.println("Entrer la valeur :");
+				val = sc.nextLine();
+			} catch (InputMismatchException e) {
+				System.err.println("Merci d'entrer une reponse valide");
+			} catch (IndexOutOfBoundsException e) {
+				e.printStackTrace();
+				System.err.println("N'appuyer pas sur Entrer pauvre fou !!!");
+			}
+
+			if (i >= 0 && i < 9 && j >= 0 && j < 9
+					&& ((val.equals("1")) || (val.equals("2")) || (val.equals("3")) || (val.equals("4"))
+							|| (val.equals("5")) || (val.equals("6")) || (val.equals("7")) || (val.equals("8"))
+							|| (val.equals("9")))) {
+				saisieCorrect = true;
+			} else
+				System.out.println("Erreur lors de la saisie d'une des 3 entrees");
+
+		}
+		if ((grille1.getT()[i][j].isModifiable())) {
+			if ((grille.getT()[i][j].getVal().equals(val))) {
+				grille1.getT()[i][j].setVal(val);
+				System.out.println("Correct !!!!");
+				grille1.AfficherGrille();
+
+				boolean compare = true;
+				int score = 0;
+				if (compare) {
+					System.out.println("Imaginons que vous avez fini");
+					score += calculScore(0, 1);
+					joueur.setScore(score);
+					System.out.println("Par exemple " + joueur.getPseudo() + " a " + joueur.getScore() + " pts");
+				}
+			} else {
+				System.out.println("Valeur incorrecte ! Reessaye");
+			}
+		} else
+			System.out.println("Erreur : la case selectionnee n'est pas remplissable");
+		System.out.println("Et ce n'est pas tout! Vous vous invite donc a participier a une partie");
 	}
 
 }

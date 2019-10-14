@@ -8,3 +8,6 @@ La partie sur la Grille Sudoku semble finie (partie console), on est capable de 
 
 Sudoku :
 11/10 : premier commit, le sudoku est fonctionnel néanmoins il reste a verifier : le Chargement et L'enregistrement de la liste des joueurs
+14/10 : modification de char en String, une fonction Demo() a été ajouter afin de faciliter la presentation et ajout d'exceptions
+Vous pouvez actuellemnt lancer une partie en 3 difficultes : 1 = facile , 2 = moyen et 3=difficile
+On peut en rajouter, modfifier, retirer facilement.

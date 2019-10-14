@@ -18,7 +18,7 @@ public class GrilleSudoku extends Grille {
 
 	}
 
-	// met les valeurs des cases ‡ " ' ' " et les rends modifiables
+	// met les valeurs des cases √† " ' ' " et les rends modifiables
 	public void resetGrille() {
 
 		for (Case[] c : this.getT()) {
@@ -31,7 +31,7 @@ public class GrilleSudoku extends Grille {
 		}
 	}
 
-	// Met les valeurs des cases ‡ ' ' uniquement si elles sont modifiables (Servira
+	// Met les valeurs des cases √† ' ' uniquement si elles sont modifiables (Servira
 	// pour afficher la solution si abandon du joueur)
 	public void resetValeurCaseModifiableGrille() {
 
@@ -48,8 +48,8 @@ public class GrilleSudoku extends Grille {
 
 	
 
-	// VÈrifie que la valeur d'une case de paramËtre donnÈe soit une valeur allant
-	// de 1 ‡ 9
+	// V√©rifie que la valeur d'une case de param√®tre donn√©e soit une valeur allant
+	// de 1 √† 9
 
 	public boolean valeurCaseValide(int x, int y) {
 		if (this.getT()[y][x].getVal().compareTo("1")==0  || this.getT()[y][x].getVal().compareTo("2")==0  ||this.getT()[y][x].getVal().compareTo("3")==0  ||this.getT()[y][x].getVal().compareTo("4")==0  ||this.getT()[y][x].getVal().compareTo("5")==0  ||this.getT()[y][x].getVal().compareTo("6")==0  ||this.getT()[y][x].getVal().compareTo("7")==0  ||this.getT()[y][x].getVal().compareTo("8")==0  ||this.getT()[y][x].getVal().compareTo("9")==0)
@@ -58,8 +58,8 @@ public class GrilleSudoku extends Grille {
 
 	}
 
-	// verifie qu'il n'y ait pas plusieurs doublon des char de 1 ‡ 9 dans les sous
-	// carrÈ 3x3 du sudoku.
+	// verifie qu'il n'y ait pas plusieurs doublon des char de 1 √† 9 dans les sous
+	// carr√© 3x3 du sudoku.
 	public boolean verifierCarre3x3PourConstruction(String c, int i, int j) {
 		// plus haute ligne du carre et colonne plus a gauche du carre
 		int PHLC = i - (i % 3);
@@ -74,7 +74,7 @@ public class GrilleSudoku extends Grille {
 		return true;
 	}
 
-	// verifie si un char donnÈ est sur la ligne
+	// verifie si un char donn√© est sur la ligne
 	public boolean verifLigneEtColonneCasePourConstruction(String c, int i, int j) {
 		int x;
 
@@ -89,17 +89,17 @@ public class GrilleSudoku extends Grille {
 	}
 
 	// resous une grille sudoku si possible, permet donc d'en generer.
-	// Seul pb, s'il existe dÈj‡ une impossibilitÈ dans la grille, le programme sera
-	// incapable de trouver une grille valide associÈe.
-	// La valeur de la position sera toujours 0 initialement, ce qui gÈnÈrera
-	// entiËrement la grille, elle permet une utilisation plus efficace de la
-	// rÈcursivitÈ
+	// Seul pb, s'il existe d√©j√† une impossibilit√© dans la grille, le programme sera
+	// incapable de trouver une grille valide associ√©e.
+	// La valeur de la position sera toujours 0 initialement, ce qui g√©n√©rera
+	// enti√®rement la grille, elle permet une utilisation plus efficace de la
+	// r√©cursivit√©
 	public boolean ResoudreSudoku(int position) {
 		String tmp=" ";
 
 		if (position == 9 * 9)
 			return true;
-		// calcul des coordonnÈes via la position
+		// calcul des coordonn√©es via la position
 		int i = position / 9, j = position % 9;
 		// Si la case n'est pas ' ' on laisse la valeur et on passe a la generation de
 		// case suivante
@@ -112,7 +112,7 @@ public class GrilleSudoku extends Grille {
 			if(k=='1') tmp="1";if(k=='2') tmp="2";if(k=='3') tmp="3";if(k=='4') tmp="4";if(k=='5') tmp="5";if(k=='6') tmp="6";if(k=='7') tmp="7";if(k=='8') tmp="8";if(k=='9') tmp="9";
 			
 			
-			// Si l'une est plaÁable, on la place et on passe ‡ la grille suivante
+			// Si l'une est pla√ßable, on la place et on passe √† la grille suivante
 			if (this.verifLigneEtColonneCasePourConstruction(tmp, i, j)
 					&& this.verifierCarre3x3PourConstruction(tmp, i, j)) {
 
@@ -156,7 +156,7 @@ public class GrilleSudoku extends Grille {
 
 	
 	
-	// Genere des des coordonnÈes alÈatoires, y place 1,2 et 3 (permet la variationd
+	// Genere des des coordonn√©es al√©atoires, y place 1,2 et 3 (permet la variationd
 	// de grille) et genere la grille
 	public void GenererGrille() {
 		char cpt = '1';
@@ -170,7 +170,7 @@ public class GrilleSudoku extends Grille {
 		boolean ok=false;
 		
 		while (cpt < '4') {
-			// On genere les coordonnÈes alÈatoirement
+			// On genere les coordonn√©es al√©atoirement
 			while(!ok) {
 			int randi = (int) (Math.random() * 9);
 			int randj = (int) (Math.random() * 9);
@@ -233,11 +233,11 @@ ok=false;
 	}
 
 	/*
-	 * VÈrifie qu'il n'y a pas de doublon dans chaque ligne et colonne de chaque
+	 * V√©rifie qu'il n'y a pas de doublon dans chaque ligne et colonne de chaque
 	 * case et que la valeur de chaque case soit valide. Si une valeur existe en
-	 * double dans un carre 3x3 retourne -2. S'il existe une valeur prÈsente en
+	 * double dans un carre 3x3 retourne -2. S'il existe une valeur pr√©sente en
 	 * double dans une ligne ou colonne retourne -1. S'il existe une case avec une
-	 * valeur n'Ètant pas supposÈe Ítre dans un sudoku retourne 0. retourne 1 si la
+	 * valeur n'√©tant pas suppos√©e √™tre dans un sudoku retourne 0. retourne 1 si la
 	 * grille est ok
 	 */
 	public int verifierGrille() {
@@ -250,7 +250,7 @@ ok=false;
 	}
 
 	
-//affiche la grille d'une bonne maniËre pour le sudoku, avec les indices des cases en bordure 
+//affiche la grille d'une bonne mani√®re pour le sudoku, avec les indices des cases en bordure 
 	public void AfficherGrille() {
 
 		int i;
@@ -273,7 +273,7 @@ ok=false;
 				System.out.println("\t\t\t\t\t   -----------------------------------------------------");
 		}
 	}
-
+/*
 	public static void main(String args[]) {
 
 		GrilleSudoku g = new GrilleSudoku();
@@ -294,5 +294,5 @@ ok=false;
 	System.out.println("FINI");	
 	} 
 	
-		
+	*/	
 }

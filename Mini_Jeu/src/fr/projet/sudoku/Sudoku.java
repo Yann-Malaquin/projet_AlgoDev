@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Sudoku {
 
+
 	private ArrayList<Joueur> listeJoueur;
 
 	public Sudoku() {
@@ -472,6 +473,7 @@ public class Sudoku {
 			System.out.println("Erreur : la case selectionnee n'est pas remplissable");
 		System.out.println("Et ce n'est pas tout! Vous vous invite donc a participier a une partie");
 	}
+
 
 }
 

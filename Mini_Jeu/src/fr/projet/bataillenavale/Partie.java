@@ -19,7 +19,7 @@ public void placerBateau(Bateau b, int x, int y, GrilleBN grille) {
 		boolean position = b.getPosition();
 		int taille = b.getTaille();
 		if (b.getPosition() == true) {
-			this.grille.
+			//this.grille.
 		}
 			
 			

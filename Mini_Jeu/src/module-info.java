@@ -6,4 +6,6 @@
  *
  */
 module Mini_Jeu {
+	exports fr.projet.sudoku;
+		
 }

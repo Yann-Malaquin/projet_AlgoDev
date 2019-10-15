@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import fr.projet.Joueur;
 
 public class Sudoku {
 

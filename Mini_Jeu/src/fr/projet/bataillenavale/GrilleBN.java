@@ -14,15 +14,17 @@ public class GrilleBN extends Grille {
 	 	
 	 	System.out.println("\t\t\t\t\t     0    1    2    3    4    5    6    7    8    9");
 	 	System.out.println("\t\t\t\t\t   -----------------------------------------------------");
-	 	for( i=0;i<imax;i++) {
+	 	//for( i=0;i<imax;i++) 
+	 	{
 	 		System.out.print("\t\t\t\t\t");
-	 		System.out.print(i + "  "); 
-	 		for( j=0;j<jmax;j++) {
+	 		//System.out.print(i + "  "); 
+	 		//for( j=0;j<jmax;j++) 
+	 		{
 	 			
-	 			System.out.print("| " + this.t[i][j].getVal() + " |");
+	 			//System.out.print("| " + this.t[i][j].getVal() + " |");
 	 		}
 	 		
-	 		System.out.println("\n\t\t\t\t\t   -----------------------------------------------------");
+	 		//System.out.println("\n\t\t\t\t\t   -----------------------------------------------------");
 	 }
 	 }
 

@@ -1,15 +1,5 @@
 package fr.projet.poker;
 
-public class TestPoker {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
-}
-package fr.projet.poker;
-
 import java.util.ArrayList;
 import java.util.List;
 

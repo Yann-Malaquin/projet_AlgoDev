@@ -62,7 +62,7 @@ public class MiniJeux {
 				
 				lcarte=p.genererPaquetCarte();
 				p.afficherPaquetCartes(lcarte);
-				p.distribuerCartes(lcarte);
+				p.distribuerCartes(lcarte,2);
 				break;
 			}
 		}

@@ -1,10 +1,11 @@
 package fr.projet;
 
+
 public class Grille {
 	
-protected Case t[][];
-protected int imax;
-protected int jmax;
+private Case t[][];
+private int imax;
+private int jmax;
 
 public Grille( int imax, int jmax) {
 	super();
@@ -36,22 +37,7 @@ public Case[][] initialiserCaseDeLaGrille() {
 	return this.t;
 }
 
-/*
-public void CopierGrille(Grille g) {
-	
-	
-	
-	if(this.imax==g.imax && this.jmax==g.jmax) {
-		for(int i=0;i<g.imax;i++) {
-			for(int j=0;j<g.jmax;i++) {
-				this.t[i][j].setModifiable(g.t[i][j].isModifiable());
-				this.t[i][j].setValeur(g.t[i][j].getValeur());
-			}
-		}
-		
-	}
-}
-*/
+
 
 public void AfficherGrille() {
 	
@@ -71,7 +57,7 @@ int i; int j;
 		if(i==2 || i==5 ) 
 			System.out.println("\t\t\t\t\t   -----------------------------------------------------");
 }
-}
+
 
 
 
@@ -87,18 +73,15 @@ public int getJmax() {
 	return jmax;
 }
 
-/*
+
 public  static void main(String args[] ){
 	
 	Grille g=new Grille(9,9);
-	g.t[0][0].setValeur('1');
-	g.t[1][1].setValeur('4');
-	g.t[0][1].setValeur('2');
-	g.t[1][0].setValeur('3'); 
-	//Grille Copieg=new Grille(g);
+	g.t[0][0].setVal("1");
+	g.t[1][1].setVal("4");
+	g.t[0][1].setVal("2");
+	g.t[1][0].setVal("3"); 
+	
 	g.AfficherGrille(); 
-	/*System.out.print(g.t[0][0].valeur);
-}
-*/
-
+	System.out.print(g.t[0][0].getVal());
 }

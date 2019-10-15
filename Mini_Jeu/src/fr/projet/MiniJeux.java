@@ -2,6 +2,7 @@ package fr.projet;
 
 import java.util.Scanner;
 
+import fr.projet.loto.Partie;
 import fr.projet.sudoku.Sudoku;
 
 public class MiniJeux {
@@ -30,6 +31,10 @@ public class MiniJeux {
 				System.out.println("");
 				break;
 			case 2:
+				Partie P = new Partie(4);
+				//P.Creationbouleloto();
+				//P.AffichageBoules();
+				P.CreationGrille();
 				break;
 				
 				

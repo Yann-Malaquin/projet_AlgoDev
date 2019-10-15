@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Partie {
+public class PartiePoker {
 
 	private List<Carte> paquetCartes = new ArrayList<Carte>();
 	private List<JoueurPoker> joueurs;
 
-	public Partie() {
+	public PartiePoker() {
 		super();
 		joueurs=new ArrayList<JoueurPoker>();
 	}

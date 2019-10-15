@@ -16,8 +16,7 @@ public class JoueurPoker extends Joueur{
 	
 	public JoueurPoker(String _pseudo)
 	{
-		super();
-		this.pseudo=_pseudo;
+		super(_pseudo);
 		mainJoueur=new ArrayList<Carte>();
 		int wallet=0;
 		int mise=0;
@@ -60,7 +59,7 @@ public class JoueurPoker extends Joueur{
 
 	@Override
 	public String toString() {
-		return this.pseudo+"\nmainJoueur= [" + mainJoueur + "]\nwallet=" + wallet + " €\nmise=" + mise + " €\netatJoueur=["
+		return this.getPseudo()+"\nmainJoueur= [" + mainJoueur + "]\nwallet=" + wallet + " €\nmise=" + mise + " €\netatJoueur=["
 				+ etatJoueur + "]\n";
 	}
 	

@@ -1,15 +1,5 @@
 package fr.projet.poker;
 
-public class TestPoker {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
-}
-package fr.projet.poker;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +8,7 @@ public class TestPoker {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		Partie p=new Partie();
+		PartiePoker p=new PartiePoker();
 		List<Carte> lcarte=new ArrayList<Carte>();
 		List<Carte> lcarte2=new ArrayList<Carte>();
 		JoueurPoker Michel=new JoueurPoker("Michel");
@@ -40,8 +30,6 @@ public class TestPoker {
 		p.afficherPaquetCartes(lcarte);
 		p.distribuerCartes(lcarte);
 
-		
-		
 
 	}
 

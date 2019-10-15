@@ -1,5 +1,5 @@
 package fr.projet.loto;
 
-public class Joueur {
+public class JoueurLoto {
 
 }

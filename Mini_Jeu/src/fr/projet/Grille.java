@@ -57,7 +57,7 @@ int i; int j;
 		if(i==2 || i==5 ) 
 			System.out.println("\t\t\t\t\t   -----------------------------------------------------");
 }
-}
+
 
 
 
@@ -84,7 +84,4 @@ public  static void main(String args[] ){
 	
 	g.AfficherGrille(); 
 	System.out.print(g.t[0][0].getVal());
-}
-
-
 }

@@ -1,5 +1,38 @@
 package fr.projet.loto;
 
-public class Partie {
+import java.util.ArrayList;
+import java.util.List;
 
+import fr.projet.Grille;
+
+public class Partie {
+	private List<Integer> Lint = new ArrayList<Integer>();
+	private int NbJoueurs;
+	private List<Grille> LG = new ArrayList<Grille>();
+	private GrilleLoto G = new GrilleLoto(LG);
+
+	public Partie(int nbJoueurs) {
+		super();
+		NbJoueurs = nbJoueurs;
+	}
+
+	public void Creationbouleloto() {
+		int i;
+		for (i = 0; i < 99; i++) {
+			Lint.add(i + 1);
+		}
+	}
+
+	public void AffichageBoules() {
+		for (Integer i : Lint) {
+			System.out.println(i);
+		}
+	}
+
+	public void CreationGrille() {
+		int i;
+		for (i = 0; i < 100; i++) {
+			G.creationGrille();
+		}
+	}
 }

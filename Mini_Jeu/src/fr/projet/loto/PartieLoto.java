@@ -8,8 +8,8 @@ import fr.projet.Grille;
 public class PartieLoto {
 	private List<Integer> Lint = new ArrayList<Integer>();
 	private int NbJoueurs;
-	private List<Grille> LG = new ArrayList<Grille>();
-	private GrilleLoto G = new GrilleLoto(LG);
+	private List<GrilleLoto> LG = new ArrayList<GrilleLoto>();
+	private GrilleLoto G;
 
 	public PartieLoto(int nbJoueurs) {
 		super();
@@ -31,8 +31,10 @@ public class PartieLoto {
 
 	public void CreationGrille() {
 		int i;
-		for (i = 0; i < 100; i++) {
+		for (i = 0; i < 20; i++) {
+			G=new GrilleLoto();
 			G.creationGrille();
+			LG.add(G);
 		}
 	}
 }

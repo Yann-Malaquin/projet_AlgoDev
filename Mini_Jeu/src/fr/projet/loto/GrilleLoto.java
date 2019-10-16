@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.Random;
 
 public class GrilleLoto {
-	private List<Grille> LG = new ArrayList<Grille>();
 	private List<Integer> LI = new ArrayList<Integer>();
 
-	public GrilleLoto(List<Grille> lG) {
+	public GrilleLoto() {
 		super();
-		LG = lG;
 	}
 
 	public void creationGrille() {
@@ -30,13 +28,9 @@ public class GrilleLoto {
 			}
 		}
 		Collections.sort(LI);
-		for (Integer xyz : LI) {
-			System.out.println(xyz);
-		}
 		G = rangercartons(G, LI);
-		//Affichage(G);
-		LG.add(G);
-	}
+		Affichage(G);
+}
 
 	public static String convertir(int a) {
 		String c = Integer.toString(a);
@@ -172,6 +166,7 @@ public class GrilleLoto {
 	public void Affichage(Grille G) {
 		int i, j;
 		String c=" ";
+		System.out.println("\n");
 		for (i = 0; i < 3; i++) {
 			System.out.println("\n______________________________");
 			for (j = 0; j < 10; j++) {
@@ -187,13 +182,5 @@ public class GrilleLoto {
 			}
 		}
 	}
-
-	public List<Grille> getLG() {
-		return LG;
-	}
-
-	public void setLG(List<Grille> lG) {
-		LG = lG;
-	}
-
+	
 }

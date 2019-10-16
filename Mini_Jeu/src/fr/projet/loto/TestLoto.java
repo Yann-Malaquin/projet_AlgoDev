@@ -6,8 +6,7 @@ public class TestLoto {
 		// TODO Auto-generated method stub
 		Partie P = new Partie(4);
 		P.Creationbouleloto();
-		P.AffichageBoules();
+		//P.AffichageBoules();
 		P.CreationGrille();
 	}
-
 }

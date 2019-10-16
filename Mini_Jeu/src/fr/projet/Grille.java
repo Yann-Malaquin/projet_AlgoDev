@@ -15,16 +15,7 @@ public Grille( int imax, int jmax) {
 	this.t= new Case[imax][jmax];
 	t=this.initialiserCaseDeLaGrille();
 }
-
-//Constructeur qui copie une grille g existante : Bug atm
-/*
-public Grille(Grille g) {
-	this.imax=g.imax;
-	this.jmax=g.jmax;
-	this.t= new Case[imax][jmax];
-	this.CopierGrille(g);
-}
-*/   
+ 
 
 //initialise les cases de la grille
 public Case[][] initialiserCaseDeLaGrille() {
@@ -57,9 +48,7 @@ int i; int j;
 		if(i==2 || i==5 ) 
 			System.out.println("\t\t\t\t\t   -----------------------------------------------------");
 }
-
-
-
+}
 
 public Case[][] getT() {
 	return t;
@@ -72,16 +61,4 @@ public int getImax() {
 public int getJmax() {
 	return jmax;
 }
-
-
-public  static void main(String args[] ){
-	
-	Grille g=new Grille(9,9);
-	g.t[0][0].setVal("1");
-	g.t[1][1].setVal("4");
-	g.t[0][1].setVal("2");
-	g.t[1][0].setVal("3"); 
-	
-	g.AfficherGrille(); 
-	System.out.print(g.t[0][0].getVal());
 }

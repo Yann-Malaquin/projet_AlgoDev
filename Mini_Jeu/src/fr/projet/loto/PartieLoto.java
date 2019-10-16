@@ -5,13 +5,13 @@ import java.util.List;
 
 import fr.projet.Grille;
 
-public class Partie {
+public class PartieLoto {
 	private List<Integer> Lint = new ArrayList<Integer>();
 	private int NbJoueurs;
 	private List<GrilleLoto> LG = new ArrayList<GrilleLoto>();
 	private GrilleLoto G;
 
-	public Partie(int nbJoueurs) {
+	public PartieLoto(int nbJoueurs) {
 		super();
 		NbJoueurs = nbJoueurs;
 	}

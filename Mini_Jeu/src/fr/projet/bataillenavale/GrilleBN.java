@@ -1,5 +1,5 @@
 package fr.projet.bataillenavale;
-import GrilleEtCase.Grille;
+import fr.projet.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,11 +17,11 @@ public class GrilleBN extends Grille {
 	}
 	
 	public int getImax() {
-		return imax; }
+		return getImax(); }
 	
 
 	public int getJmax() {
-		return jmax;
+		return getJmax();
 		}
 	
 	/*public void ajouterElementMap(String nom, int Coordonnee) {

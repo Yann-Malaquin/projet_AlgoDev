@@ -95,7 +95,7 @@ public class Joueur {
 		 		System.out.print(i + "  "); 
 		 		for( j=0;j<10;j++) {
 		 			
-		 			System.out.print("| " + tBateau.t[i][j].getVal() + " |");
+		 			System.out.print("| " + tBateau.getT()[i][j].getVal() + " |");
 		 		}
 		 		
 		 		System.out.println("\n\t\t\t\t\t   --------------------------------------------------");
@@ -113,7 +113,7 @@ public class Joueur {
 		 		System.out.print(i + "  "); 
 		 		for( j=0;j<10;j++) {
 		 			
-		 			System.out.print("| " + tUser.t[i][j].getVal() + " |");
+		 			System.out.print("| " + tUser.getT()[i][j].getVal() + " |");
 		 		}
 		 		
 		 		System.out.println("\n\t\t\t\t\t   --------------------------------------------------");

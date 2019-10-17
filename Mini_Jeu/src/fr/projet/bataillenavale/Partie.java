@@ -19,14 +19,14 @@ public Partie(Joueur j1, Joueur j2) {
 }
 
 /*
- * M�thode qui sert a placer le bateau selon la position (Horizontale ou
+ * Methode qui sert a placer le bateau selon la position (Horizontale ou
  * verticale)
  */
 public void placerBateau(Joueur joueur) {
 	for(Bateau b : Bateau.getTabBateau()){
 		int Coordonnee;
-		if (b.getPosition() == true) { System.out.println("Votre bateau va �tre placer horizontalement");}
-		else { System.out.println("Votre bateau va �tre placer verticalement"); }
+		if (b.getPosition() == true) { System.out.println("Votre bateau va etre placer horizontalement");}
+		else { System.out.println("Votre bateau va etre placer verticalement"); }
 		System.out.println("Choisissez la base de votre bateau (Colonne) ");
 		int x = sc.nextInt();
 		if(x < 0 || x > 9)
@@ -45,7 +45,7 @@ public void placerBateau(Joueur joueur) {
 		if (b.getPosition() == true) {
 		
 			for (int i = 0; i<taille ;i++) {
-				joueur.gettBateau().getT()[y][x+i].setVal('X');
+				joueur.gettBateau().getT()[y][x+i].setVal("X");
 				Coordonnee = Integer.valueOf(String.valueOf(x+i) + String.valueOf(y));
 				//grille.ajouterElementMap(b.getNom(), Coordonnee);
 				}
@@ -54,7 +54,7 @@ public void placerBateau(Joueur joueur) {
 		
 		if (b.getPosition() == false) {
 			for (int i =0;i< taille; i++){
-				joueur.gettBateau().getT()[y+i][x].setVal('X');
+				joueur.gettBateau().getT()[y+i][x].setVal("X");
 				Coordonnee = Integer.valueOf(String.valueOf(x) + String.valueOf(y+i));
 				//grille.ajouterElementMap(b.getNom(), Coordonnee);
 			}
@@ -158,15 +158,15 @@ public void placerBateau(Joueur joueur) {
 
 public static boolean VerifCoup (Joueur attaquant, Joueur defenseur, int x, int y) {
 		boolean hyp = false;
-	if (defenseur.gettBateau().getT()[y][x].getVal() == 'X'){
-			attaquant.gettUser().getT()[y][x].setVal('X');
+	if (defenseur.gettBateau().getT()[y][x].getVal() == "X"){
+			attaquant.gettUser().getT()[y][x].setVal("X");
 			//grilleJoueur2.retirerElementMap(Integer.valueOf(String.valueOf(x) + String.valueOf(y)));
 			//grilleJoueur2.couler();
 			hyp = true;
 		return hyp;
 		}
-	else if(defenseur.gettBateau().getT()[y][x].getVal() == ' ') {
-		attaquant.gettUser().getT()[y][x].setVal('O');
+	else if(defenseur.gettBateau().getT()[y][x].getVal() == " ") {
+		attaquant.gettUser().getT()[y][x].setVal("O");
 		hyp = false;
 		return hyp;
 			}
@@ -176,7 +176,7 @@ public static boolean VerifCoup (Joueur attaquant, Joueur defenseur, int x, int 
 		
 public void JouerCoup(Joueur attaquant, Joueur defenseur) {
 	System.out.println("");
-	System.out.println(attaquant.getNom() + " A vous de jouer");
+	System.out.println(attaquant.getNickname() + " A vous de jouer");
 	System.out.println("Entrez la case X");
 	int CoorX = sc.nextInt();
 	if(CoorX < 0 || CoorX > 9)
@@ -237,6 +237,7 @@ public void DemarrerPartie(Joueur Joueur1, Joueur Joueur2) {
 		System.out.println("Point " + Joueur2.getNom() + " : " + Joueur2.getPoint());
 	}
 
+}
 }
 
 /*public void DemarrerPartieIA(Joueur Joueur1, IA IA, GrilleBN GrilleJoueur1, GrilleBN GrilleIA) {

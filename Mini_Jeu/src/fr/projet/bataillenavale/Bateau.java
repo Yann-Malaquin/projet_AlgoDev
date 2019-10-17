@@ -8,6 +8,7 @@ public class Bateau {
 	private boolean position; //true Horizontal False Vertical
 	private static ArrayList<Bateau> TabBateau = new ArrayList<Bateau>();
 	private static int totalCase;
+
 	
 public Bateau(String nom, int taille, boolean position) {
 	this.setNom(nom);
@@ -61,7 +62,5 @@ public static ArrayList<Bateau> getTabBateau() {
 public void setTabBateau(ArrayList<Bateau> tabBateau) {
 	TabBateau = tabBateau;
 }
-
-
 
 }

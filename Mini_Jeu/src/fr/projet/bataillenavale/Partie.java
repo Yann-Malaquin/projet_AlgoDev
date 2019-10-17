@@ -19,14 +19,14 @@ public Partie(Joueur j1, Joueur j2) {
 }
 
 /*
- * Méthode qui sert a placer le bateau selon la position (Horizontale ou
+ * Mï¿½thode qui sert a placer le bateau selon la position (Horizontale ou
  * verticale)
  */
 public void placerBateau(Joueur joueur) {
 	for(Bateau b : Bateau.getTabBateau()){
 		int Coordonnee;
-		if (b.getPosition() == true) { System.out.println("Votre bateau va être placer horizontalement");}
-		else { System.out.println("Votre bateau va être placer verticalement"); }
+		if (b.getPosition() == true) { System.out.println("Votre bateau va ï¿½tre placer horizontalement");}
+		else { System.out.println("Votre bateau va ï¿½tre placer verticalement"); }
 		System.out.println("Choisissez la base de votre bateau (Colonne) ");
 		int x = sc.nextInt();
 		if(x < 0 || x > 9)
@@ -192,24 +192,24 @@ public void JouerCoup(Joueur attaquant, Joueur defenseur) {
 	}
 	boolean result = VerifCoup(attaquant, defenseur, CoorX, CoorY);
 	if (result == true) {
-		System.out.println("Bien joué, cible touchée!");
+		System.out.println("Bien jouï¿½, cible touchï¿½e!");
 		System.out.println("");
 		attaquant.ajouterPoint(1);
 	} else {
-		System.out.println("Arf dommmage, cible loupée");
+		System.out.println("Arf dommmage, cible loupï¿½e");
 		System.out.println("");
 	}
 	attaquant.AfficherGrilleJoueur();
 }
 
 /*
- * Méthode qui fait tourner TOUT le jeu. Alors on a un compteur (cpt) qui est
- * initialiser a un nombre aléatoire pour définir le joueur qui va commencer. On
- * a creer une boucle avec ce compteur qui va etre incrémenté à l'infini, et une
+ * Mï¿½thode qui fait tourner TOUT le jeu. Alors on a un compteur (cpt) qui est
+ * initialiser a un nombre alï¿½atoire pour dï¿½finir le joueur qui va commencer. On
+ * a creer une boucle avec ce compteur qui va etre incrï¿½mentï¿½ ï¿½ l'infini, et une
  * condition d'arret. Quand un des joueur atteint le nombre de point necessaire
- * pour gagner la partie (le nombre de case à couler) la partie s'arrete.
- * Ensuite le jeu tour à tour est geré par le compteur qui est incrémenté et qui
- * défini le joueur qui joue en fonction de si il est pair où non.
+ * pour gagner la partie (le nombre de case ï¿½ couler) la partie s'arrete.
+ * Ensuite le jeu tour ï¿½ tour est gerï¿½ par le compteur qui est incrï¿½mentï¿½ et qui
+ * dï¿½fini le joueur qui joue en fonction de si il est pair oï¿½ non.
  */
 
 public void DemarrerPartie(Joueur Joueur1, Joueur Joueur2) {
@@ -265,4 +265,3 @@ public void DemarrerPartie(Joueur Joueur1, Joueur Joueur2) {
 						}			
 					}
 				} */
-}

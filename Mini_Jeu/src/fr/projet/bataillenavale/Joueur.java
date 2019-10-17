@@ -1,7 +1,5 @@
 package fr.projet.bataillenavale;
 
-import fr.projet.Case;
-
 public class Joueur {
 	private String nom;
 	private String prenom;

@@ -24,11 +24,12 @@ public Partie(Joueur j1, Joueur j2) {
  */
 public void placerBateau(Joueur joueur) {
 	for(Bateau b : Bateau.getTabBateau()){
+		joueur.AfficherGrilleBateau();
 		int Coordonnee;
 		if (b.getPosition() == true) { 
 			System.out.println("Votre " + b.getNom() + " de taille : " + b.getTaille() +"  va etre placer horizontalement");}
 		else { 
-			System.out.println("Votre " + b.getNom() + " de taille : " + b.getTaille() +"  va etre placer verticalement"); }
+			System.out.println("Votre " + b.getNom() + " de taille : " + b.getTaille() +"  va etre placer verticalement");}
 			System.out.println("Choisissez la base de votre bateau (Colonne) ");
 		int x = sc.nextInt();
 		if(x < 0 || x > 9)
@@ -37,34 +38,65 @@ public void placerBateau(Joueur joueur) {
 			x = sc.nextInt();
 		}
 		System.out.println("Choisissez la base de votre bateau (Ligne) ");
+		
 		int y = sc.nextInt();
 		if(y < 0 || y > 9)
-		{
-			System.out.println("Veuillez entrer un nombre entre 0 et 9");
-			y = sc.nextInt();
-		}
+			{
+				System.out.println("Veuillez entrer un nombre entre 0 et 9");
+				y = sc.nextInt();
+			}
+
+		
 		int taille = b.getTaille();
 		if (b.getPosition() == true) {
-		
+			if(x+taille > 9) {
+			System.out.println("Votre bateau a ete decaler afin de rentrer dans le tableau");
+			x = 9-(taille-1);
+			}
+			for (int i = 0; i<taille;i++) {
+				if(joueur.gettBateau().getT()[y][x+i].isModifiable() == false)
+					System.out.println("Une des case des deja occupe veuillez entrez des coordonnees qui ne rentre pas en conflit");
+											}
 			for (int i = 0; i<taille ;i++) {
-				joueur.gettBateau().getT()[y][x+i].setVal("X");
-				Coordonnee = Integer.valueOf(String.valueOf(x+i) + String.valueOf(y));
-				joueur.gettBateau().ajouterElementMap(b.getNom(), Coordonnee);
+							joueur.gettBateau().getT()[y][x+i].setVal("X");
+							joueur.gettBateau().getT()[y][x+i].setModifiable(false);
+							Coordonnee = Integer.valueOf(String.valueOf(x+i) + String.valueOf(y));
+							joueur.gettBateau().ajouterElementMap(b.getNom(), Coordonnee);
 				}
 		
 		}
 		
 		if (b.getPosition() == false) {
+			if(y+taille > 9) {
+			
+				System.out.println("Votre bateau a ete decaler afin de rentrer dans le tableau");
+				y = 9-(taille-1);
+							}
+			for (int i = 0;i< taille; i++) {
+					if(joueur.gettBateau().getT()[y+i][x].isModifiable() == false)
+						System.out.println("Une des case des deja occupe veuillez entrez des coordonnees qui ne rentre pas en conflit"); 
+											}
+				System.out.println("Entrez votre Colonne : ");
+				x = sc.nextInt();
+				System.out.println("Entrez votre Ligne : ");
+				y = sc.nextInt();
+				if(y+taille > 9) {
+					
+					System.out.println("Votre bateau a ete decaler afin de rentrer dans le tableau");
+					y = 9-(taille-1);
+								}
+	
 			for (int i =0;i< taille; i++){
 				joueur.gettBateau().getT()[y+i][x].setVal("X");
+				joueur.gettBateau().getT()[y+i][x].setModifiable(false);
 				Coordonnee = Integer.valueOf(String.valueOf(x) + String.valueOf(y+i));
 				joueur.gettBateau().ajouterElementMap(b.getNom(), Coordonnee);
-			}
+										}
 		
-		}
-		joueur.AfficherGrilleBateau();
-		}
+									}
 	}
+}
+		
 
 
 
@@ -80,6 +112,7 @@ public void placerBateau(Joueur joueur) {
 				choixY = rand.nextInt(9);
 				for (int i = 0; i<b.getTaille() ;i++) {
 					IA.gettBateau().getT()[choixX+i][choixY].setVal("X");
+					IA.gettBateau().getT()[choixX+i][choixY].setModifiable(false);
 					Coordonnee = Integer.valueOf(String.valueOf(choixX+i) + String.valueOf(choixY));
 					IA.gettBateau().ajouterElementMap(b.getNom(), Coordonnee);
 					}
@@ -89,6 +122,7 @@ public void placerBateau(Joueur joueur) {
 				choixY = rand.nextInt(9);
 				for (int i = 0; i<b.getTaille() ;i++) {
 					IA.gettBateau().getT()[choixX+i][choixY].setVal("X");
+					IA.gettBateau().getT()[choixX+i][choixY].setModifiable(false);
 					Coordonnee = Integer.valueOf(String.valueOf(choixX+i) + String.valueOf(choixY));
 					IA.gettBateau().ajouterElementMap(b.getNom(), Coordonnee);
 					}
@@ -98,6 +132,7 @@ public void placerBateau(Joueur joueur) {
 				choixY = rand.nextInt(9);
 				for (int i = 0; i<b.getTaille() ;i++) {
 					IA.gettBateau().getT()[choixX+i][choixY].setVal("X");
+					IA.gettBateau().getT()[choixX+i][choixY].setModifiable(false);
 					Coordonnee = Integer.valueOf(String.valueOf(choixX+i) + String.valueOf(choixY));
 					IA.gettBateau().ajouterElementMap(b.getNom(), Coordonnee);
 					}
@@ -107,18 +142,21 @@ public void placerBateau(Joueur joueur) {
 				choixY = rand.nextInt(9);
 				for (int i = 0; i<b.getTaille() ;i++) {
 					IA.gettBateau().getT()[choixX+i][choixY].setVal("X");
+					IA.gettBateau().getT()[choixX+i][choixY].setModifiable(false);
 					Coordonnee = Integer.valueOf(String.valueOf(choixX+i) + String.valueOf(choixY));
 					IA.gettBateau().ajouterElementMap(b.getNom(), Coordonnee);
 					}
 			}
 
 		}
+		
 		if (b.getPosition() == true){
 			if (b.getTaille() == 5) {
 				choixX = rand.nextInt(9);
 				choixY = rand.nextInt(5);
 				for (int i = 0; i<b.getTaille() ;i++) {
 					IA.gettBateau().getT()[choixY][choixX+i].setVal("X");
+					IA.gettBateau().getT()[choixY][choixY+i].setModifiable(false);
 					Coordonnee = Integer.valueOf(String.valueOf(choixX+i) + String.valueOf(choixY));
 					IA.gettBateau().ajouterElementMap(b.getNom(), Coordonnee);
 					}
@@ -128,6 +166,7 @@ public void placerBateau(Joueur joueur) {
 				choixY = rand.nextInt(6);
 				for (int i = 0; i<b.getTaille() ;i++) {
 					IA.gettBateau().getT()[choixY][choixX+i].setVal("X");
+					IA.gettBateau().getT()[choixY][choixY+i].setModifiable(false);
 					Coordonnee = Integer.valueOf(String.valueOf(choixX+i) + String.valueOf(choixY));
 					IA.gettBateau().ajouterElementMap(b.getNom(), Coordonnee);
 					}
@@ -137,6 +176,7 @@ public void placerBateau(Joueur joueur) {
 				choixY = rand.nextInt(7);
 				for (int i = 0; i<b.getTaille() ;i++) {
 					IA.gettBateau().getT()[choixY][choixX+i].setVal("X");
+					IA.gettBateau().getT()[choixY][choixY+i].setModifiable(false);
 					Coordonnee = Integer.valueOf(String.valueOf(choixX+i) + String.valueOf(choixY));
 					IA.gettBateau().ajouterElementMap(b.getNom(), Coordonnee);
 					}
@@ -146,12 +186,14 @@ public void placerBateau(Joueur joueur) {
 				choixY = rand.nextInt(8);
 				for (int i = 0; i<b.getTaille() ;i++) {
 					IA.gettBateau().getT()[choixY][choixX+i].setVal("X");
+					IA.gettBateau().getT()[choixY][choixY+i].setModifiable(false);
 					Coordonnee = Integer.valueOf(String.valueOf(choixX+i) + String.valueOf(choixY));
 					IA.gettBateau().ajouterElementMap(b.getNom(), Coordonnee);
 					}
 			}
 			for (int i =0;i< b.getTaille(); i++){
 				IA.gettBateau().getT()[choixY+i][choixX].setVal("X");
+				IA.gettBateau().getT()[choixY][choixY+i].setModifiable(false);
 				Coordonnee = Integer.valueOf(String.valueOf(choixX) + String.valueOf(choixX+i));
 				IA.gettBateau().ajouterElementMap(b.getNom(), Coordonnee);
 			}

@@ -25,9 +25,11 @@ public Partie(Joueur j1, Joueur j2) {
 public void placerBateau(Joueur joueur) {
 	for(Bateau b : Bateau.getTabBateau()){
 		int Coordonnee;
-		if (b.getPosition() == true) { System.out.println("Votre bateau va etre placer horizontalement");}
-		else { System.out.println("Votre bateau va etre placer verticalement"); }
-		System.out.println("Choisissez la base de votre bateau (Colonne) ");
+		if (b.getPosition() == true) { 
+			System.out.println("Votre " + b.getNom() + " de taille : " + b.getTaille() +"  va etre placer horizontalement");}
+		else { 
+			System.out.println("Votre " + b.getNom() + " de taille : " + b.getTaille() +"  va etre placer verticalement"); }
+			System.out.println("Choisissez la base de votre bateau (Colonne) ");
 		int x = sc.nextInt();
 		if(x < 0 || x > 9)
 		{
@@ -63,6 +65,8 @@ public void placerBateau(Joueur joueur) {
 		joueur.AfficherGrilleBateau();
 		}
 	}
+
+
 
   public void PlacerBateauIA(IA IA) {
 	int choixX = 0;

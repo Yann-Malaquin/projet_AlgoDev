@@ -24,7 +24,7 @@ public class MiniJeux {
 		
 		while(choix!=0)
 		{
-			System.out.println("<0> Quitter <1> Sudoku <2> Loto <3> Poker <4> ");
+			System.out.println("<0> Quitter <1> Sudoku <2> Loto <3> Poker <4> Bataille Navale");
 			System.out.println("Choix: ");
 		
 			choix = sc.nextInt();

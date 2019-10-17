@@ -36,15 +36,15 @@ public class IA extends Joueur {
 	public GrilleBN gettBateau() {
 		return tBateau;
 	}
-	
-	/*public boolean RechercheTableauEntier(int[] Tableau, int valeurs) {
+
+	public boolean RechercheTableauEntier(int[] Tableau, int valeurs) {
 		for (int n : Tableau)
 			if (Tableau[n] == valeurs)
 				return true;
 		return false;
-	} */
+	} 
 	
-	/*public int coupIA(IA IA, Joueur defenseur) {
+	public int coupIA(IA IA, Joueur defenseur) {
 		Random rand = new Random();
 		int CoorX = 0, CoorY = 0;
 		if (tableauResult[cpt - 1] == 0) { // Si le coup précédent est loupé les coordonnées sont choisis aléatoirement entre 1 et 10;
@@ -148,5 +148,5 @@ public class IA extends Joueur {
 		if (choix == 1) CoorY++;
 		if (choix == 2)	CoorX++;
 		if (choix == 3) CoorY--;
-} */
+} 
 } 

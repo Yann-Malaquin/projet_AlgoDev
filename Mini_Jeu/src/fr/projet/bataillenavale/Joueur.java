@@ -21,6 +21,8 @@ public class Joueur {
 	}
 	
 	public Joueur (String nickname) {
+		nom = "nom";
+		prenom = "prenom";
 		this.nickname = nickname;
 		point =  0;
 		this.setListeCoup(new ArrayList<Integer>());

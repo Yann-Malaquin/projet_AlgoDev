@@ -34,19 +34,23 @@ public void placerBateau(Joueur joueur) {
 			System.out.println("Votre " + b.getNom() + " de taille : " + b.getTaille() +"  va etre placer verticalement");}
 			System.out.println("Choisissez la base de votre bateau (Colonne) ");
 		int x = sc.nextInt();
-		if(x < 0 || x > 9)
+		if(x < 0 || x > 9) {
+			while (x < 0 || x > 9)
 		{
 			System.out.println("Veuillez entrer un nombre entre 0 et 9");
 			x = sc.nextInt();
-		}
+		} }
 		System.out.println("Choisissez la base de votre bateau (Ligne) ");
 		
 		int y = sc.nextInt();
-		if(y < 0 || y > 9)
+		
+		if(y < 0 || y > 9) {
+			while (x < 0 || x > 9)
 			{
 				System.out.println("Veuillez entrer un nombre entre 0 et 9");
 				y = sc.nextInt();
 			}
+		}
 
 		
 		int taille = b.getTaille();
@@ -59,6 +63,7 @@ public void placerBateau(Joueur joueur) {
 				if(joueur.gettBateau().getT()[y][x+i].isModifiable() == false)
 					verif = false;
 				}
+			
 			if (verif == false) {
 				System.out.println("Une des case des deja occupe veuillez entrez des coordonnees qui ne rentre pas en conflit\n"); 
 				System.out.println("\t Entrez votre Colonne : ");
@@ -235,17 +240,19 @@ public void JouerCoup(Joueur attaquant, Joueur defenseur) {
 	System.out.println(attaquant.getNickname() + " A vous de jouer");
 	System.out.println("Entrez la ligne");
 	int CoorX = sc.nextInt();
-	if(CoorX < 0 || CoorX > 9)
+	if(CoorX < 0 || CoorX > 9) {
+		while(CoorX < 0 || CoorX > 9)
 	{
 		System.out.println("Veuillez entrer un nombre entre 0 et 9");
 		CoorX = sc.nextInt();
-	}
+	} }
 	System.out.println("Entrez la colonne");
 	int CoorY = sc.nextInt();
-	if(CoorY < 0 || CoorX > 9) {
+	if(CoorY < 0 || CoorY > 9) {
+		while(CoorY < 0 || CoorY > 9) {
 		System.out.println("Veuillez entrer un nombre entre 0 et 9");
 		CoorY = sc.nextInt();
-	}
+	} }
 	if (attaquant.getListeCoup().contains(Integer.valueOf(String.valueOf(CoorX) + String.valueOf(CoorY))) == true){
 		System.out.println("\t Vous avez déjà jouer ce coup : ");
 		System.out.println("\t Entrez votre colonne ");
@@ -256,11 +263,11 @@ public void JouerCoup(Joueur attaquant, Joueur defenseur) {
 	}
 	boolean result = VerifCoup(attaquant, defenseur, CoorX, CoorY);
 	if (result == true) {
-		System.out.println("Bien jouï¿½, cible touchï¿½e!");
+		System.out.println("Bien jouï¿½, cible touche !");
 		System.out.println("");
 		attaquant.ajouterPoint(1);
 	} else {
-		System.out.println("Arf dommmage, cible loupï¿½e");
+		System.out.println("Arf dommmage, cible loupe !");
 		System.out.println("");
 	}
 	attaquant.getListeCoup().add(Integer.valueOf(String.valueOf(CoorX) + String.valueOf(CoorY)));
@@ -310,7 +317,7 @@ public void DemarrerPartieIA(Joueur Joueur1, IA IA, GrilleBN GrilleJoueur1, Gril
 	placerBateau(Joueur1);
 	PlacerBateauIA(IA);
 	int cpt = (int) (Math.random() * 2);
-	boolean PartieFini = false;
+	boolean PartieFini = false ;
 	while (PartieFini == false) {
 		if (cpt % 2 == 0) {
 			if (cpt % 2 == 0) {
@@ -326,8 +333,8 @@ public void DemarrerPartieIA(Joueur Joueur1, IA IA, GrilleBN GrilleJoueur1, Gril
 				}
 			}
 		cpt++;
-		System.out.println("Point " + Joueur1.getNom() + " : " + Joueur1.getPoint());
-		System.out.println("Point " + IA.getNom() + " : " + IA.getPoint());
+		System.out.println("Point " + Joueur1.getNickname() + " : " + Joueur1.getPoint());
+		System.out.println("Point " + IA.getNickname() + " : " + IA.getPoint());
 						}			
 					}
 				}

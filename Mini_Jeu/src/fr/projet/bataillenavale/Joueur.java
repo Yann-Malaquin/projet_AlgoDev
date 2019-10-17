@@ -1,5 +1,7 @@
 package fr.projet.bataillenavale;
 
+import java.util.ArrayList;
+
 public class Joueur {
 	private String nom;
 	private String prenom;
@@ -8,17 +10,20 @@ public class Joueur {
 	private int couptoucher;
 	private GrilleBN tBateau = new GrilleBN(10,10);
 	private GrilleBN tUser = new GrilleBN(10,10);
+	private ArrayList<Integer> listeCoup;
 	
 	public Joueur() {
 	nom = "nom";
 	prenom = "prenom";
 	nickname = "pseudo";
 	point = 0;
+	this.setListeCoup(new ArrayList<Integer>());
 	}
 	
 	public Joueur (String nickname) {
 		this.nickname = nickname;
 		point =  0;
+		this.setListeCoup(new ArrayList<Integer>());
 	}
 	
 	public Joueur (String nom, String prenom, String nickname) {
@@ -26,6 +31,7 @@ public class Joueur {
 		this.prenom = prenom;
 		this.nickname = nickname;
 		point =  0;
+		this.setListeCoup(new ArrayList<Integer>());
 	}
 	
 	public String getNom() {
@@ -116,5 +122,13 @@ public class Joueur {
 		 		
 		 		System.out.println("\n\t\t\t\t\t   --------------------------------------------------");
 		 }
-	 }	 
+	 }
+
+	public ArrayList<Integer> getListeCoup() {
+		return listeCoup;
+	}
+
+	public void setListeCoup(ArrayList<Integer> listeCoup) {
+		this.listeCoup = listeCoup;
+	}	 
 }

@@ -59,7 +59,7 @@ public void placerBateau(Joueur joueur) {
 				if(joueur.gettBateau().getT()[y][x+i].isModifiable() == false)
 					verif = false;
 				}
-			if (verif = false) {
+			if (verif == false) {
 				System.out.println("Une des case des deja occupe veuillez entrez des coordonnees qui ne rentre pas en conflit\n"); 
 				System.out.println("\t Entrez votre Colonne : ");
 				x = sc.nextInt();
@@ -87,7 +87,7 @@ public void placerBateau(Joueur joueur) {
 					if(joueur.gettBateau().getT()[y+i][x].isModifiable() == false)
 						verif = false;
 									}
-			if (verif = false) {
+			if (verif == false) {
 				System.out.println("Une des case des deja occupe veuillez entrez des coordonnees qui ne rentre pas en conflit\n\n"); 
 				System.out.println("\t Entrez votre Colonne : ");
 				x = sc.nextInt();
@@ -233,18 +233,26 @@ public static boolean VerifCoup (Joueur attaquant, Joueur defenseur, int x, int 
 public void JouerCoup(Joueur attaquant, Joueur defenseur) {
 	System.out.println("");
 	System.out.println(attaquant.getNickname() + " A vous de jouer");
-	System.out.println("Entrez la case X");
+	System.out.println("Entrez la ligne");
 	int CoorX = sc.nextInt();
 	if(CoorX < 0 || CoorX > 9)
 	{
 		System.out.println("Veuillez entrer un nombre entre 0 et 9");
 		CoorX = sc.nextInt();
 	}
-	System.out.println("Entrez la case Y");
+	System.out.println("Entrez la colonne");
 	int CoorY = sc.nextInt();
 	if(CoorY < 0 || CoorX > 9) {
 		System.out.println("Veuillez entrer un nombre entre 0 et 9");
 		CoorY = sc.nextInt();
+	}
+	if (attaquant.getListeCoup().contains(Integer.valueOf(String.valueOf(CoorX) + String.valueOf(CoorY))) == true){
+		System.out.println("\t Vous avez déjà jouer ce coup : ");
+		System.out.println("\t Entrez votre colonne ");
+		CoorX = sc.nextInt();
+		System.out.println("\t Entrez votre ligne");
+		CoorY = sc.nextInt();
+		
 	}
 	boolean result = VerifCoup(attaquant, defenseur, CoorX, CoorY);
 	if (result == true) {
@@ -255,6 +263,7 @@ public void JouerCoup(Joueur attaquant, Joueur defenseur) {
 		System.out.println("Arf dommmage, cible loupï¿½e");
 		System.out.println("");
 	}
+	attaquant.getListeCoup().add(Integer.valueOf(String.valueOf(CoorX) + String.valueOf(CoorY)));
 	attaquant.AfficherGrilleJoueur();
 }
 

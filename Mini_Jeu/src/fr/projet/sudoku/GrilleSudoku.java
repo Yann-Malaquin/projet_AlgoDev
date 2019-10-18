@@ -88,6 +88,12 @@ public class GrilleSudoku extends Grille {
 		return true;
 	}
 
+	public boolean verifValeurPourConstruction(String c, int i, int j) {
+		
+		if(this.verifierCarre3x3PourConstruction(c, i, j)&& this.verifLigneEtColonneCasePourConstruction(c, i, j)) return true;
+		return false;
+	}
+	
 	// resous une grille sudoku si possible, permet donc d'en generer.
 	// Seul pb, s'il existe déjà une impossibilité dans la grille, le programme sera
 	// incapable de trouver une grille valide associée.
@@ -277,6 +283,7 @@ ok=false;
 	public static void main(String args[]) {
 
 		GrilleSudoku g = new GrilleSudoku();
+		g.AfficherGrille();
 		
 		
 	
@@ -293,6 +300,6 @@ ok=false;
 
 	System.out.println("FINI");	
 	} 
+	*/
 	
-	*/	
 }

@@ -22,19 +22,49 @@ public Partie(Joueur j1, Joueur j2) {
  * Methode qui sert a placer le bateau selon la position (Horizontale ou
  * verticale)
  */
+
+private boolean VerifSuperposition(int colonne, int ligne, Bateau b, Joueur j){
+	int cpt = 0;
+	if(b.getPosition() == false) {
+		while(cpt < b.getTaille() ) { //Verif superposition
+			if(j.gettBateau().getT()[ligne+cpt][colonne].isModifiable() == true) {
+				System.out.println(" Ligne " + (ligne+cpt) + " Col : " + colonne);
+				cpt++;}
+				
+			else {
+				System.out.println("Test ELSE");
+				return false;
+			}
+	}
+	if(b.getPosition() == true) {
+		while(cpt < b.getTaille() ) { //Verif superposition
+			if(j.gettBateau().getT()[colonne+cpt][ligne].isModifiable() == true) {
+				System.out.println(cpt);
+				System.out.println("j.gettBateau().getT()[colonne+cpt][ligne].isModifiable()"+ j.gettBateau().getT()[colonne+cpt][ligne].isModifiable());
+				cpt++; }
+			
+			else {
+				System.out.println("Test ELSE");
+				return false;
+				}
+			}
+		}
+	}
+	return true;
+}
 public void placerBateau(Joueur joueur) {
 	joueur.AfficherGrilleBateau();
 	
 	for(Bateau b : Bateau.getTabBateau()) {
-		boolean verif = true;
-		int Coordonnee;
-		if (b.getPosition() == true) { 
+		boolean verif = true;	//Variable de verification de case utilisé #t = Non utilisé / #f = utilisé
+		int Coordonnee; // Variable qui permet de mettre les coordonnée dans un tableau
+		if (b.getPosition() == true) { // Si Position est horizontale
 			System.out.println("Votre " + b.getNom() + " de taille : " + b.getTaille() +"  va etre placer horizontalement");}
 		else { 
 			System.out.println("Votre " + b.getNom() + " de taille : " + b.getTaille() +"  va etre placer verticalement");}
 			System.out.println("Choisissez la base de votre bateau (Colonne) ");
-		int x = sc.nextInt();
-		if(x < 0 || x > 9) {
+		int x = sc.nextInt(); //Demande de la colonne à l'utilisateur
+		if(x < 0 || x > 9) { // Si colonne saisie est hors tableau alors on redemande
 			while (x < 0 || x > 9)
 		{
 			System.out.println("Veuillez entrer un nombre entre 0 et 9");
@@ -42,9 +72,9 @@ public void placerBateau(Joueur joueur) {
 		} }
 		System.out.println("Choisissez la base de votre bateau (Ligne) ");
 		
-		int y = sc.nextInt();
+		int y = sc.nextInt(); //Demande de la ligne à l'utilisateur
 		
-		if(y < 0 || y > 9) {
+		if(y < 0 || y > 9) { //Si ligne saisie hors tableau alors on redemande
 			while (x < 0 || x > 9)
 			{
 				System.out.println("Veuillez entrer un nombre entre 0 et 9");
@@ -53,25 +83,23 @@ public void placerBateau(Joueur joueur) {
 		}
 
 		
-		int taille = b.getTaille();
-		if (b.getPosition() == true) {
-			if(x+(taille-1) > 9) {
+		int taille = b.getTaille(); //Variable qui stock la taille tu tableau
+		if (b.getPosition() == true) { //Si position verticale
+			if(x+(taille-1) > 9) { //Verif sortie tableau
 			System.out.println("Votre bateau a ete decaler afin de rentrer dans le tableau");
 			x = 9-(taille-1);
 			}
-			for (int i = 0; i<taille;i++) {
-				if(joueur.gettBateau().getT()[y][x+i].isModifiable() == false)
-					verif = false;
-				}
+			int cpt = 0;
+			System.out.println(taille);
 			
-			if (verif == false) {
+			while (this.VerifSuperposition(y, x, b, joueur) == false) {
 				System.out.println("Une des case des deja occupe veuillez entrez des coordonnees qui ne rentre pas en conflit\n"); 
 				System.out.println("\t Entrez votre Colonne : ");
 				x = sc.nextInt();
 				System.out.println("\t Entrez votre Ligne : ");
 				y = sc.nextInt();
 				
-			}
+			} 
 			
 			for (int i = 0; i<taille ;i++) {
 							joueur.gettBateau().getT()[y][x+i].setVal("X");
@@ -88,16 +116,12 @@ public void placerBateau(Joueur joueur) {
 				y = 9-(taille-1);
 							}
 			
-			for (int i = 0;i< taille; i++) {
-					if(joueur.gettBateau().getT()[y+i][x].isModifiable() == false)
-						verif = false;
-									}
-			if (verif == false) {
+			while(this.VerifSuperposition(y, x, b, joueur) == false) {
 				System.out.println("Une des case des deja occupe veuillez entrez des coordonnees qui ne rentre pas en conflit\n\n"); 
 				System.out.println("\t Entrez votre Colonne : ");
 				x = sc.nextInt();
 				System.out.println("\t Entrez votre Ligne : ");
-				y = sc.nextInt();}
+				y = sc.nextInt();} 
 	
 			for (int i =0;i< taille; i++){
 				joueur.gettBateau().getT()[y+i][x].setVal("X");
@@ -108,9 +132,9 @@ public void placerBateau(Joueur joueur) {
 		
 									}
 		joueur.AfficherGrilleBateau();
-	}
+		}
 	
-}
+	}
 		
 
 

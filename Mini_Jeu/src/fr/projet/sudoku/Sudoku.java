@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 public class Sudoku {
 
-
 	private ArrayList<Joueur> listeJoueur;
 
 	public Sudoku() {
@@ -132,18 +131,16 @@ public class Sudoku {
 				 * demande a nouveau la valeur
 				 */
 				if ((grille.getT()[i][j].isModifiable())) {
-					if ((grilleValide.getT()[i][j].getVal().equals(val))) {
+					if ((grille.verifValeurPourConstruction(val,i,j))) {
 						grille.getT()[i][j].setVal(val);
 						System.out.println("Correct !!!!");
 						grille.AfficherGrille();
 
 						boolean compare = true;
-						for (int x = 0; x < 9; x++) {
-							for (int y = 0; y < 9; y++) {
-								if (!grilleValide.getT()[x][y].getVal().equals(grille.getT()[x][y].getVal()))
-									compare = false;
-							}
-						}
+						if (!(grille.verifierGrille()==1))
+							compare = false;
+							
+						
 						/*
 						 * Si tout est replie, on calcul le score, et on demande a l'utilisateur s'il
 						 * veux continuer a jouer dans le meme mode de jeu
@@ -177,6 +174,7 @@ public class Sudoku {
 			}
 
 		}
+		sc.close();
 
 	}
 
@@ -191,7 +189,7 @@ public class Sudoku {
 	/*
 	 * Retourne un boolean qui definit si la valeur entree est valide
 	 */
-	public boolean valeurValide(GrilleSudoku grille, char val, int i, int j) {
+	public boolean valeurValide(GrilleSudoku grille, String val, int i, int j) {
 		if (grille.getT()[i][j].getVal().equals(val))
 			return true;
 		else
@@ -372,7 +370,7 @@ public class Sudoku {
 	 * Programme de test afin de mettre en valeur ce que l'on peut faire avec ce
 	 * programme
 	 */
-	public void Demo() {
+	/*public void Demo() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Bonjour ! Bienvenue dans cette demo");
 		System.out.println("Regardez. On peut generer une grille");
@@ -455,7 +453,7 @@ public class Sudoku {
 
 		}
 		if ((grille1.getT()[i][j].isModifiable())) {
-			if ((grille.getT()[i][j].getVal().equals(val))) {
+			if (grille1.verifValeurPourConstruction(val,i,j)) {
 				grille1.getT()[i][j].setVal(val);
 				System.out.println("Correct !!!!");
 				grille1.AfficherGrille();
@@ -474,8 +472,10 @@ public class Sudoku {
 		} else
 			System.out.println("Erreur : la case selectionnee n'est pas remplissable");
 		System.out.println("Et ce n'est pas tout! Vous vous invite donc a participier a une partie");
+		sc.close();
 	}
+	*/
+	
 
 
 }
-

@@ -59,9 +59,9 @@ public class MiniJeux {
 				p.setJoueurs(Claude);
 				p.setJoueurs(Jean);
 				p.setJoueurs(JC);
-				
 				lcarte=p.genererPaquetCarte();
 				p.afficherPaquetCartes(lcarte);
+				
 				p.distribuerCartes(lcarte,2);
 				break;
 			}

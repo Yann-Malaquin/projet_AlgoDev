@@ -97,7 +97,6 @@ public class PartiePoker {
 		List<Carte> paquetCartesMelangeestmp = new ArrayList<Carte>();
 		int pdonneur = 0; // position du donneur dans la liste
 		int init;
-		paquetCartes = this.genererPaquetCarte();
 		boolean find = false;
 
 		for (int i = 0; i < 1; i++) { // on mélange 4 fois le paquet de cartes

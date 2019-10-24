@@ -26,10 +26,39 @@ public class TestPoker {
 		p.setJoueurs(Jean);
 		p.setJoueurs(JC);
 		
-		lcarte=p.genererPaquetCarte();
-		p.afficherPaquetCartes(lcarte);
+		lcarte = p.genererPaquetCarte();
 		p.distribuerCartes(lcarte,2);
+		
+		
+		Carte troisT = new Carte("Carreau","0",7);
+		Carte deuxCa = new Carte("Pique","1",5);
+		Carte deuxCo = new Carte("Trèfle","2",4);
+		Carte troisC = new Carte("Carreau","5",0);
+		Carte troisP = new Carte("Carreau","6",8);
+		Carte As = new Carte("Carreau","7",5);
+		Carte Roi = new Carte("Carreau","8",5);
+		
+		p.setCarteMilieu(troisT);
+		p.setCarteMilieu(deuxCa);
+		p.setCarteMilieu(deuxCo);
+		p.setCarteMilieu(troisC);
+		p.setCarteMilieu(troisP);
+		
+		p.setCarteMilieu(As);
+		p.setCarteMilieu(Roi);
+		
+		System.out.println(p.getCarteMilieu());
 
+		MainsGagnantes mg = new MainsGagnantes();
+		
+		if(mg.estPaire(p.getCarteMilieu()))
+				{
+			System.out.println("OK");
+				}
+		else {
+			System.out.println("Pas OK");
+		}
+	
 
 	}
 

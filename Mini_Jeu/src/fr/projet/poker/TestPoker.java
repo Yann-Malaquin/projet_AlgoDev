@@ -1,6 +1,7 @@
 package fr.projet.poker;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TestPoker {
@@ -16,7 +17,7 @@ public class TestPoker {
 		JoueurPoker Jean=new JoueurPoker("Jean");
 		JoueurPoker JC=new JoueurPoker("JC");
 		
-		Michel.setEtatJoueur("blabla");
+		/*Michel.setEtatJoueur("blabla");
 		Claude.setEtatJoueur("nsd");
 		Jean.setEtatJoueur("donneur");
 		JC.setEtatJoueur("blabla");
@@ -26,17 +27,17 @@ public class TestPoker {
 		p.setJoueurs(Jean);
 		p.setJoueurs(JC);
 		
-		lcarte = p.genererPaquetCarte();
-		p.distribuerCartes(lcarte,2);
+		
+		p.distribuerCartes(lcarte,2);*/
 		
 		
-		Carte troisT = new Carte("Carreau","0",7);
-		Carte deuxCa = new Carte("Pique","1",5);
-		Carte deuxCo = new Carte("Trèfle","2",4);
-		Carte troisC = new Carte("Carreau","5",0);
-		Carte troisP = new Carte("Carreau","6",8);
-		Carte As = new Carte("Carreau","7",5);
-		Carte Roi = new Carte("Carreau","8",5);
+		Carte troisT = new Carte("Carreau","9",9);
+		Carte deuxCa = new Carte("Pique","10",10);
+		Carte deuxCo = new Carte("Trèfle","2",2);
+		Carte troisC = new Carte("Trèfle","5",5);
+		Carte troisP = new Carte("Carreau","6",6);
+		Carte As = new Carte("Trèfle","7",7);
+		Carte Roi = new Carte("Carreau","4",4);
 		
 		p.setCarteMilieu(troisT);
 		p.setCarteMilieu(deuxCa);
@@ -51,14 +52,17 @@ public class TestPoker {
 
 		MainsGagnantes mg = new MainsGagnantes();
 		
-		if(mg.estPaire(p.getCarteMilieu()))
+		/*if(mg.estPaire(p.getCarteMilieu()))
 				{
 			System.out.println("OK");
 				}
 		else {
 			System.out.println("Pas OK");
-		}
-	
+		}*/
+		lcarte = p.genererPaquetCarte();
+		//p.afficherPaquetCartes(p.trieCarteNbreCouleur(p.getCarteMilieu()));
+		p.afficherPaquetCartes(p.trieCarteNbre(p.getCarteMilieu()));
+			
 
 	}
 

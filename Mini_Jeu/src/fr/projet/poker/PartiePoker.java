@@ -185,7 +185,58 @@ public class PartiePoker {
 		}
 	}
 	
+	public List<Carte> trieCarteNbreCouleur (List<Carte> cartesMilieu)
+	{
+		List<Carte> copyCartesMilieu= new ArrayList<Carte>(cartesMilieu);
+		List<Carte> cartesMilieuTriee  = new ArrayList<Carte>();
+		
+		Carte min = null;
+		int i = 0;
+		
+		while (copyCartesMilieu.size() > 0)
+		{
+			min = copyCartesMilieu.get(0);
+			
+			for(int j = 0 ; j< copyCartesMilieu.size(); j++)
+			{
+				
+				if((min.getCouleur().compareTo(copyCartesMilieu.get(j).getCouleur()) >= 0) && (min.getValeur() > copyCartesMilieu.get(j).getValeur()))
+				{
+					min = copyCartesMilieu.get(j);
+				}
+			}
+			cartesMilieuTriee.add(min);
+			copyCartesMilieu.remove(min);
+		}
+		return cartesMilieuTriee;
+	}
 	
+	public List<Carte> trieCarteNbre (List<Carte> cartesMilieu)
+	{
+		List<Carte> copyCartesMilieu= new ArrayList<Carte>(cartesMilieu);
+		List<Carte> cartesMilieuTriee  = new ArrayList<Carte>();
+		
+		Carte min = null;
+		int i = 0;
+		
+		while (copyCartesMilieu.size() > 0)
+		{
+			min = copyCartesMilieu.get(0);
+			
+			for(int j = 0 ; j< copyCartesMilieu.size(); j++)
+			{
+				
+				if(min.getValeur() > copyCartesMilieu.get(j).getValeur())
+				{
+					min = copyCartesMilieu.get(j);
+				}
+			}
+			cartesMilieuTriee.add(min);
+			copyCartesMilieu.remove(min);
+		}
+		
+		return cartesMilieuTriee;
+	}
 	
 
 	

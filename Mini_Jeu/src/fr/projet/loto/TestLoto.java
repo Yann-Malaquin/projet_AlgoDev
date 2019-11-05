@@ -8,5 +8,7 @@ public class TestLoto {
 		P.Creationbouleloto();
 		//P.AffichageBoules();
 		P.CreationGrille();
+		P.distribution();
+		P.debut_partie();
 	}
 }

@@ -6,6 +6,7 @@
  *
  */
 module Mini_Jeu {
-	exports fr.projet.sudoku;
+    requires java.desktop;
+    exports fr.projet.sudoku;
 		
 }

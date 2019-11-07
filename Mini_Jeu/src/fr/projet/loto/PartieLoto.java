@@ -63,7 +63,7 @@ public class PartieLoto {
 		String nom;
 		int nbfav, nbcartons;
 		while (i < NbJoueurs) {
-			System.out.println("\nChoisir le prénom du joueur: " + (i + 1));
+			System.out.println("\nChoisir le prï¿½nom du joueur: " + (i + 1));
 			nom = sc.nextLine();
 			System.out.println("\nChoisir le nombre favoris du joueur: ");
 			nbfav = sc.nextInt();

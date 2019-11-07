@@ -88,6 +88,12 @@ public class GrilleSudoku extends Grille {
 		return true;
 	}
 
+	public boolean verifValeurPourConstruction(String c, int i, int j) {
+		
+		if(this.verifierCarre3x3PourConstruction(c, i, j)&& this.verifLigneEtColonneCasePourConstruction(c, i, j)) return true;
+		return false;
+	}
+	
 	// resous une grille sudoku si possible, permet donc d'en generer.
 	// Seul pb, s'il existe déjà une impossibilité dans la grille, le programme sera
 	// incapable de trouver une grille valide associée.
@@ -262,8 +268,9 @@ ok=false;
 			System.out.print("\t\t\t\t\t");
 			System.out.print(i + "  ");
 			for (j = 0; j < this.getJmax(); j++) {
-
-				System.out.print("| " + this.getT()[i][j].getVal() + " |");
+				if(this.getT()[i][j].isModifiable()) {
+				System.out.print("| " + this.getT()[i][j].getVal() + " |");}
+				else { System.err.print("| " + this.getT()[i][j].getVal() + " |");}
 				if (j == 2 || j == 5)
 					System.out.print("    ");
 			}
@@ -277,15 +284,17 @@ ok=false;
 	public static void main(String args[]) {
 
 		GrilleSudoku g = new GrilleSudoku();
+		g.AfficherGrille();
 		
 		
 	
-		for(int i=0;i<20;i++) {
+		for(int i=0;i<1;i++) {
 		g.GenererGrille();
 		g.retournerGrilleVerticalement();
 		System.out.println(g.verifLignesEtColonnesEtCaseValide());
 		System.out.print(g.verifCarre3x3());
 		System.out.println(g.verifierGrille());
+		
 		g.AfficherGrille();
 		g.resetGrille();
 		}
@@ -293,6 +302,5 @@ ok=false;
 
 	System.out.println("FINI");	
 	} 
-	
-	*/	
+	*/
 }

@@ -2,13 +2,6 @@ package fr.projet.sudoku;
 
 import fr.projet.*;
 
-
-
-import java.util.ArrayList;
-import java.util.Scanner;
-
-
-
 public class GrilleSudoku extends Grille {
 
 	public GrilleSudoku() {
@@ -88,12 +81,13 @@ public class GrilleSudoku extends Grille {
 		return true;
 	}
 
+
 	public boolean verifValeurPourConstruction(String c, int i, int j) {
-		
+
 		if(this.verifierCarre3x3PourConstruction(c, i, j)&& this.verifLigneEtColonneCasePourConstruction(c, i, j)) return true;
 		return false;
 	}
-	
+
 	// resous une grille sudoku si possible, permet donc d'en generer.
 	// Seul pb, s'il existe déjà une impossibilité dans la grille, le programme sera
 	// incapable de trouver une grille valide associée.
@@ -257,44 +251,43 @@ ok=false;
 
 	
 //affiche la grille d'une bonne manière pour le sudoku, avec les indices des cases en bordure 
-	public void AfficherGrille() {
+public void AfficherGrille() {
 
-		int i;
-		int j;
+	int i;
+	int j;
 
-		System.out.println("\t\t\t\t\t     0    1    2        3    4    5        6    7    8     ");
-		System.out.println("\t\t\t\t\t   -----------------------------------------------------");
-		for (i = 0; i < this.getImax(); i++) {
-			System.out.print("\t\t\t\t\t");
-			System.out.print(i + "  ");
-			for (j = 0; j < this.getJmax(); j++) {
-				if(this.getT()[i][j].isModifiable()) {
+	System.out.println("\t\t\t\t\t     0    1    2        3    4    5        6    7    8     ");
+	System.out.println("\t\t\t\t\t   -----------------------------------------------------");
+	for (i = 0; i < this.getImax(); i++) {
+		System.out.print("\t\t\t\t\t");
+		System.out.print(i + "  ");
+		for (j = 0; j < this.getJmax(); j++) {
+			if(this.getT()[i][j].isModifiable()) {
 				System.out.print("| " + this.getT()[i][j].getVal() + " |");}
-				else { System.err.print("| " + this.getT()[i][j].getVal() + " |");}
+			else { System.out.print("\033[31m" +"| " + this.getT()[i][j].getVal() + " |"+ "\033[30m");}
 				if (j == 2 || j == 5)
-					System.out.print("    ");
-			}
-
-			System.out.println("\n\t\t\t\t\t   -----------------------------------------------------");
-			if (i == 2 || i == 5)
-				System.out.println("\t\t\t\t\t   -----------------------------------------------------");
+				System.out.print("    ");
 		}
+
+		System.out.println("\n\t\t\t\t\t   -----------------------------------------------------");
+		if (i == 2 || i == 5)
+			System.out.println("\t\t\t\t\t   -----------------------------------------------------");
 	}
+}
 /*
 	public static void main(String args[]) {
 
 		GrilleSudoku g = new GrilleSudoku();
-		g.AfficherGrille();
 		
 		
 	
-		for(int i=0;i<1;i++) {
+		for(int i=0;i<20;i++) {
 		g.GenererGrille();
 		g.retournerGrilleVerticalement();
 		System.out.println(g.verifLignesEtColonnesEtCaseValide());
 		System.out.print(g.verifCarre3x3());
 		System.out.println(g.verifierGrille());
-		
+		g.getT()[5][5].setModifiable(false);
 		g.AfficherGrille();
 		g.resetGrille();
 		}
@@ -303,4 +296,6 @@ ok=false;
 	System.out.println("FINI");	
 	} 
 	*/
+
+
 }

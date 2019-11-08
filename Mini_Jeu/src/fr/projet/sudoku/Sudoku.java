@@ -4,20 +4,7 @@ import fr.projet.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import fr.projet.Joueur;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -36,6 +23,11 @@ public class Sudoku extends JFrame {
     private JLabel texte = new JLabel();
     private JButton bouton = new JButton();
     private ArrayList<Joueur> listeJoueur;
+    private String pseudo = "defaut";
+    private JFrame fenetre = new JFrame();
+    private JPanel cp = new JPanel();
+    private JPanel cd = new JPanel();
+    private int CptErreur=0;
     private boolean aCliquer = false;
 
 
@@ -47,7 +39,7 @@ public class Sudoku extends JFrame {
     }
 
     /*
-     * Jouer va lancer une partie selon la difficulté passée en parametre certains
+     * Jouer va lancer une partie selon la difficultÃ© passÃ©e en parametre certains
      * parametre sont modifiable comme le nombre d'erreurs maximum
      */
     public void Jouer(int difficulte) throws IOException // 1=facile, 2=moyen, 3=difficile
@@ -61,9 +53,7 @@ public class Sudoku extends JFrame {
         boolean pseudoInvalide = true;
         int erreur = 0;
         int erreurMax = 30;// parametre modifiable
-        String pseudo = "defaut";
-        JFrame fenetre = new JFrame();
-        JPanel cp = new JPanel();
+
 
         InputListener listener = new InputListener();
         MouseListener mouse = new MouseListener() {
@@ -136,14 +126,6 @@ public class Sudoku extends JFrame {
         bouton.setVisible(true);
         fenetre.setVisible(true);
 
-        while (pseudoInvalide) {
-            System.out.println("\"Bonjour ! Entrer un pseudo s'il vous plait\"");
-            pseudo = sc.nextLine();
-
-            if ((pseudo != null) && (pseudo.length() > 0))
-                pseudoInvalide = false;
-        }
-        Joueur joueur = new Joueur(pseudo);
 
         /*
          * On creer une grille pleine, que l'on copie dans grille valide afin de nous
@@ -158,7 +140,7 @@ public class Sudoku extends JFrame {
         /*
         Creation de la grille dans l'application
         */
-        JPanel cd = new JPanel();
+
         cd.setLayout(new GridLayout(taille_grille,taille_grille));
 
         for(int i =0;i<taille_grille;i++)
@@ -187,17 +169,65 @@ public class Sudoku extends JFrame {
                     grilleT[i][j].addActionListener(listener);
                 }
                 else
-                {
-                    grilleT[i][j].setText(grille.getT()[i][j].getVal());
-                    grilleT[i][j].setEditable(false);
-                    grilleT[i][j].setForeground(Color.BLUE);
-                }
+                    {
+                        grilleT[i][j].setText(grille.getT()[i][j].getVal());
+                        grilleT[i][j].setEditable(false);
+                        grilleT[i][j].setForeground(Color.BLUE);
+                        grilleT[i][j].setBackground(Color.white);
+                    }
+
                 grilleT[i][j].setHorizontalAlignment(JTextField.CENTER);
+                if( ((j>= 3 && j<=5) && (( i>=0 && i<=2) ||  (i>= 6 && i<=8))) ||  ((i>=3 && i<=5 ) && (( j>=0 && j<=2)  ||  (j>= 6 && j<=8))) )
+                {
+                    grilleT[i][j].setBackground(Color.LIGHT_GRAY);
+                }
             }
         }
 
-        cd.setPreferredSize(new Dimension(hauteur_max,largeur_max)); // on peut le modifier en plein ecran ?
+        /*
+        Faire apparaitre les lignes
+         */
+        for(int i =0;i<taille_grille;i++)
+        {
+            for(int j =0;j<taille_grille;j++)
+            {
+                if((i==0)||(i==3)||(i==6))
+                {
+                    if((j==0)||(j==1)||(j==4)||(j==7))
+                        grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1,1,0,0,Color.black));
+                    if((j==3)||(j==6))
+                        grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1,0,0,0,Color.black));
+                    if(j==8)
+                        grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1,1,0,1,Color.black));
+                    if((j==2)||(j==5)||(j==8))
+                        grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1,1,0,2,Color.black));
+                }
+                if((i==1)||(i==4)||(i==7))
+                {
+                    if((j==0)||(j==1)||(j==4)||(j==7))
+                        grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1,1,0,0,Color.black));
+                    if((j==3)||(j==6))
+                        grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1,0,0,0,Color.black));
+                    if(j==8)
+                        grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1,1,0,1,Color.black));
+                    if((j==2)||(j==5)||(j==8))
+                        grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1,1,0,2,Color.black));
+                }
+                if((i==2)||(i==5)||(i==8))
+                {
+                    if((j==0)||(j==1)||(j==4)||(j==7))
+                        grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1,1,1,0,Color.black));
+                    if((j==3)||(j==6))
+                        grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1,0,1,0,Color.black));
+                    if(j==8)
+                        grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
+                    if((j==2)||(j==5)||(j==8))
+                        grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1,1,1,2,Color.black));
+                }
+            }
+        }
 
+        cd.setPreferredSize(new Dimension(hauteur_max,largeur_max)); //plein ecran ?
         while(!aCliquer)
         {
             try {
@@ -206,6 +236,11 @@ public class Sudoku extends JFrame {
                 e.printStackTrace();
             }
         }
+        if(ZonePseudo.getText().length()>0 && ZonePseudo.getText()!=null) {
+            pseudo = ZonePseudo.getText();
+        }
+        else{ pseudo="Anonyme";}
+        Joueur joueur = new Joueur(pseudo);
         cd.setVisible(true);
         fenetre.setContentPane(cd);
         fenetre.repaint();
@@ -232,6 +267,7 @@ public class Sudoku extends JFrame {
                  */
                 System.out.println("Vous avez actuellement " + erreur + " erreurs.");
                 boolean saisieCorrect = false;
+
                 while (!saisieCorrect) {
                     try {
                         sc = new Scanner(System.in);
@@ -283,7 +319,7 @@ public class Sudoku extends JFrame {
                         if (compare) {
                             identique = true;
                             System.out.println("Wow ! Tu as fini ! Felicitations !");
-                            score += calculScore(erreur, difficulte);
+                            score += calculScore(difficulte);
                             joueur.setScore(score);
                             System.out.println(
                                     "Voulez vous rejouer pour augmenter votre score ?\nEntrer 1 pour oui et 0 pour non");
@@ -313,53 +349,68 @@ public class Sudoku extends JFrame {
 
     }
 
-
-
-    // classe interne qui va rendre interactif les entrées dans la grille de l'interface
+    // classe interne qui va rendre interactif les entrÃ©es dans la grille de l'interface
     private class InputListener implements ActionListener {
 
         int LigneChoisie = -1;
         int ColonneChoisie = -1;
 
+
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
-
-                JTextField source = (JTextField) e.getSource();
-                boolean trouve = false;
-                for (int i = 0; i < 9 && !trouve; ++i) {
-                    for (int j = 0; j < 9 && !trouve; ++j) {
-                        if (grilleT[i][j] == source) {
-                            LigneChoisie = i;
-                            ColonneChoisie = j;
-                            trouve = true;
-                        }
+            JTextField source = (JTextField) e.getSource();
+            boolean trouve =false;
+            for(int i=0;i<9 && !trouve; ++i){
+                for(int j=0;j<9 && !trouve; ++j){
+                    if(grilleT[i][j]==source){
+                        LigneChoisie=i;
+                        ColonneChoisie=j;
+                        trouve=true;
                     }
                 }
-// Recupère la valeur mise dans la case, et place le premier char dans la "vraie" grille sudoku
-                String valeurInput = grilleT[LigneChoisie][ColonneChoisie].getText();
-                char tmp = valeurInput.charAt(0);
-                String premierChar = "";
-                premierChar = premierChar + tmp;
-                grille.getT()[LigneChoisie][ColonneChoisie].setVal(premierChar);
-                grilleT[LigneChoisie][ColonneChoisie].setText(premierChar);
-                if (grille.verifierGrille() == 1) {
-                    //Faire des trucs si grille bonne
-                    JOptionPane.showMessageDialog(null, "Tu as gagné !");
-                }
-
             }
+// RecupÃ¨re la valeur mise dans la case, et place le premier char dans la "vraie" grille sudoku
+            String valeurInput = grilleT[LigneChoisie][ColonneChoisie].getText();
+            char tmp = valeurInput.charAt(0);
+            String premierChar ="";
+            premierChar = premierChar + tmp;
+            if(ZonePseudo.getText().length()>0 && ZonePseudo.getText()!=null) {
+                pseudo = ZonePseudo.getText();
+            }
+            else{ pseudo="Anonyme";}
+            if(!grille.verifValeurPourConstruction(premierChar,LigneChoisie,ColonneChoisie)){
+                CptErreur++;
+                grilleT[LigneChoisie][ColonneChoisie].setForeground(Color.red);
+                JOptionPane.showMessageDialog(null, "Vous avez fais une erreur, vous Ãªtes Ã  " +CptErreur+ " erreurs");
+            }
+            if(CptErreur==30){
+                JOptionPane.showMessageDialog(null, "Tu as perdu ! Tu as fais 30 erreurs");
+                fenetre.setVisible(false);
+            }
+            grille.getT()[LigneChoisie][ColonneChoisie].setVal(premierChar);
+            grilleT[LigneChoisie][ColonneChoisie].setText(premierChar);
+            grilleT[LigneChoisie][ColonneChoisie].setForeground(Color.BLACK);
+            if(grille.verifierGrille()==1){
+                //Faire des trucs si grille bonne
+                JOptionPane.showMessageDialog(null, "Tu as gagnÃ© !");
+                fenetre.setVisible(false);
+            }
+
+
         }
 
 
+    }
 
 
     /*
      * Calcule le score d'un joueur en fonction des parametres predefini La maniere
      * de calculer un score peut etre modifier
      */
-    public int calculScore(int erreurs, int difficulte) {
-        return (50 - erreurs / difficulte);
+    public int calculScore(int difficulte) {
+        return (50 - CptErreur / difficulte);
     }
 
     /*
@@ -384,7 +435,7 @@ public class Sudoku extends JFrame {
     }
 
     /*
-     * Faire des trous dans le grille en fonction de la difficulte selectionné
+     * Faire des trous dans le grille en fonction de la difficulte selectionnÃ©
      */
     public void gestionDifficulte(int difficulte) {
         int max = 0;
@@ -395,7 +446,7 @@ public class Sudoku extends JFrame {
         else if (difficulte == 3)
             max = 6;
         else
-            System.err.println("Erreur lors de la selection de la difficulté");
+            System.err.println("Erreur lors de la selection de la difficultÃ©");
 
         for (int a = 0; a < 9; a += 3)
             for (int b = 0; b < 9; b += 3) {
@@ -500,7 +551,7 @@ public class Sudoku extends JFrame {
             ecrire.flush();
             ecrire.close();
 
-            System.out.println("...Données enregistree...");
+            System.out.println("...DonnÃ©es enregistree...");
 
         } catch (IOException e) {
             e.printStackTrace();

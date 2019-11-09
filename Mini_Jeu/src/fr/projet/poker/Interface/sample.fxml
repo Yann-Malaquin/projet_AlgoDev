@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fr.projet.poker.Interface.Controller"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane fx:id="Fenetre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet.poker.Interface.Controller">
+    <children>
+        <AnchorPane fx:id="Table" layoutX="100.0" layoutY="100.0" prefHeight="800.0" prefWidth="1500.0">
+            <children>
+                <AnchorPane fx:id="Carte" layoutX="372.0" layoutY="230.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="756.0" />
+                <ImageView fitHeight="800.0" fitWidth="1500.0" layoutX="-7.0" layoutY="-4.0">
 
+                </ImageView>
+                <Group fx:id="Joueur5" layoutX="276.3673095703125" layoutY="129.1939239501953">
+                    <children>
+                        <AnchorPane fx:id="Carte15" layoutX="36.0" layoutY="27.0" prefHeight="85.0" prefWidth="54.0" rotate="-30.0" style="-fx-background-color: white;" />
+                        <AnchorPane fx:id="Carte25" layoutX="-9.0" layoutY="27.0" prefHeight="85.0" prefWidth="54.0" rotate="-30.0" style="-fx-background-color: white;" />
+                    </children>
+                </Group>
+                <Group fx:id="Joueur4" layoutX="260.0" layoutY="523.0" rotate="45.0">
+                    <children>
+                        <AnchorPane fx:id="Carte24" layoutX="36.0" layoutY="27.0" prefHeight="85.0" prefWidth="54.0" rotate="-30.0" style="-fx-background-color: white;" />
+                        <AnchorPane fx:id="Carte14" layoutX="-9.0" layoutY="27.0" prefHeight="85.0" prefWidth="54.0" rotate="-30.0" style="-fx-background-color: white;" />
+                    </children>
+                </Group>
+                <Group fx:id="Joueur" layoutX="727.0" layoutY="593.0">
+                    <children>
+                        <AnchorPane fx:id="Carte13" layoutX="54.0" prefHeight="85.0" prefWidth="54.0" style="-fx-background-color: white;" />
+                        <AnchorPane prefHeight="85.0" prefWidth="54.0" style="-fx-background-color: white;" />
+                    </children>
+                </Group>
+                <Group fx:id="Joueur1" layoutX="1174.0" layoutY="168.0" rotate="45.0">
+                    <children>
+                        <AnchorPane fx:id="Carte21" layoutX="12.0" layoutY="-4.0" prefHeight="85.0" prefWidth="54.0" style="-fx-background-color: white;" />
+                        <AnchorPane fx:id="Carte11" layoutX="36.0" layoutY="-27.0" prefHeight="85.0" prefWidth="54.0" style="-fx-background-color: white;" />
+                    </children>
+                </Group>
+                <Group fx:id="Joueur2" layoutX="1166.0" layoutY="543.0" rotate="-25.0">
+                    <children>
+                        <AnchorPane fx:id="Carte12" layoutX="12.0" layoutY="-4.0" prefHeight="85.0" prefWidth="54.0" style="-fx-background-color: white;" />
+                        <AnchorPane fx:id="Carte22" layoutX="36.0" layoutY="-27.0" prefHeight="85.0" prefWidth="54.0" style="-fx-background-color: white;" />
+                    </children>
+                </Group>
+            </children></AnchorPane>
+    </children>
 </AnchorPane>

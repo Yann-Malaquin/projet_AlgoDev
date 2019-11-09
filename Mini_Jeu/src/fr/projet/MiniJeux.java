@@ -56,7 +56,7 @@ public class MiniJeux {
 					System.out.println("\n");
 					break;
 
-				case 3:
+				/*case 3:
 					PartiePoker p = new PartiePoker();
 					List<Carte> lcarte = new ArrayList<Carte>();
 					List<Carte> lcarte2 = new ArrayList<Carte>();
@@ -79,7 +79,7 @@ public class MiniJeux {
 					p.afficherPaquetCartes(lcarte);
 					p.distribuerCartes(lcarte);
 					break;
-				/*case 4:
+				case 4:
 					Joueur J1 = new Joueur("mLn");
 					Joueur J2 = new Joueur("OneT");
 					GrilleBN Grille = new GrilleBN(10, 10);

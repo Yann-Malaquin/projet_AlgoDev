@@ -55,6 +55,7 @@ public class Carte {
 			C.setLayoutY(30);
 
 			BD.setPrefSize(15, 15);
+			BD.setRotate(180);
 			BD.setLayoutX(29);
 			BD.setLayoutY(60);
 
@@ -104,6 +105,7 @@ public class Carte {
 			C.setLayoutY(30);
 
 			BD.setPrefSize(15, 15);
+			BD.setRotate(180);
 			BD.setLayoutX(29);
 			BD.setLayoutY(60);
 
@@ -152,6 +154,7 @@ public class Carte {
 			C.setLayoutY(30);
 
 			BD.setPrefSize(15, 15);
+			BD.setRotate(180);
 			BD.setLayoutX(29);
 			BD.setLayoutY(60);
 

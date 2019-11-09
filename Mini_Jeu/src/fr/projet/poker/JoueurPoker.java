@@ -3,33 +3,32 @@ package fr.projet.poker;
 import java.util.ArrayList;
 import java.util.List;
 import fr.projet.Joueur;
+import javafx.scene.layout.AnchorPane;
 
 public class JoueurPoker extends Joueur{
 	
-	private List<Carte> mainJoueur; // 2 cartes en main
-	private int wallet; // porte feuille du joueur (limité par la table)
+	private List<AnchorPane> mainJoueur; // 2 cartes en main
+	private int wallet; // porte feuille du joueur (limite par la table)
 	private int mise; // mise du joueur
 	private List<String> etatJoueur; 
-	/*List car un joueur peuavoir plusieurs "état" fold et pblinde ...
+	/*List car un joueur peuavoir plusieurs "etats" fold et pblinde ...
 	 * fold,call,raise,all-in,check,pblinde,gblinde,donneur
 	 */
 	
 	public JoueurPoker(String _pseudo)
 	{
 		super(_pseudo);
-		mainJoueur=new ArrayList<Carte>();
+		mainJoueur=new ArrayList<AnchorPane>();
 		int wallet=0;
 		int mise=0;
 		etatJoueur=new ArrayList<String>();
 	}
-	
-	
 
-	public List<Carte> getMainJoueur() {
+	public List<AnchorPane> getMainJoueur() {
 		return mainJoueur;
 	}
 
-	public void setMainJoueur(Carte c) {
+	public void setMainJoueur(AnchorPane c) {
 		this.mainJoueur.add(c);
 	}
 
@@ -59,14 +58,7 @@ public class JoueurPoker extends Joueur{
 
 	@Override
 	public String toString() {
-		return this.getPseudo()+"\nmainJoueur= [" + mainJoueur + "]\nwallet=" + wallet + " €\nmise=" + mise + " €\netatJoueur=["
+		return this.getPseudo()+"\nmainJoueur= [" + mainJoueur + "]\nwallet=" + wallet + " ï¿½\nmise=" + mise + " ï¿½\netatJoueur=["
 				+ etatJoueur + "]\n";
 	}
-	
-	
-	
-	
-	
-	
-
 }

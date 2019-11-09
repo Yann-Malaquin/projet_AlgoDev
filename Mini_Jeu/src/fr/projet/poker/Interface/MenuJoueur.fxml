@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="Fenetre" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet.poker.Interface.MenuJoueurController">
+   <children>
+      <Group fx:id="Joueur1" layoutX="14.0" layoutY="14.0">
+         <children>
+            <Label layoutX="96.0" text="Joueur 1" />
+            <Label layoutY="34.0" text="Nom" />
+            <Label layoutY="67.0" text="Porte Monnaie" />
+            <TextField fx:id="NomJ1" layoutX="89.0" layoutY="30.0" />
+            <TextField fx:id="PMJ1" layoutX="89.0" layoutY="63.0" />
+         </children>
+      </Group>
+      <Group fx:id="Joueur2" layoutX="14.0" layoutY="127.0">
+         <children>
+            <Label layoutX="96.0" text="Joueur 2" />
+            <Label layoutY="34.0" text="Nom" />
+            <Label layoutY="67.0" text="Porte Monnaie" />
+            <TextField fx:id="NomJ2" layoutX="89.0" layoutY="30.0" />
+            <TextField fx:id="PMJ2" layoutX="89.0" layoutY="63.0" />
+         </children>
+      </Group>
+      <Group fx:id="Joueur3" layoutX="14.0" layoutY="248.0">
+         <children>
+            <Label layoutX="66.0" text="Joueur 3" />
+            <Label layoutY="34.0" text="Nom" />
+            <Label layoutY="67.0" text="Porte Monnaie" />
+            <TextField fx:id="NomJ3" layoutX="89.0" layoutY="30.0" />
+            <TextField fx:id="PMJ3" layoutX="89.0" layoutY="63.0" />
+         </children>
+      </Group>
+      <Group fx:id="Joueur4" layoutX="300.0" layoutY="14.0">
+         <children>
+            <Label layoutX="96.0" text="Joueur 4" />
+            <Label layoutY="34.0" text="Nom" />
+            <Label layoutY="67.0" text="Porte Monnaie" />
+            <TextField fx:id="NomJ4" layoutX="89.0" layoutY="30.0" />
+            <TextField fx:id="PMJ4" layoutX="89.0" layoutY="63.0" />
+         </children>
+      </Group>
+      <Group fx:id="Joueur5" layoutX="300.0" layoutY="128.0">
+         <children>
+            <Label layoutX="96.0" layoutY="-2.0" text="Joueur 5" />
+            <Label layoutY="34.0" text="Nom" />
+            <Label layoutY="67.0" text="Porte Monnaie" />
+            <TextField fx:id="NomJ5" layoutX="89.0" layoutY="30.0" />
+            <TextField fx:id="PMJ5" layoutX="89.0" layoutY="63.0" />
+         </children>
+      </Group>
+      <Button fx:id="Jouer" layoutX="512.0" layoutY="336.0" mnemonicParsing="false" onAction="#sendData" text="Jouer" />
+   </children>
+</AnchorPane>

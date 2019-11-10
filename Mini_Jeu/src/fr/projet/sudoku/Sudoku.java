@@ -169,12 +169,12 @@ public class Sudoku extends JFrame {
                     grilleT[i][j].addActionListener(listener);
                 }
                 else
-                    {
-                        grilleT[i][j].setText(grille.getT()[i][j].getVal());
-                        grilleT[i][j].setEditable(false);
-                        grilleT[i][j].setForeground(Color.BLUE);
-                        grilleT[i][j].setBackground(Color.white);
-                    }
+                {
+                    grilleT[i][j].setText(grille.getT()[i][j].getVal());
+                    grilleT[i][j].setEditable(false);
+                    grilleT[i][j].setForeground(Color.BLUE);
+                    grilleT[i][j].setBackground(Color.white);
+                }
 
                 grilleT[i][j].setHorizontalAlignment(JTextField.CENTER);
                 if( ((j>= 3 && j<=5) && (( i>=0 && i<=2) ||  (i>= 6 && i<=8))) ||  ((i>=3 && i<=5 ) && (( j>=0 && j<=2)  ||  (j>= 6 && j<=8))) )
@@ -361,46 +361,64 @@ public class Sudoku extends JFrame {
         public void actionPerformed(ActionEvent e) {
 
             JTextField source = (JTextField) e.getSource();
-            boolean trouve =false;
-            for(int i=0;i<9 && !trouve; ++i){
-                for(int j=0;j<9 && !trouve; ++j){
-                    if(grilleT[i][j]==source){
-                        LigneChoisie=i;
-                        ColonneChoisie=j;
-                        trouve=true;
+
+                boolean trouve = false;
+                for (int i = 0; i < 9 && !trouve; ++i) {
+                    for (int j = 0; j < 9 && !trouve; ++j) {
+                        if (grilleT[i][j] == source) {
+                            LigneChoisie = i;
+                            ColonneChoisie = j;
+                            trouve = true;
+                        }
                     }
                 }
-            }
+            if (source.getText().length() > 0) {
 // Recupère la valeur mise dans la case, et place le premier char dans la "vraie" grille sudoku
-            String valeurInput = grilleT[LigneChoisie][ColonneChoisie].getText();
-            char tmp = valeurInput.charAt(0);
-            String premierChar ="";
-            premierChar = premierChar + tmp;
-            if(ZonePseudo.getText().length()>0 && ZonePseudo.getText()!=null) {
-                pseudo = ZonePseudo.getText();
-            }
-            else{ pseudo="Anonyme";}
-            if(!grille.verifValeurPourConstruction(premierChar,LigneChoisie,ColonneChoisie)){
-                CptErreur++;
-                grilleT[LigneChoisie][ColonneChoisie].setForeground(Color.red);
-                JOptionPane.showMessageDialog(null, "Vous avez fais une erreur, vous êtes à " +CptErreur+ " erreurs");
-            }
-            if(CptErreur==30){
-                JOptionPane.showMessageDialog(null, "Tu as perdu ! Tu as fais 30 erreurs");
-                fenetre.setVisible(false);
-            }
-            grille.getT()[LigneChoisie][ColonneChoisie].setVal(premierChar);
-            grilleT[LigneChoisie][ColonneChoisie].setText(premierChar);
-            grilleT[LigneChoisie][ColonneChoisie].setForeground(Color.BLACK);
-            if(grille.verifierGrille()==1){
-                //Faire des trucs si grille bonne
-                JOptionPane.showMessageDialog(null, "Tu as gagné !");
-                fenetre.setVisible(false);
-            }
+                String valeurInput = grilleT[LigneChoisie][ColonneChoisie].getText();
+                char tmp = valeurInput.charAt(0);
+                String premierChar = "";
+                premierChar = premierChar + tmp;
+                if (ZonePseudo.getText().length() > 0 && ZonePseudo.getText() != null) {
+                    pseudo = ZonePseudo.getText();
+                } else {
+                    pseudo = "Anonyme";
+                }
+
+                grille.getT()[LigneChoisie][ColonneChoisie].setVal("");
+                grilleT[LigneChoisie][ColonneChoisie].setText("");
+                if ((!grille.verifValeurPourConstruction(premierChar, LigneChoisie, ColonneChoisie)) || (tmp<'1' || tmp >'9')) {
+                    CptErreur++;
+
+                    grilleT[LigneChoisie][ColonneChoisie].setText(premierChar);
+                    grilleT[LigneChoisie][ColonneChoisie].setForeground(Color.red);
+                    JOptionPane.showMessageDialog(null, "Vous avez fais une erreur, vous êtes à " + CptErreur + " erreurs");
+                    grilleT[LigneChoisie][ColonneChoisie].setText("");
+
+                    if (CptErreur == 30) {
+                        JOptionPane.showMessageDialog(null, "Tu as perdu ! Tu as fais 30 erreurs");
+                        fenetre.dispose();
+                    }
+                } else {
+                    System.out.println(premierChar.length());
+
+                        grille.getT()[LigneChoisie][ColonneChoisie].setVal(premierChar);
+                        grilleT[LigneChoisie][ColonneChoisie].setText(premierChar);
+
+                    if (grille.verifierGrille() == 1) {
+                        //Faire des trucs si grille bonne
+                        JOptionPane.showMessageDialog(null, "Tu as gagné !");
+                        fenetre.dispose();
+                    }
 
 
+                }
+                grilleT[LigneChoisie][ColonneChoisie].setForeground(Color.BLACK);
+                grille.AfficherGrille();
+            }
+            else {
+                grille.getT()[LigneChoisie][ColonneChoisie].setVal("");
+            }
         }
-
 
     }
 

@@ -2,40 +2,50 @@ package fr.projet.poker.Interface;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class MenuJoueurController implements Initializable {
+public class MenuJoueurController {
+
 
     private List<String> name = new ArrayList<String>();
     @FXML
-    private Button Jouer;
+    private Button Quitter;
+
     @FXML
-    private AnchorPane Fenetre = new AnchorPane();
+    Button Jouer;
+
+    @FXML
+    private Group root;
+    @FXML
+    private AnchorPane Fenetre;
+    @FXML
+    private AnchorPane Table;
+    @FXML
+    private Group AllJoueur;
+    @FXML
+    private Group Joueur;
+    @FXML
+    private Label Name;
 
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-
-    public void sendData() {
+    @FXML
+    private void sendNamePlayer() {
 
         Group getGroup = new Group();
         TextField getName = new TextField();
+        TextField getDonneur = new TextField();
+        String donneur = null;
         int i = 0;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Table.fxml"));
         Parent root = null;
@@ -46,28 +56,25 @@ public class MenuJoueurController implements Initializable {
         }
         TableController controller = loader.<TableController>getController();
 
-        while (i < Fenetre.getChildren().size() - 1) {
+        while (i < Fenetre.getChildren().size() - 2) {
             getGroup = (Group) Fenetre.getChildren().get(i);
             getName = (TextField) getGroup.getChildren().get(3);
             name.add(getName.getText());
             i++;
         }
-        controller.initTable(name);
+        getGroup = (Group) Fenetre.getChildren().get(5);
+        getDonneur = (TextField) getGroup.getChildren().get(1);
+        donneur = getDonneur.getText();
+
+        System.out.println("blabla "+ donneur);
+
 
 
 
         Stage primaryStage = (Stage) Jouer.getScene().getWindow();
-
-        primaryStage.setTitle("Poker");
-        primaryStage.setScene(new Scene(root, 1700.0D, 1000.0D));
-        primaryStage.show();
-
-
-
-
-
-
-
+        controller.initTable(primaryStage,name,donneur);
 
     }
+
+
 }

@@ -2,25 +2,28 @@ package fr.projet.poker.Interface;
 
 import fr.projet.poker.Carte;
 import fr.projet.poker.JoueurPoker;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import java.lang.String;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+
 import java.io.FileInputStream;
-import java.net.URL;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.ResourceBundle;
 
-import static java.lang.Thread.sleep;
-
-public class TableController implements Initializable {
+public class TableController extends Thread {
 
 
     private List<AnchorPane> paquetCartes = new ArrayList<AnchorPane>();
@@ -30,52 +33,281 @@ public class TableController implements Initializable {
     FileInputStream table;
 
     @FXML
-    private AnchorPane Table = new AnchorPane();
+    private Group root;
     @FXML
-    private AnchorPane Carte = new AnchorPane();
+    private AnchorPane Fenetre;
     @FXML
-    private Group AllJoueur = new Group();
+    private AnchorPane Table;
     @FXML
-    private Group Joueur = new Group();
+    private Group AllJoueur;
     @FXML
-    private AnchorPane CarteJ = new AnchorPane();
+    private AnchorPane CarteJ;
     @FXML
-    private Label Name = new Label();
+    private AnchorPane Carte;
+    @FXML
+    private Group Joueur;
+    @FXML
+    private Group Plateau;
+    @FXML
+    private Label Name;
+    @FXML
+    private Button afficher;
+    @FXML
+    private Button distribuer;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @FXML
+    private Label Role;
 
-        paquetCartes = this.genererPaquetCarte();
-        //this.afficheCarteMelange(paquetCartes);
-        this.distribuerCartes(paquetCartes);
 
-    }
+    public void initTable(Stage primaryStage, List<String> name, String nameDonneur) {
+        try {
+            root = (Group) FXMLLoader.load(this.getClass().getResource("Table.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    public List<AnchorPane> getPaquetCartes() {
-        return this.paquetCartes;
-    }
-
-    public void initTable(List<String> name) {
         try {
             table = new FileInputStream("C:\\Users\\Bitfenix\\Desktop\\Projet\\Mini_Jeu\\src\\fr\\projet\\poker\\Interface\\picture\\table_poker.png");
         } catch (Exception e) {
             System.out.println("Oups");
         }
-        Image im = new Image(table, 1500, 800, false, false);
 
+        primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+        primaryStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+
+        Fenetre = (AnchorPane) root.getChildren().get(0);
+        Table = (AnchorPane) Fenetre.getChildren().get(0);
+        AllJoueur = (Group) Table.getChildren().get(0);
+        Plateau = (Group) AllJoueur.getChildren().get(5);
+        Carte = (AnchorPane) Plateau.getChildren().get(0);
+        afficher = (Button) Plateau.getChildren().get(1);
+        distribuer = (Button) Plateau.getChildren().get(2);
+
+        Fenetre.setPrefWidth(primaryStage.getWidth());
+        Fenetre.setPrefHeight(primaryStage.getHeight());
+        distribuer.setVisible(false);
+
+        double w, h;
+
+        w = primaryStage.getWidth();
+        h = primaryStage.getHeight();
+
+        Table.setLayoutX(200);
+        Table.setLayoutY(100);
+        Image im = new Image(table, w - (w * 0.20), h - (h * 0.20), false, false);
         BackgroundImage myBI = new BackgroundImage(im,
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
         Table.setBackground(new Background(myBI));
-        int i = 0;
+        System.out.println("balbalbal " + name.toString());
+        this.setNamePlayer(root, name);
+        this.setDonneur(root, nameDonneur);
+        paquetCartes = this.genererPaquetCarte();
+        afficher.setText("Afficher paquet cartes");
+        afficher.setVisible(true);
 
-        while(i < AllJoueur.getChildren().size()-1) {
+        afficher.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                this.afficheCarte(root, paquetCartes);
+
+                Fenetre = (AnchorPane) root.getChildren().get(0);
+                Table = (AnchorPane) Fenetre.getChildren().get(0);
+                AllJoueur = (Group) Table.getChildren().get(0);
+                Plateau = (Group) AllJoueur.getChildren().get(5);
+            }
+
+            public void afficheCarte(Group root, List<AnchorPane> paquetCartes) {
+                int i = 1;
+                double y = 300, r = -50, x = 0, cos = 0, sin = 0;
+                Fenetre = (AnchorPane) root.getChildren().get(0);
+                Table = (AnchorPane) Fenetre.getChildren().get(0);
+                AllJoueur = (Group) Table.getChildren().get(0);
+                Plateau = (Group) AllJoueur.getChildren().get(5);
+                Carte = (AnchorPane) Plateau.getChildren().get(0);
+                afficher = (Button) Plateau.getChildren().get(1);
+
+                afficher.setVisible(false);
+
+                for (AnchorPane ap : paquetCartes) {
+                    ap.setLayoutX(x);
+                    ap.setLayoutY(y);
+                    ap.setRotate(r);
+
+                    Carte.getChildren().add(ap);
+
+                    cos = Math.toRadians(r);
+                    sin = Math.toRadians(r);
+
+                    x += Math.cos(cos) * 15;
+
+                    y += Math.sin(sin) * 15;
+
+                    i++;
+                    r += (2 * (90 / 52));
+                }
+
+                if (i == 53) {
+                    distribuer.setVisible(true);
+                    distribuer.setText("Distribuer");
+                    afficher.setVisible(false);
+                }
+            }
+        });
+
+        distribuer.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                Plateau.getChildren().remove(0);
+                this.distribuerCartes(root, paquetCartes);
+
+                Fenetre = (AnchorPane) root.getChildren().get(0);
+                Table = (AnchorPane) Fenetre.getChildren().get(0);
+                AllJoueur = (Group) Table.getChildren().get(0);
+                Plateau = (Group) AllJoueur.getChildren().get(5);
+            }
+
+            public void distribuerCartes(Group root, List<AnchorPane> paquetCartes) {
+
+                AnchorPane tmp = new AnchorPane();
+                int i, pdonneur = 0, init;
+                Label role;
+
+                for (i = 0; i < 2; i++) { // on mélange le paquet de carte
+                    List<AnchorPane> paquetCartesMelangeestmp = this.melangerPaquetCartes(paquetCartes);
+                    paquetCartes = this.melangerPaquetCartes(paquetCartesMelangeestmp);
+                }
+                Fenetre = (AnchorPane) root.getChildren().get(0);
+                Table = (AnchorPane) Fenetre.getChildren().get(0);
+                AllJoueur = (Group) Table.getChildren().get(0);
+                Plateau = (Group) AllJoueur.getChildren().get(5);
+
+                for (i = 0; i < AllJoueur.getChildren().size() - 1; i++) {
+                    Joueur = (Group) AllJoueur.getChildren().get(i);
+                    role = (Label) Joueur.getChildren().get(3);
+                    if (role.getText().compareTo("D") == 0) {
+
+                        break;
+                    } else {
+                        pdonneur++;
+                    }
+                }
+
+                init = pdonneur;
+
+                for (i = 0; i < 2; i++) {
+
+                    if ((pdonneur + 1) == AllJoueur.getChildren().size() - 1) {
+                        pdonneur = 0;
+                    } else {
+                        pdonneur++;
+                    }
+
+                    while (pdonneur < AllJoueur.getChildren().size() - 1)
+                    {
+
+                        Joueur = (Group) AllJoueur.getChildren().get(pdonneur);
+                        CarteJ = (AnchorPane) Joueur.getChildren().get(i);
+
+                        System.out.println("while role ="+pdonneur);
+
+                        tmp = paquetCartes.get(0);
+                        paquetCartes.remove(0);
+                        tmp.setLayoutX(0);
+                        tmp.setLayoutY(0);
+                        tmp.setRotate(0);
+                        tmp.setPrefHeight(85);
+                        tmp.setPrefWidth(54);
+                        CarteJ.getChildren().add(tmp);
+
+                        if (pdonneur == init) // si on arrive sur le donneur alors on quitte le 1er et on entame le 2e tour
+                        {
+                            break;
+                        } else if (pdonneur == (AllJoueur.getChildren().size() - 2)) // si on arrive a la fin de la liste on retourne au 1er joueur
+                        {
+                            pdonneur = 0;
+                        } else {
+                            pdonneur++;
+                        }
+                    }
+                    pdonneur = init;
+                }
+            }
+
+            public List<AnchorPane> melangerPaquetCartes(List<AnchorPane> paquetCartes)// melanger le paquet de cartes 1 fois
+            {
+                List<AnchorPane> paquetMelange = new ArrayList<AnchorPane>();
+                int indexAlea;
+                int i = paquetCartes.size();
+                Random rand = new Random();
+
+                while (i > 0) {
+                    indexAlea = rand.nextInt(i);
+                    paquetMelange.add(paquetCartes.get(indexAlea));
+                    paquetCartes.remove(indexAlea);
+                    i--;
+                }
+
+                return paquetMelange;
+            }
+
+
+        });
+
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
+
+    public void setNamePlayer(Group root, List<String> name) {
+        int i = 0;
+        Fenetre = (AnchorPane) root.getChildren().get(0);
+        Table = (AnchorPane) Fenetre.getChildren().get(0);
+        AllJoueur = (Group) Table.getChildren().get(0);
+
+        while (i < AllJoueur.getChildren().size() - 1) {
             Joueur = (Group) AllJoueur.getChildren().get(i);
             Name = (Label) Joueur.getChildren().get(2);
             Name.setText(name.get(i));
             i++;
         }
+    }
 
+    public void afficherPopup(Group root) {
+        Stage primaryStage = new Stage();
+
+        Group root1 = new Group();
+        try {
+            root1 = FXMLLoader.load(this.getClass().getResource("PopupDonneur.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        primaryStage.setScene(new Scene(root1, 400, 200));
+        primaryStage.setAlwaysOnTop(true);
+        primaryStage.show();
+
+        this.setDonneur(root, "Michel");
+    }
+
+    public void setDonneur(Group root, String name) {
+        int i = 0;
+        Fenetre = (AnchorPane) root.getChildren().get(0);
+        Table = (AnchorPane) Fenetre.getChildren().get(0);
+        AllJoueur = (Group) Table.getChildren().get(0);
+
+
+        while (i < AllJoueur.getChildren().size() - 1) {
+            Joueur = (Group) AllJoueur.getChildren().get(i);
+            Name = (Label) Joueur.getChildren().get(2);
+            System.out.println("Name : " + Name.getText());
+            if (Name.getText().compareTo(name) == 0) {
+                Role = (Label) Joueur.getChildren().get(3);
+                Role.setText("D");
+                break;
+            } else {
+                i++;
+            }
+        }
     }
 
     public List<AnchorPane> genererPaquetCarte() {
@@ -103,143 +335,6 @@ public class TableController implements Initializable {
         return paquetCartes;
     }
 
-
-    public List<AnchorPane> melangerPaquetCartes(List<AnchorPane> paquetCartes)// melanger le paquet de cartes 1 fois
-    {
-        List<AnchorPane> paquetMelange = new ArrayList<AnchorPane>();
-        int indexAlea;
-        int i = paquetCartes.size();
-        Random rand = new Random();
-
-        while (i > 0) {
-            indexAlea = rand.nextInt(i);
-            paquetMelange.add(paquetCartes.get(indexAlea));
-            paquetCartes.remove(indexAlea);
-            i--;
-        }
-
-        return paquetMelange;
-    }
-
-    public void afficheCarteMelange(List<AnchorPane> paquetCartes) {
-        int i = 1;
-        double y = 300, r = -50, x = 0, cos = 0, sin = 0;
-        for (AnchorPane ap : paquetCartes) {
-            ap.setLayoutX(x);
-            ap.setLayoutY(y);
-            ap.setRotate(r);
-
-            Carte.getChildren().add(ap);
-
-            cos = Math.toRadians(r);
-            sin = Math.toRadians(r);
-
-            x += Math.cos(cos) * 15;
-
-            y += Math.sin(sin) * 15;
-
-            i++;
-            r += (2 * (90 / 52));
-        }
-    }
-
-
-    public void distribuerCartes(List<AnchorPane> paquetCartes){
-
-            AnchorPane tmp = new AnchorPane();
-
-        for (int i = 0; i < 2; i++) { // on mélange le paquet de carte
-            List<AnchorPane> paquetCartesMelangeestmp = this.melangerPaquetCartes(paquetCartes);
-            paquetCartes = this.melangerPaquetCartes(paquetCartesMelangeestmp);
-        }
-
-            for (int i = 0; i <2;i++) {
-                for (int j = 0; j < 5; j++) {
-                    Joueur = (Group) AllJoueur.getChildren().get(j);
-                    CarteJ = (AnchorPane) Joueur.getChildren().get(i);
-
-                    System.out.println(Carte.getLayoutX());
-                    System.out.println(Carte.getLayoutY());
-
-                    tmp = paquetCartes.get(0);
-                    paquetCartes.remove(0);
-                    tmp.setLayoutX(0);
-                    tmp.setLayoutY(0);
-                    tmp.setRotate(0);
-                    tmp.setPrefHeight(85);
-                    tmp.setPrefWidth(54);
-                    CarteJ.getChildren().add(tmp);
-                   
-
-                }
-            }
-        }
-
-
-    /*public void distribuerCartes(List<AnchorPane> paquetCartes) {
-        List<AnchorPane> paquetCartesMelangees = new ArrayList<AnchorPane>();
-        List<AnchorPane> paquetCartesMelangeestmp = new ArrayList<AnchorPane>();
-        int pdonneur = 0; // position du donneur dans la liste
-        int init; //départ du donneur pour distribution
-        paquetCartes = this.genererPaquetCarte();
-        boolean find = false;
-
-        for (int i = 0; i < 2; i++) { // on mélange le paquet de carte
-            paquetCartesMelangeestmp = this.melangerPaquetCartes(paquetCartes);
-            paquetCartes = this.melangerPaquetCartes(paquetCartesMelangeestmp);
-        }
-
-        paquetCartesMelangees.addAll(paquetCartes);
-
-        for (int i = 0; i < joueurs.size(); i++) { // on cherche le donneur parmis les joueurs
-            for (int j = 0; j < joueurs.get(i).getEtatJoueur().size(); j++) {
-                if (joueurs.get(i).getEtatJoueur().get(j).equals("donneur")) {
-                    find = true;
-                    break;
-                }
-
-
-            }
-            if (find == true) {
-                break;
-            } else {
-                pdonneur++;
-            }
-        }
-
-        init = pdonneur;
-
-        for (int tour = 0; tour < 2; tour++) { // pour les tours de distribution
-
-            if ((pdonneur + 1) == (joueurs.size())) // si on est au dernier joueur alors le 1er joueur a recevoir les cartes sera le 1er de la liste
-            {
-                pdonneur = 0;
-            } else {
-                pdonneur += 1;
-            }
-
-
-            System.out.println("pdonneur: " + pdonneur);
-            while (pdonneur < joueurs.size()) { // tant que l'on est pas supérieur au nombre de joueur
-
-                joueurs.get(pdonneur).setMainJoueur(paquetCartesMelangees.get(0));
-                paquetCartesMelangees.remove(0);
-                System.out.println(joueurs.get(pdonneur).toString());
-
-                if (pdonneur == init) // si on arrive sur le donneur alors on quitte le 1er et on entame le 2e tour
-                {
-                    break;
-                } else if (pdonneur == (joueurs.size() - 1)) // si on arrive a la fin de la liste on retourne au 1er joueur
-                {
-                    pdonneur = 0;
-                } else {
-                    pdonneur++;
-                }
-            }
-
-            pdonneur = init; // on redonne le donneur pour rédémarrer
-        }
-    }*/
 
 }
 

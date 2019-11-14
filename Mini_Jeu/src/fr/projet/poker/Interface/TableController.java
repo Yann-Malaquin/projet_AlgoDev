@@ -335,6 +335,10 @@ public class TableController extends Thread {
         return paquetCartes;
     }
 
+    public void partiePoker(){
+
+    }
+
 
 }
 

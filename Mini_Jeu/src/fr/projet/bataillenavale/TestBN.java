@@ -1,4 +1,4 @@
-package fr.projet.bataillenavale;
+/*package fr.projet.bataillenavale;
 
 import fr.projet.Grille;
 
@@ -20,4 +20,4 @@ public class TestBN {
 
 	}
 
-}
+} */

@@ -11,6 +11,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -28,7 +29,6 @@ public class TableController extends Thread {
 
     private List<AnchorPane> paquetCartes = new ArrayList<AnchorPane>();
     private List<AnchorPane> paquetCartesMelangees = new ArrayList<AnchorPane>();
-    private List<JoueurPoker> joueurs;
 
     FileInputStream table;
 
@@ -51,15 +51,31 @@ public class TableController extends Thread {
     @FXML
     private Label Name;
     @FXML
+    private Label Bank;
+    @FXML
     private Button afficher;
     @FXML
     private Button distribuer;
+    @FXML
+    private Button SeCoucher;
+    @FXML
+    private Button Suivre;
+    @FXML
+    private Button Miser;
+    @FXML
+    private Button Tapis;
+    @FXML
+    private Button Check;
+    @FXML
+    private Label Pot;
+    @FXML
+    private TextField barreMiser;
 
     @FXML
     private Label Role;
 
 
-    public void initTable(Stage primaryStage, List<String> name, String nameDonneur) {
+    public void initTable(Stage primaryStage, List<String> name, String nameDonneur, List<String> bank) {
         try {
             root = (Group) FXMLLoader.load(this.getClass().getResource("Table.fxml"));
         } catch (IOException e) {
@@ -82,10 +98,17 @@ public class TableController extends Thread {
         Carte = (AnchorPane) Plateau.getChildren().get(0);
         afficher = (Button) Plateau.getChildren().get(1);
         distribuer = (Button) Plateau.getChildren().get(2);
+        SeCoucher = (Button) Plateau.getChildren().get(3);
+        Miser = (Button) Plateau.getChildren().get(4);
+        Check = (Button) Plateau.getChildren().get(5);
+        Tapis = (Button) Plateau.getChildren().get(6);
+        Suivre = (Button) Plateau.getChildren().get(7);
+        barreMiser = (TextField) Plateau.getChildren().get(8);
+        Pot = (Label) Plateau.getChildren().get(9);
 
         Fenetre.setPrefWidth(primaryStage.getWidth());
         Fenetre.setPrefHeight(primaryStage.getHeight());
-        distribuer.setVisible(false);
+
 
         double w, h;
 
@@ -100,7 +123,9 @@ public class TableController extends Thread {
                 BackgroundSize.DEFAULT);
         Table.setBackground(new Background(myBI));
         System.out.println("balbalbal " + name.toString());
+        this.setButton(root);
         this.setNamePlayer(root, name);
+        this.setBankPlayer(root,bank);
         this.setDonneur(root, nameDonneur);
         paquetCartes = this.genererPaquetCarte();
         afficher.setText("Afficher paquet cartes");
@@ -204,13 +229,10 @@ public class TableController extends Thread {
                         pdonneur++;
                     }
 
-                    while (pdonneur < AllJoueur.getChildren().size() - 1)
-                    {
+                    while (pdonneur < AllJoueur.getChildren().size() - 1) {
 
                         Joueur = (Group) AllJoueur.getChildren().get(pdonneur);
                         CarteJ = (AnchorPane) Joueur.getChildren().get(i);
-
-                        System.out.println("while role ="+pdonneur);
 
                         tmp = paquetCartes.get(0);
                         paquetCartes.remove(0);
@@ -233,6 +255,7 @@ public class TableController extends Thread {
                     }
                     pdonneur = init;
                 }
+                distribuer.setVisible(false);
             }
 
             public List<AnchorPane> melangerPaquetCartes(List<AnchorPane> paquetCartes)// melanger le paquet de cartes 1 fois
@@ -273,6 +296,20 @@ public class TableController extends Thread {
         }
     }
 
+    public void setBankPlayer(Group root, List<String> bank){
+        int i = 0;
+        Fenetre = (AnchorPane) root.getChildren().get(0);
+        Table = (AnchorPane) Fenetre.getChildren().get(0);
+        AllJoueur = (Group) Table.getChildren().get(0);
+
+        while (i < AllJoueur.getChildren().size() - 1) {
+            Joueur = (Group) AllJoueur.getChildren().get(i);
+            Bank = (Label) Joueur.getChildren().get(4);
+            Bank.setText(bank.get(i)+ "€");
+            i++;
+        }
+    }
+
     public void afficherPopup(Group root) {
         Stage primaryStage = new Stage();
 
@@ -308,6 +345,35 @@ public class TableController extends Thread {
                 i++;
             }
         }
+
+        if (i + 1 == AllJoueur.getChildren().size() - 1) {
+            Joueur = (Group) AllJoueur.getChildren().get(0);
+            Name = (Label) Joueur.getChildren().get(2);
+            Role = (Label) Joueur.getChildren().get(3);
+            Role.setText("PB");
+            Joueur = (Group) AllJoueur.getChildren().get(1);
+            Name = (Label) Joueur.getChildren().get(2);
+            Role = (Label) Joueur.getChildren().get(3);
+            Role.setText("GB");
+        } else if (i + 2 == AllJoueur.getChildren().size() - 1) {
+            Joueur = (Group) AllJoueur.getChildren().get(i + 1);
+            Name = (Label) Joueur.getChildren().get(2);
+            Role = (Label) Joueur.getChildren().get(3);
+            Role.setText("PB");
+            Joueur = (Group) AllJoueur.getChildren().get(0);
+            Name = (Label) Joueur.getChildren().get(2);
+            Role = (Label) Joueur.getChildren().get(3);
+            Role.setText("GB");
+        } else {
+            Joueur = (Group) AllJoueur.getChildren().get(i + 1);
+            Name = (Label) Joueur.getChildren().get(2);
+            Role = (Label) Joueur.getChildren().get(3);
+            Role.setText("PB");
+            Joueur = (Group) AllJoueur.getChildren().get(i + 2);
+            Name = (Label) Joueur.getChildren().get(2);
+            Role = (Label) Joueur.getChildren().get(3);
+            Role.setText("GB");
+        }
     }
 
     public List<AnchorPane> genererPaquetCarte() {
@@ -335,10 +401,35 @@ public class TableController extends Thread {
         return paquetCartes;
     }
 
-    public void partiePoker(){
+    public void partiePoker() {
 
     }
 
+    public void setButton(Group root){
+
+        Fenetre = (AnchorPane) root.getChildren().get(0);
+        Table = (AnchorPane) Fenetre.getChildren().get(0);
+        AllJoueur = (Group) Table.getChildren().get(0);
+        Plateau = (Group) AllJoueur.getChildren().get(5);
+        Carte = (AnchorPane) Plateau.getChildren().get(0);
+        distribuer = (Button) Plateau.getChildren().get(2);
+        SeCoucher = (Button) Plateau.getChildren().get(3);
+        Miser = (Button) Plateau.getChildren().get(4);
+        Check = (Button) Plateau.getChildren().get(5);
+        Tapis = (Button) Plateau.getChildren().get(6);
+        Suivre = (Button) Plateau.getChildren().get(7);
+        barreMiser = (TextField) Plateau.getChildren().get(8);
+        Pot = (Label) Plateau.getChildren().get(9);
+
+        distribuer.setVisible(false);
+        SeCoucher.setVisible(false);
+        Miser.setVisible(false);
+        Check.setVisible(false);
+        Tapis.setVisible(false);
+        Suivre.setVisible(false);
+        Pot.setVisible(false);
+        barreMiser.setVisible(false);
+    }
 
 }
 

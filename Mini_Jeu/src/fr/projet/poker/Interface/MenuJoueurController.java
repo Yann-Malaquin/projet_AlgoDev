@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -19,25 +18,13 @@ public class MenuJoueurController {
 
 
     private List<String> name = new ArrayList<String>();
-    @FXML
-    private Button Quitter;
+    private List<String> bank = new ArrayList<String>();
 
     @FXML
     Button Jouer;
 
     @FXML
-    private Group root;
-    @FXML
     private AnchorPane Fenetre;
-    @FXML
-    private AnchorPane Table;
-    @FXML
-    private Group AllJoueur;
-    @FXML
-    private Group Joueur;
-    @FXML
-    private Label Name;
-
 
     @FXML
     private void sendNamePlayer() {
@@ -45,6 +32,7 @@ public class MenuJoueurController {
         Group getGroup = new Group();
         TextField getName = new TextField();
         TextField getDonneur = new TextField();
+        TextField getBank = new TextField();
         String donneur = null;
         int i = 0;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Table.fxml"));
@@ -66,13 +54,20 @@ public class MenuJoueurController {
         getDonneur = (TextField) getGroup.getChildren().get(1);
         donneur = getDonneur.getText();
 
-        System.out.println("blabla "+ donneur);
+        i = 0;
 
+        while (i < Fenetre.getChildren().size() - 2) {
+
+            getGroup = (Group) Fenetre.getChildren().get(i);
+            getBank = (TextField) getGroup.getChildren().get(4);
+            bank.add(getBank.getText());
+            i++;
+        }
 
 
 
         Stage primaryStage = (Stage) Jouer.getScene().getWindow();
-        controller.initTable(primaryStage,name,donneur);
+        controller.initTable(primaryStage,name,donneur,bank);
 
     }
 

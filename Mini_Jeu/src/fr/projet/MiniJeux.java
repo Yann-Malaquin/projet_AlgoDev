@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import fr.projet.bataillenavale.Bateau;
-import fr.projet.bataillenavale.GrilleBN;
-import fr.projet.bataillenavale.Joueur;
-import fr.projet.bataillenavale.Partie;
+import fr.projet.bataillenavale.JoueurBN;
 import fr.projet.loto.PartieLoto;
 import fr.projet.poker.Carte;
 import fr.projet.poker.JoueurPoker;
@@ -17,9 +14,19 @@ import fr.projet.poker.*;
 
 public class MiniJeux {
 
+
+
+
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		Joueur J=new Joueur("Jean");
+		Classement C=new Classement();
+		C.ajouterJoueur(J);
+		for(fr.projet.Joueur P: C.ClassementGlobal){
+			P.afficherJoueur();
 
+		}
 		int choix=1;
 		
 		while(choix!=0) {
@@ -37,11 +44,11 @@ public class MiniJeux {
 			switch (choix) {
 				case 0:
 					System.out.println("Fin programme");
-					System.exit(0);
+					//System.exit(0);
 				case 1:
 					Sudoku test = new Sudoku();
 					try {
-						test.Jouer(3);
+						test.Jouer();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

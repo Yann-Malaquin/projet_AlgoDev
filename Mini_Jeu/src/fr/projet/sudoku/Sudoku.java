@@ -4,7 +4,6 @@ import fr.projet.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -22,9 +21,12 @@ public class Sudoku extends JFrame {
     private JTextField ZonePseudo = new JTextField();
     private GrilleSudoku grille = new GrilleSudoku();
     private JLabel texte = new JLabel();
+    private JLabel txt = new JLabel();
+    private JLabel txt_score = new JLabel();
     private JButton bouton1 = new JButton();
     private JButton bouton2 = new JButton();
     private JButton bouton3 = new JButton();
+    private JButton quitter = new JButton();
     private ArrayList<Joueur> listeJoueur;
     private Joueur joueur = new Joueur();
     private String pseudo = "defaut";
@@ -44,13 +46,24 @@ public class Sudoku extends JFrame {
       }
     };
     private JPanel cd = new JPanel();
-    private JPanel classement = new JPanel();
-    private JTable tableau =new JTable();
-    private String[] entetes ={"Pseudo","Score"};
-    private Object[][] donnees = {};
+    private JPanel votreScore =  new JPanel() {
+
+        public void paintComponent(Graphics g)
+        {
+            super.paintComponent(g);
+            ImageIcon fond = null;
+            try {
+                fond = new ImageIcon(ImageIO.read(new File("src/Sudoku/Fond_VotreScore.jpg")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            g.drawImage(fond.getImage(), 0, 0, getWidth(), getHeight(), null);
+        }
+    };
     private int CptErreur=0;
     private boolean aCliquer = false;
     private boolean fini = false;
+    private boolean retour = false;
     private int erreurMax = 30;
     private int difficulte; // 1=facile, 2=moyen, 3=difficile
 
@@ -153,6 +166,36 @@ public class Sudoku extends JFrame {
 
             }
         };
+        MouseListener mouse4 = new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                retour=true;
+                fenetre.setVisible(false);
+                System.exit(0);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                retour=true;
+                fenetre.setVisible(false);
+                System.exit(0);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        };
         File f = new File(nomFichier);
         if (!f.exists()) {
             nomFichier = "listeJoueurs.txt";
@@ -192,6 +235,9 @@ public class Sudoku extends JFrame {
         bouton2.addMouseListener(mouse2);
         bouton3.setText("DIFFICILE");
         bouton3.addMouseListener(mouse3);
+        quitter.setText("Quitter");
+        quitter.setBackground(Color.LIGHT_GRAY);
+        quitter.addMouseListener(mouse4);
         JLabel espace1 = new JLabel();
         espace1.setText("     ");
         JLabel espace2 = new JLabel();
@@ -217,6 +263,7 @@ public class Sudoku extends JFrame {
         cp.add(ZonePseudo,aligne);
         aligne.gridwidth=getWidth();
         cp.add(b,aligne);
+        cp.add(quitter,aligne);
         texte.setVisible(true);
         ZonePseudo.setVisible(true);
         bouton1.setVisible(true);
@@ -224,7 +271,7 @@ public class Sudoku extends JFrame {
         bouton3.setVisible(true);
         fenetre.setVisible(true);
 
-        cd.setPreferredSize(new Dimension(hauteur_max,largeur_max)); //plein ecran ?
+        cd.setPreferredSize(new Dimension(hauteur_max,largeur_max));
         while(!aCliquer)
         {
             try {
@@ -360,7 +407,7 @@ public class Sudoku extends JFrame {
         joueur.setScore(score);
         listeJoueur.add(joueur);
         EnregistrerListe(nomFichier);
-        afficherClassement();
+        afficherVotreScore();
 
 
         sc.close();
@@ -414,7 +461,7 @@ public class Sudoku extends JFrame {
 
                     if (CptErreur == erreurMax) {
                         JOptionPane.showMessageDialog(null, "Tu as perdu ! Tu as fais "+erreurMax+" erreurs");
-                        fenetre.dispose();
+                        fini=true;
                     }
                 } else {
                     System.out.println(premierChar.length());
@@ -423,10 +470,8 @@ public class Sudoku extends JFrame {
                     grilleT[LigneChoisie][ColonneChoisie].setText(premierChar);
 
                     if (grille.verifierGrille() == 1) {
-                        //Faire des trucs si grille bonne
-                        fini=true;
                         JOptionPane.showMessageDialog(null, "Tu as gagné !");
-                        fenetre.dispose();
+                        fini=true;
                     }
 
 
@@ -628,34 +673,50 @@ public class Sudoku extends JFrame {
 
         }
 
-        public void afficherClassement()
+        public void afficherVotreScore()
         {
-            cd.setVisible(false);
+            fenetre.setVisible(false);
             fenetre.remove(cd);
+            fenetre.setContentPane(votreScore);
+            GridBagConstraints gbc = new GridBagConstraints();
+            votreScore.setLayout(new GridBagLayout());
+            txt.setText("Votre Score :");
+            txt.setHorizontalAlignment(JLabel.CENTER);
+            txt.setVerticalAlignment(JLabel.CENTER);
+            txt.setForeground(Color.white);
+            txt.setFont(new Font("Arial",Font.BOLD,30));
+            txt.setPreferredSize(new Dimension(200,50));
+            txt_score.setText(Integer.toString(joueur.getScore()));
+            txt_score.setForeground(Color.black);
+            txt_score.setVerticalAlignment(JLabel.CENTER);
+            txt_score.setHorizontalAlignment(JLabel.CENTER);
+            txt_score.setFont(new Font("Arial",Font.BOLD,50));
+            gbc.ipady =  GridBagConstraints.CENTER;
+            gbc.gridx=0;
+            gbc.gridy=GridBagConstraints.RELATIVE;
+            gbc.fill=GridBagConstraints.HORIZONTAL;
+            gbc.insets = new Insets(40,40,40,40);
+            votreScore.add(txt,gbc);
+            votreScore.add(txt_score,gbc);
+            txt.setVisible(true);
+            txt_score.setVisible(true);
+            votreScore.setVisible(true);
             fenetre.repaint();
-            synchroniseClassement();
-            tableau = new JTable(donnees,entetes);
-            tableau.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK));
-            classement.add(tableau);
-            fenetre.add(new JScrollPane(classement),BorderLayout.CENTER);
-            classement.setVisible(true);
+            fenetre.setVisible(true);
+
 
             try {
-                Thread.sleep(100000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            fenetre.dispose();
             fenetre.setVisible(false);
 
 
         }
 
-        public void synchroniseClassement()
-        {
-            this.donnees = new Object[][]{{joueur.getPseudo(), Integer.toString(joueur.getScore())}};
 
-            ///// ajouter pour chque joueurs
-        }
 
 
 }

@@ -2,8 +2,10 @@ package fr.projet.sudoku;
 
 import fr.projet.*;
 
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -270,7 +272,7 @@ public class Sudoku extends JFrame {
         bouton2.setVisible(true);
         bouton3.setVisible(true);
         fenetre.setVisible(true);
-
+        //lancerMusique("src/Sudoku/Musique/Jasmin.wav");
         cd.setPreferredSize(new Dimension(hauteur_max,largeur_max));
         while(!aCliquer)
         {
@@ -716,7 +718,49 @@ public class Sudoku extends JFrame {
 
         }
 
+        public void lancerMusique(String musique) {
+            File fichier = new File(musique);
+            SourceDataLine line = null;
+            AudioInputStream audioInputStream = null;
+            try {
+                AudioFileFormat format = AudioSystem.getAudioFileFormat(fichier);
+            } catch (UnsupportedAudioFileException e1) {
+            } catch (IOException e1) {
+            }
+
+            try {
+                audioInputStream = AudioSystem.getAudioInputStream(fichier);
+            } catch (UnsupportedAudioFileException e) {
+            } catch (IOException e) {
+            }
+
+            AudioFormat audioFormat = audioInputStream.getFormat();
+            DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+
+            try {
+                line = (SourceDataLine) AudioSystem.getLine(info);
+            } catch (LineUnavailableException e) {
+                return;
+            }
+
+            try {
+                line.open(audioFormat);
+            } catch (LineUnavailableException e) {
+                return;
+            }
+            line.start();
+            try {
+                byte bytes[] = new byte[1024];
+                int bytesRead = 0;
+                while ((bytesRead = audioInputStream.read(bytes, 0, bytes.length)) != -1) {
+                    line.write(bytes, 0, bytesRead);
+                }
+            } catch (IOException io) {
+                io.printStackTrace();
+                return;
+            }
 
 
+        }
 
 }

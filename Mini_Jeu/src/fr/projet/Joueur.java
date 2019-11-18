@@ -1,6 +1,8 @@
 package fr.projet;
 
-public class Joueur {
+import java.io.Serializable;
+
+public class Joueur implements Serializable {
 	
 	private String pseudo;
 	private int score=0;
@@ -98,7 +100,7 @@ public class Joueur {
 	}
 
 	public void afficherJoueur(){
-		System.out.println(pseudo +"\t"+ scoreSudo +"\t"+ scoreLoto +"\t"+ scorePoker  +"\t"+ scoreBN);
+		System.out.println(pseudo +"\n\t"+ scoreSudo +"\t"+ scoreLoto +"\t"+ scorePoker  +"\t"+ scoreBN +"\t"+ score);
 	}
 
 }

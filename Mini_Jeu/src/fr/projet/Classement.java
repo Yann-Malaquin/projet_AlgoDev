@@ -1,10 +1,14 @@
 package fr.projet;
 
+import java.io.*;
 import java.util.ArrayList;
 
-public class Classement {
+public class Classement implements Serializable{
     public ArrayList<Joueur> ClassementGlobal=new ArrayList<Joueur>();
     public String FichierSauvegarde="Classement.txt";
+
+    public Classement() {
+    }
 
     //Ajoute un joueur dans le Classement Si non présent.
     public void ajouterJoueur(Joueur J){
@@ -43,4 +47,55 @@ public class Classement {
             ClassementGlobal.get(indiceJoueur).ajoutScoreBN(points);
         }
     }
-}
+
+    public void afficherClassement() {
+        for (fr.projet.Joueur P : this.ClassementGlobal) {
+            P.afficherJoueur();
+
+        }
+    }
+
+    public File SauvegardeClassement(String Nom) {
+
+        File SaveClassement = new File(Nom);
+        FileOutputStream temp;
+        try {
+            temp = new FileOutputStream(SaveClassement);
+            ObjectOutputStream oos = new ObjectOutputStream(temp);
+            oos.writeObject(this);
+            oos.close();
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
+        return SaveClassement;
+    }
+
+    public void ChargerClassement(Classement C, String nomSave) {
+
+        File f = new File(nomSave);
+
+        FileInputStream inFileStream;
+
+        try {
+            inFileStream = new FileInputStream(f);
+            ObjectInputStream inObjectStream = new ObjectInputStream(inFileStream);
+            C = (Classement) inObjectStream.readObject();
+
+            ClassementGlobal = C.ClassementGlobal;
+
+            inObjectStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+    }
+
+

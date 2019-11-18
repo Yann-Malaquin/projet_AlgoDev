@@ -20,18 +20,12 @@ public class MiniJeux {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Joueur J=new Joueur("Jean");
-		Classement C=new Classement();
-		C.ajouterJoueur(J);
-		for(fr.projet.Joueur P: C.ClassementGlobal){
-			P.afficherJoueur();
 
-		}
 		int choix=1;
 		
 		while(choix!=0) {
 			Scanner sc1 = new Scanner(System.in);
-			System.out.println("<0> Quitter <1> Sudoku <2> Loto"/* <3> Poker <4> Bataille Navale*/);
+			System.out.println("<0> Quitter <1> Sudoku <2> Loto <3> Poker <4> Bataille Navale <5> Classement" );
 			System.out.println("Choix: ");
 
 			try {
@@ -98,6 +92,21 @@ public class MiniJeux {
 					Bateau B5 = new Bateau("Torpilleur", 2, true);
 					P1.DemarrerPartie(J1, J2);*/
 					//sc.close();
+
+                case 5:
+                    System.out.println("Test des classements");
+                    Joueur Philippe=new Joueur("Philippe");
+                    Joueur Bernard=new Joueur("Bernard");
+                    Classement C=new Classement();
+                    C.ajouterJoueur(Philippe);
+                    C.DonnerPointAUnJoueur(Bernard,20,1);
+                    C.afficherClassement();
+                    C.SauvegardeClassement(C.FichierSauvegarde);
+                    System.out.println("Sauvegarde effectuée \n Affichage du classement chargé");
+                    Classement ClassementCharge = new Classement();
+                    ClassementCharge.ChargerClassement(ClassementCharge,C.FichierSauvegarde);
+                    ClassementCharge.afficherClassement();
+                    break;
 			}
 		}
 

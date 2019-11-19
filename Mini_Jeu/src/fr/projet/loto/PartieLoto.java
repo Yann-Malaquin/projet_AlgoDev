@@ -19,9 +19,13 @@ public class PartieLoto {
 		NbJoueurs = nbJoueurs;
 	}
 
+	public PartieLoto() {
+		super();
+	}
+
 	public void Creationbouleloto() {
 		int i;
-		for (i = 0; i < 99; i++) {
+		for (i = 0; i < 90; i++) {
 			Lint.add(i + 1);
 		}
 	}
@@ -34,7 +38,7 @@ public class PartieLoto {
 
 	public void CreationGrille() {
 		int i, cpt = 0, x = 0;
-		for (i = 0; i < 50; i++) {
+		for (i = 0; i < 100; i++) {
 			x = 0;
 			while (x != 1) {
 				cpt = 0;
@@ -42,7 +46,7 @@ public class PartieLoto {
 				G.setLI(new ArrayList<Integer>());
 				G.creationGrille();
 				for (int a = 0; a < 3; a++) {
-					for (int b = 0; b < 10; b++) {
+					for (int b = 0; b < 9; b++) {
 						if (G.getG().getT()[a][b].getVal().compareTo(" ") != 0) {
 							cpt++;
 						}
@@ -54,18 +58,18 @@ public class PartieLoto {
 				}
 			}
 		}
-		for (GrilleLoto temp : LG) {
-			temp.Affichage(temp.getG());
-		}
+		//for (GrilleLoto temp : LG) {
+			//temp.Affichage(temp.getG());
+		//}
 	}
 
 	public void distribution() {
 		int i = 0, y, z;
-		Scanner sc = new Scanner(System.in);
+		/*Scanner sc = new Scanner(System.in);
 		String nom;
 		int nbfav, nbcartons;
 		while (i < NbJoueurs) {
-			System.out.println("\nChoisir le prénom du joueur: " + (i + 1));
+			System.out.println("\nChoisir le prï¿½nom du joueur: " + (i + 1));
 			nom = sc.nextLine();
 			System.out.println("\nChoisir le nombre favoris du joueur: ");
 			nbfav = sc.nextInt();
@@ -78,7 +82,7 @@ public class PartieLoto {
 			LJ.add(JL);
 			i++;
 		}
-		//sc.close();
+		sc.close();*/
 		for (JoueurLoto temp : LJ) {
 			y = 0;
 			z = 0;
@@ -98,15 +102,15 @@ public class PartieLoto {
 				LG.remove(LG.get(taille));
 				y++;
 			}
-			for (GrilleLoto x : temp.getLGJ()) {
+			/*for (GrilleLoto x : temp.getLGJ()) {
 				x.Affichage(x.getG());
-			}
+			}*/
 		}
 	}
 
 	public Boolean nbfav(GrilleLoto GL, JoueurLoto JL) {
 		for (int a = 0; a < 3; a++) {
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < 9; j++) {
 				if (GL.getG().getT()[a][j].getVal() == GL.convertir(JL.getNombrefav())) {
 					JL.getLGJ().add(GL);
 					System.out.println(JL.getJ().getPseudo());
@@ -170,7 +174,7 @@ public class PartieLoto {
 	}*/
 	
 	public void debut_partie() {
-	int grillepleine=0,t1=0,t2=0,t3=0,cadeau1=0,cadeau2=0,cadeau3=0,max=99;
+	int grillepleine=0,t1=0,t2=0,t3=0,cadeau1=0,cadeau2=0,cadeau3=0,max=90;
 	remplissage_cadeau();
 	while (grillepleine !=1) {
 	int x=0,y=0,z=0;
@@ -183,19 +187,19 @@ public class PartieLoto {
 	for (JoueurLoto test : LJ) {
 		System.out.println("\n\n" + test.getJ().getPseudo() + ":");
 		for (GrilleLoto tempo: test.getLGJ()) {
-			System.out.println("Le numéro de cette grille: " + (test.getLGJ().indexOf(tempo)+1) );
+			System.out.println("Le numï¿½ro de cette grille: " + (test.getLGJ().indexOf(tempo)+1) );
 			tempo.Affichage(tempo.getG());
-			System.out.println("\nCette grille contient-elle le numéro ? " + temp + "\n1=Oui, 2=Non");
+			System.out.println("\nCette grille contient-elle le numï¿½ro ? " + temp + "\n1=Oui, 2=Non");
 			Scanner sc1 = new Scanner(System.in);
 			int verif = sc1.nextInt();
 			sc1.nextLine();
 			if(verif==1) {
-				System.out.println("Donnez le numéro de la ligne, puis de la colonne:");
+				System.out.println("Donnez le numï¿½ro de la ligne, puis de la colonne:");
 			int l = sc1.nextInt();
 			int c = sc1.nextInt();
 			tempo.getG().getT()[l-1][c-1].setModifiable(false);
 			}
-			System.out.println("Rappel des numéros déjà tirées:");
+			System.out.println("Rappel des numï¿½ros dï¿½jï¿½ tirï¿½es:");
 			for (int c:Lboulesortie) {
 				System.out.println(c + " ");
 			}
@@ -231,7 +235,7 @@ public class PartieLoto {
 						 t1++;
 					 }
 					 else {
-						 System.out.println("\nVous vous êtes trompés!");
+						 System.out.println("\nVous vous ï¿½tes trompï¿½s!");
 						 t1=0;
 					 }
 				}
@@ -269,7 +273,7 @@ public class PartieLoto {
 						 t2++;
 					 }
 					 else {
-						 System.out.println("\nVous vous êtes trompés!");
+						 System.out.println("\nVous vous ï¿½tes trompï¿½s!");
 						 t2=0;
 					 }
 				}
@@ -309,7 +313,7 @@ public class PartieLoto {
 							 break;
 						 }
 						 else {
-							 System.out.println("\nVous vous êtes trompés!");
+							 System.out.println("\nVous vous ï¿½tes trompï¿½s!");
 							 t3=0;
 						 }
 					}
@@ -323,20 +327,28 @@ public class PartieLoto {
 		Lots L;
 		L=new Lots("Blu-Ray", 1);
 		Lcadeau.add(L);
-		L=new Lots("Appareil à raclette", 2);
+		L=new Lots("Appareil a raclette", 2);
 		Lcadeau.add(L);
 		L=new Lots("VTT", 3);
 		Lcadeau.add(L);
-		L=new Lots("Télévision 4k", 3);
+		L=new Lots("Television 4k", 3);
 		Lcadeau.add(L);
 		L=new Lots("Bon d'achat de 20 euros", 1);
 		Lcadeau.add(L);
-		L=new Lots("1 bière offerte au bar", 1);
+		L=new Lots("1 biere offerte au bar", 1);
 		Lcadeau.add(L);
 		L=new Lots("Roman policier", 1);
 		Lcadeau.add(L);
 		L=new Lots("Casquette tour de France", 1);
 		Lcadeau.add(L);
 		return L;
+	}
+
+	public List<JoueurLoto> getLJ(){
+		return this.LJ;
+	}
+
+	public void setjoueur(JoueurLoto JL){
+		LJ.add(JL);
 	}
 }

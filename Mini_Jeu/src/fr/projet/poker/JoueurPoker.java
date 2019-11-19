@@ -1,64 +1,55 @@
 package fr.projet.poker;
 
-import java.util.ArrayList;
-import java.util.List;
 import fr.projet.Joueur;
 import javafx.scene.layout.AnchorPane;
 
-public class JoueurPoker extends Joueur{
-	
-	private List<AnchorPane> mainJoueur; // 2 cartes en main
-	private int wallet; // porte feuille du joueur (limite par la table)
-	private int mise; // mise du joueur
-	private List<String> etatJoueur; 
-	/*List car un joueur peuavoir plusieurs "etats" fold et pblinde ...
-	 * fold,call,raise,all-in,check,pblinde,gblinde,donneur
-	 */
-	
-	public JoueurPoker(String _pseudo)
-	{
-		super(_pseudo);
-		mainJoueur=new ArrayList<AnchorPane>();
-		int wallet=0;
-		int mise=0;
-		etatJoueur=new ArrayList<String>();
-	}
+import java.util.ArrayList;
+import java.util.List;
 
-	public List<AnchorPane> getMainJoueur() {
-		return mainJoueur;
-	}
+public class JoueurPoker extends Joueur {
 
-	public void setMainJoueur(AnchorPane c) {
-		this.mainJoueur.add(c);
-	}
+    private List<AnchorPane> mainJoueur; // 2 cartes en main
+    private int wallet; // porte feuille du joueur (limite par la table)
+    private int mise; // mise du joueur
+    private List<String> etatJoueur;
+    /*List car un joueur peuavoir plusieurs "etats" fold et pblinde ...
+     * fold,call,raise,all-in,check,pblinde,gblinde,donneur
+     */
 
-	public int getWallet() {
-		return wallet;
-	}
+    public JoueurPoker(String _pseudo, int _wallet) {
+        super(_pseudo);
+        mainJoueur = new ArrayList<AnchorPane>();
+        int wallet = _wallet;
+        etatJoueur = new ArrayList<String>();
+    }
 
-	public void setWallet(int _wallet) {
-		this.wallet = _wallet;
-	}
+    public List<AnchorPane> getMainJoueur() {
+        return mainJoueur;
+    }
 
-	public int getMise() {
-		return mise;
-	}
+    public void setMainJoueur(AnchorPane c) {
+        this.mainJoueur.add(c);
+    }
 
-	public void setMise(int _mise) {
-		this.mise = _mise;
-	}
+    public int getWallet() {
+        return wallet;
+    }
 
-	public List<String> getEtatJoueur() {
-		return etatJoueur;
-	}
+    public void setWallet(int _wallet) {
+        this.wallet = _wallet;
+    }
 
-	public void setEtatJoueur(String _etatJoueur) {
-		this.etatJoueur.add(_etatJoueur);
-	}
+    public List<String> getEtatJoueur() {
+        return etatJoueur;
+    }
 
-	@Override
-	public String toString() {
-		return this.getPseudo()+"\nmainJoueur= [" + mainJoueur + "]\nwallet=" + wallet + " �\nmise=" + mise + " �\netatJoueur=["
-				+ etatJoueur + "]\n";
-	}
+    public void setEtatJoueur(String _etatJoueur) {
+        this.etatJoueur.add(_etatJoueur);
+    }
+
+    @Override
+    public String toString() {
+        return this.getPseudo() + "\nmainJoueur= [" + mainJoueur + "]\nwallet=" + wallet + " �\netatJoueur=["
+                + etatJoueur + "]\n";
+    }
 }

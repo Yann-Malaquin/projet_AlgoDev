@@ -29,6 +29,10 @@ public class TableController extends Thread {
 
     private List<AnchorPane> paquetCartes = new ArrayList<AnchorPane>();
     private List<AnchorPane> paquetCartesMelangees = new ArrayList<AnchorPane>();
+    private List<JoueurPoker> lJP = new ArrayList<JoueurPoker>();
+    private int indexJoueur;
+    private double suivre;
+    private int init;
 
     FileInputStream table;
 
@@ -61,6 +65,8 @@ public class TableController extends Thread {
     @FXML
     private Button Suivre;
     @FXML
+    private Button Relancer;
+    @FXML
     private Button Miser;
     @FXML
     private Button Tapis;
@@ -70,7 +76,6 @@ public class TableController extends Thread {
     private Label Pot;
     @FXML
     private TextField barreMiser;
-
     @FXML
     private Label Role;
 
@@ -99,12 +104,13 @@ public class TableController extends Thread {
         afficher = (Button) Plateau.getChildren().get(1);
         distribuer = (Button) Plateau.getChildren().get(2);
         SeCoucher = (Button) Plateau.getChildren().get(3);
-        Miser = (Button) Plateau.getChildren().get(4);
-        Check = (Button) Plateau.getChildren().get(5);
-        Tapis = (Button) Plateau.getChildren().get(6);
-        Suivre = (Button) Plateau.getChildren().get(7);
-        barreMiser = (TextField) Plateau.getChildren().get(8);
-        Pot = (Label) Plateau.getChildren().get(9);
+        Suivre = (Button) Plateau.getChildren().get(4);
+        Relancer = (Button) Plateau.getChildren().get(5);
+        Miser = (Button) Plateau.getChildren().get(6);
+        Tapis = (Button) Plateau.getChildren().get(7);
+        Check = (Button) Plateau.getChildren().get(8);
+        barreMiser = (TextField) Plateau.getChildren().get(9);
+        Pot = (Label) Plateau.getChildren().get(10);
 
         Fenetre.setPrefWidth(primaryStage.getWidth());
         Fenetre.setPrefHeight(primaryStage.getHeight());
@@ -123,9 +129,9 @@ public class TableController extends Thread {
                 BackgroundSize.DEFAULT);
         Table.setBackground(new Background(myBI));
         System.out.println("balbalbal " + name.toString());
-        this.setButton(root);
+        //this.setButton(root);
         this.setNamePlayer(root, name);
-        this.setBankPlayer(root,bank);
+        this.setBankPlayer(root, bank);
         this.setDonneur(root, nameDonneur);
         paquetCartes = this.genererPaquetCarte();
         afficher.setText("Afficher paquet cartes");
@@ -139,7 +145,7 @@ public class TableController extends Thread {
                 Fenetre = (AnchorPane) root.getChildren().get(0);
                 Table = (AnchorPane) Fenetre.getChildren().get(0);
                 AllJoueur = (Group) Table.getChildren().get(0);
-                Plateau = (Group) AllJoueur.getChildren().get(5);
+                Plateau = (Group) AllJoueur.getChildren().get(AllJoueur.getChildren().size() - 1);
             }
 
             public void afficheCarte(Group root, List<AnchorPane> paquetCartes) {
@@ -148,7 +154,7 @@ public class TableController extends Thread {
                 Fenetre = (AnchorPane) root.getChildren().get(0);
                 Table = (AnchorPane) Fenetre.getChildren().get(0);
                 AllJoueur = (Group) Table.getChildren().get(0);
-                Plateau = (Group) AllJoueur.getChildren().get(5);
+                Plateau = (Group) AllJoueur.getChildren().get(AllJoueur.getChildren().size() - 1);
                 Carte = (AnchorPane) Plateau.getChildren().get(0);
                 afficher = (Button) Plateau.getChildren().get(1);
 
@@ -190,7 +196,7 @@ public class TableController extends Thread {
                 Fenetre = (AnchorPane) root.getChildren().get(0);
                 Table = (AnchorPane) Fenetre.getChildren().get(0);
                 AllJoueur = (Group) Table.getChildren().get(0);
-                Plateau = (Group) AllJoueur.getChildren().get(5);
+                Plateau = (Group) AllJoueur.getChildren().get(AllJoueur.getChildren().size() - 1);
             }
 
             public void distribuerCartes(Group root, List<AnchorPane> paquetCartes) {
@@ -206,7 +212,7 @@ public class TableController extends Thread {
                 Fenetre = (AnchorPane) root.getChildren().get(0);
                 Table = (AnchorPane) Fenetre.getChildren().get(0);
                 AllJoueur = (Group) Table.getChildren().get(0);
-                Plateau = (Group) AllJoueur.getChildren().get(5);
+                Plateau = (Group) AllJoueur.getChildren().get(AllJoueur.getChildren().size() - 1);
 
                 for (i = 0; i < AllJoueur.getChildren().size() - 1; i++) {
                     Joueur = (Group) AllJoueur.getChildren().get(i);
@@ -278,6 +284,9 @@ public class TableController extends Thread {
 
         });
 
+        this.partiePoker(root, AllJoueur);
+        this.pbGB(root, AllJoueur, 10, 20);
+
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
@@ -296,7 +305,7 @@ public class TableController extends Thread {
         }
     }
 
-    public void setBankPlayer(Group root, List<String> bank){
+    public void setBankPlayer(Group root, List<String> bank) {
         int i = 0;
         Fenetre = (AnchorPane) root.getChildren().get(0);
         Table = (AnchorPane) Fenetre.getChildren().get(0);
@@ -305,7 +314,7 @@ public class TableController extends Thread {
         while (i < AllJoueur.getChildren().size() - 1) {
             Joueur = (Group) AllJoueur.getChildren().get(i);
             Bank = (Label) Joueur.getChildren().get(4);
-            Bank.setText(bank.get(i)+ "€");
+            Bank.setText(bank.get(i) + " €");
             i++;
         }
     }
@@ -401,11 +410,7 @@ public class TableController extends Thread {
         return paquetCartes;
     }
 
-    public void partiePoker() {
-
-    }
-
-    public void setButton(Group root){
+    public void setButton(Group root) {
 
         Fenetre = (AnchorPane) root.getChildren().get(0);
         Table = (AnchorPane) Fenetre.getChildren().get(0);
@@ -414,12 +419,13 @@ public class TableController extends Thread {
         Carte = (AnchorPane) Plateau.getChildren().get(0);
         distribuer = (Button) Plateau.getChildren().get(2);
         SeCoucher = (Button) Plateau.getChildren().get(3);
-        Miser = (Button) Plateau.getChildren().get(4);
-        Check = (Button) Plateau.getChildren().get(5);
-        Tapis = (Button) Plateau.getChildren().get(6);
-        Suivre = (Button) Plateau.getChildren().get(7);
-        barreMiser = (TextField) Plateau.getChildren().get(8);
-        Pot = (Label) Plateau.getChildren().get(9);
+        Suivre = (Button) Plateau.getChildren().get(4);
+        Relancer = (Button) Plateau.getChildren().get(5);
+        Miser = (Button) Plateau.getChildren().get(6);
+        Tapis = (Button) Plateau.getChildren().get(7);
+        Check = (Button) Plateau.getChildren().get(8);
+        barreMiser = (TextField) Plateau.getChildren().get(9);
+        Pot = (Label) Plateau.getChildren().get(10);
 
         distribuer.setVisible(false);
         SeCoucher.setVisible(false);
@@ -431,6 +437,457 @@ public class TableController extends Thread {
         barreMiser.setVisible(false);
     }
 
+    /*public void miser(Group root, Group Joueur, double mise) {
+
+        double bank = 0, pot = 0;
+
+        Label tmp = (Label) Joueur.getChildren().get(4);
+        Fenetre = (AnchorPane) root.getChildren().get(0);
+        Table = (AnchorPane) Fenetre.getChildren().get(0);
+        AllJoueur = (Group) Table.getChildren().get(0);
+        Plateau = (Group) AllJoueur.getChildren().get(5);
+        Role = (Label) Joueur.getChildren().get(3);
+        Role.setText(Role.getText() + "/M");
+        Bank = (Label) Joueur.getChildren().get(4);
+        Pot = (Label) Plateau.getChildren().get(9);
+        ///////////////////////////////////////////
+        //Bank
+
+        String tmpBank = Bank.getText();
+        String tmpBank2 = tmpBank.substring(0, tmpBank.length() - 2);
+        bank = Double.parseDouble(tmpBank2) - mise;
+        Bank.setText(tmpBank.replaceAll(tmpBank2, Double.toString(bank)));
+
+        //////////////////////////////////////////
+        //Pot
+        String tmpPot = Pot.getText();
+        String tmpPot2 = tmpPot.substring(12, tmpPot.length() - 2);
+        pot = mise + Double.parseDouble(tmpPot2);
+        Pot.setText(tmpPot.replaceAll(tmpPot2, Double.toString(pot)));
+    }
+
+    public void relancer(Group root, Group Joueur, double relance) {
+        double bank = 0, pot = 0;
+
+        Label tmp = (Label) Joueur.getChildren().get(4);
+        Fenetre = (AnchorPane) root.getChildren().get(0);
+        Table = (AnchorPane) Fenetre.getChildren().get(0);
+        AllJoueur = (Group) Table.getChildren().get(0);
+        Plateau = (Group) AllJoueur.getChildren().get(5);
+        Role = (Label) Joueur.getChildren().get(3);
+        Role.setText(Role.getText() + "/R");
+        Bank = (Label) Joueur.getChildren().get(4);
+        Pot = (Label) Plateau.getChildren().get(9);
+        ///////////////////////////////////////////
+        //Bank
+
+        String tmpBank = Bank.getText();
+        String tmpBank2 = tmpBank.substring(0, tmpBank.length() - 2);
+        bank = Double.parseDouble(tmpBank2) - relance;
+        Bank.setText(tmpBank.replaceAll(tmpBank2, Double.toString(bank)));
+
+        //////////////////////////////////////////
+        //Pot
+        String tmpPot = Pot.getText();
+        String tmpPot2 = tmpPot.substring(12, tmpPot.length() - 2);
+        pot = relance + Double.parseDouble(tmpPot2);
+        Pot.setText(tmpPot.replaceAll(tmpPot2, Double.toString(pot)));
+
+    }
+
+    public void suivre(Group root, Group Joueur, double suivie) {
+        double bank = 0, pot = 0;
+
+        Label tmp = (Label) Joueur.getChildren().get(4);
+        Fenetre = (AnchorPane) root.getChildren().get(0);
+        Table = (AnchorPane) Fenetre.getChildren().get(0);
+        AllJoueur = (Group) Table.getChildren().get(0);
+        Plateau = (Group) AllJoueur.getChildren().get(5);
+        Role = (Label) Joueur.getChildren().get(3);
+        Role.setText(Role.getText() + "/S");
+        Bank = (Label) Joueur.getChildren().get(4);
+        Pot = (Label) Plateau.getChildren().get(9);
+        ///////////////////////////////////////////
+        //Bank
+
+        String tmpBank = Bank.getText();
+        String tmpBank2 = tmpBank.substring(0, tmpBank.length() - 2);
+        bank = Double.parseDouble(tmpBank2) - suivie;
+        Bank.setText(tmpBank.replaceAll(tmpBank2, Double.toString(bank)));
+
+        //////////////////////////////////////////
+        //Pot
+        String tmpPot = Pot.getText();
+        String tmpPot2 = tmpPot.substring(12, tmpPot.length() - 2);
+        pot = suivie + Double.parseDouble(tmpPot2);
+        Pot.setText(tmpPot.replaceAll(tmpPot2, Double.toString(pot)));
+
+    }
+
+    public void check(Group root, Group Joueur) {
+        Label tmp = (Label) Joueur.getChildren().get(4);
+        Fenetre = (AnchorPane) root.getChildren().get(0);
+        Table = (AnchorPane) Fenetre.getChildren().get(0);
+        AllJoueur = (Group) Table.getChildren().get(0);
+        Plateau = (Group) AllJoueur.getChildren().get(5);
+        Role = (Label) Joueur.getChildren().get(3);
+        Role.setText(Role.getText() + "/C");
+    }
+
+    public void tapis(Group root, Group Joueur) {
+        double bank = 0, pot = 0;
+        Label tmp = (Label) Joueur.getChildren().get(4);
+        Fenetre = (AnchorPane) root.getChildren().get(0);
+        Table = (AnchorPane) Fenetre.getChildren().get(0);
+        AllJoueur = (Group) Table.getChildren().get(0);
+        Plateau = (Group) AllJoueur.getChildren().get(5);
+        Role = (Label) Joueur.getChildren().get(3);
+        Role.setText(Role.getText() + "/T");
+        Bank = (Label) Joueur.getChildren().get(4);
+        Pot = (Label) Plateau.getChildren().get(9);
+        ///////////////////////////////////////////
+        //Bank
+
+        String tmpBank = Bank.getText();
+        String tmpBank2 = tmpBank.substring(0, tmpBank.length() - 2);
+        bank = Double.parseDouble(tmpBank2);
+        Bank.setText(tmpBank.replaceAll(tmpBank2, "0"));
+
+        //////////////////////////////////////////
+        //Pot
+        String tmpPot = Pot.getText();
+        String tmpPot2 = tmpPot.substring(12, tmpPot.length() - 2);
+        pot = bank + Double.parseDouble(tmpPot2);
+        Pot.setText(tmpPot.replaceAll(tmpPot2, Double.toString(pot)));
+
+    }
+
+    public void seCoucher(Group root, Group Joueur) {
+
+        Joueur.getChildren().remove(0);
+        Joueur.getChildren().remove(0);
+
+
+    }*/
+
+    public void pbGB(Group root, Group AllJoueur, double pb, double gb) {
+        double bank = 0, pot = 0, j = 0;
+
+        for (int i = 0; i < AllJoueur.getChildren().size() - 1; i++) {
+
+            Joueur = (Group) AllJoueur.getChildren().get(i);
+            Role = (Label) Joueur.getChildren().get(3);
+            Bank = (Label) Joueur.getChildren().get(4);
+            Pot = (Label) Plateau.getChildren().get(10);
+
+            if (Role.getText().compareTo("GB") == 0) {
+                ///////////////////////////////////////////
+                //Bank
+
+                String tmpBank = Bank.getText();
+                String tmpBank2 = tmpBank.substring(0, tmpBank.length() - 2);
+                bank = Double.parseDouble(tmpBank2) - gb;
+                Bank.setText(tmpBank.replaceAll(tmpBank2, Double.toString(bank)));
+
+                //////////////////////////////////////////
+                //Pot
+                String tmpPot = Pot.getText();
+                String tmpPot2 = tmpPot.substring(12, tmpPot.length() - 2);
+                pot = gb + Double.parseDouble(tmpPot2);
+                Pot.setText(tmpPot.replaceAll(tmpPot2, Double.toString(pot)));
+                j++;
+            } else if (Role.getText().compareTo("PB") == 0) {
+                ///////////////////////////////////////////
+                //Bank
+
+                String tmpBank = Bank.getText();
+                String tmpBank2 = tmpBank.substring(0, tmpBank.length() - 2);
+                bank = Double.parseDouble(tmpBank2) - pb;
+                Bank.setText(tmpBank.replaceAll(tmpBank2, Double.toString(bank)));
+
+                //////////////////////////////////////////
+                //Pot
+                String tmpPot = Pot.getText();
+                String tmpPot2 = tmpPot.substring(12, tmpPot.length() - 2);
+                pot = pb + Double.parseDouble(tmpPot2);
+                Pot.setText(tmpPot.replaceAll(tmpPot2, Double.toString(pot)));
+                j++;
+            }
+
+            if (j == 2) {
+                break;
+            }
+            this.suivre = gb;
+        }
+    }
+
+    public void premierTour(Group root, Group AllJoueur) {
+
+        indexJoueur = 0;
+
+        while (indexJoueur < AllJoueur.getChildren().size() - 1) {
+            Joueur = (Group) AllJoueur.getChildren().get(indexJoueur);
+            Role = (Label) Joueur.getChildren().get(3);
+            if (Role.getText().compareTo("GB") == 0) {
+                break;
+            } else {
+                indexJoueur++;
+            }
+        }
+
+        if (indexJoueur >= AllJoueur.getChildren().size() - 1) {
+            indexJoueur = 0;
+        }
+
+        init = indexJoueur;
+        suivre = 0;
+        indexJoueur+= 1;
+
+        Suivre.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Joueur = (Group) AllJoueur.getChildren().get(indexJoueur);
+                //suivre = Double.parseDouble(barreMiser.getText());
+                this.suivre(root, Joueur, suivre);
+                System.out.println("Avant test IndexJoueur " + indexJoueur);
+                if (indexJoueur == init) {
+                    event.consume();
+                } else if (indexJoueur == AllJoueur.getChildren().size() - 2) {
+                    System.out.println("IF IndexJoueur " + indexJoueur);
+                    indexJoueur = 0;
+                } else {
+                    System.out.println("Else IndexJoueur " + indexJoueur);
+                    indexJoueur++;
+                }
+            }
+
+            public void suivre(Group root, Group Joueur, double suivie) {
+                double bank = 0, pot = 0;
+
+                Fenetre = (AnchorPane) root.getChildren().get(0);
+                Table = (AnchorPane) Fenetre.getChildren().get(0);
+                Plateau = (Group) AllJoueur.getChildren().get(5);
+                Role = (Label) Joueur.getChildren().get(3);
+                Role.setText(Role.getText() + "/S");
+                Bank = (Label) Joueur.getChildren().get(4);
+                Pot = (Label) Plateau.getChildren().get(10);
+                ///////////////////////////////////////////
+                //Bank
+
+                String tmpBank = Bank.getText();
+                String tmpBank2 = tmpBank.substring(0, tmpBank.length() - 2);
+                bank = Double.parseDouble(tmpBank2) - suivie;
+                Bank.setText(tmpBank.replaceAll(tmpBank2, Double.toString(bank)));
+
+                //////////////////////////////////////////
+                //Pot
+                String tmpPot = Pot.getText();
+                String tmpPot2 = tmpPot.substring(12, tmpPot.length() - 2);
+                pot = suivie + Double.parseDouble(tmpPot2);
+                Pot.setText(tmpPot.replaceAll(tmpPot2, Double.toString(pot)));
+            }
+        });
+
+        Miser.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                double mise = 0;
+                Joueur = (Group) AllJoueur.getChildren().get(indexJoueur);
+                mise = Double.parseDouble(barreMiser.getText());
+                this.miser(root, Joueur, mise);
+                System.out.println("Miser");
+                suivre = mise;
+                if (indexJoueur == init) {
+                    event.consume();
+                } else if (indexJoueur == AllJoueur.getChildren().size() - 2) {
+                    System.out.println("IF IndexJoueur " + indexJoueur);
+                    indexJoueur = 0;
+                } else {
+                    System.out.println("Else IndexJoueur " + indexJoueur);
+                    indexJoueur++;
+                }
+
+            }
+
+            public void miser(Group root, Group Joueur, double mise) {
+
+                double bank = 0, pot = 0;
+
+                Fenetre = (AnchorPane) root.getChildren().get(0);
+                Table = (AnchorPane) Fenetre.getChildren().get(0);
+                Plateau = (Group) AllJoueur.getChildren().get(5);
+                Role = (Label) Joueur.getChildren().get(3);
+                Role.setText(Role.getText() + "/M");
+                Bank = (Label) Joueur.getChildren().get(4);
+                Pot = (Label) Plateau.getChildren().get(10);
+                ///////////////////////////////////////////
+                //Bank
+
+                String tmpBank = Bank.getText();
+                String tmpBank2 = tmpBank.substring(0, tmpBank.length() - 2);
+                bank = Double.parseDouble(tmpBank2) - mise;
+                Bank.setText(tmpBank.replaceAll(tmpBank2, Double.toString(bank)));
+
+                //////////////////////////////////////////
+                //Pot
+                String tmpPot = Pot.getText();
+                String tmpPot2 = tmpPot.substring(12, tmpPot.length() - 2);
+                pot = mise + Double.parseDouble(tmpPot2);
+                Pot.setText(tmpPot.replaceAll(tmpPot2, Double.toString(pot)));
+            }
+        });
+
+        Relancer.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                double relance = 0;
+                Joueur = (Group) AllJoueur.getChildren().get(indexJoueur);
+                relance = Double.parseDouble(barreMiser.getText());
+                this.relancer(root, Joueur, relance);
+                suivre = relance;
+                if (indexJoueur == init) {
+                    event.consume();
+                } else if (indexJoueur == AllJoueur.getChildren().size() - 2) {
+                    System.out.println("IF IndexJoueur " + indexJoueur);
+                    indexJoueur = 0;
+                } else {
+                    System.out.println("Else IndexJoueur " + indexJoueur);
+                    indexJoueur++;
+                }
+            }
+
+            public void relancer(Group root, Group Joueur, double relance) {
+                double bank = 0, pot = 0;
+
+                Fenetre = (AnchorPane) root.getChildren().get(0);
+                Table = (AnchorPane) Fenetre.getChildren().get(0);
+                Plateau = (Group) AllJoueur.getChildren().get(5);
+                Role = (Label) Joueur.getChildren().get(3);
+                Role.setText(Role.getText() + "/R");
+                Bank = (Label) Joueur.getChildren().get(4);
+                Pot = (Label) Plateau.getChildren().get(10);
+                ///////////////////////////////////////////
+                //Bank
+
+                String tmpBank = Bank.getText();
+                String tmpBank2 = tmpBank.substring(0, tmpBank.length() - 2);
+                bank = Double.parseDouble(tmpBank2) - relance;
+                Bank.setText(tmpBank.replaceAll(tmpBank2, Double.toString(bank)));
+
+                //////////////////////////////////////////
+                //Pot
+                String tmpPot = Pot.getText();
+                String tmpPot2 = tmpPot.substring(12, tmpPot.length() - 2);
+                pot = relance + Double.parseDouble(tmpPot2);
+                Pot.setText(tmpPot.replaceAll(tmpPot2, Double.toString(pot)));
+
+            }
+        });
+
+        Check.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Joueur = (Group) AllJoueur.getChildren().get(indexJoueur);
+                this.check(root, Joueur);
+                if (indexJoueur == init) {
+                    event.consume();
+                } else if (indexJoueur == AllJoueur.getChildren().size() - 2) {
+                    System.out.println("IF IndexJoueur " + indexJoueur);
+                    indexJoueur = 0;
+                } else {
+                    System.out.println("Else IndexJoueur " + indexJoueur);
+                    indexJoueur++;
+                }
+            }
+
+            public void check(Group root, Group Joueur) {
+
+                Fenetre = (AnchorPane) root.getChildren().get(0);
+                Table = (AnchorPane) Fenetre.getChildren().get(0);
+                Plateau = (Group) AllJoueur.getChildren().get(5);
+                Role = (Label) Joueur.getChildren().get(3);
+                Role.setText(Role.getText() + "/C");
+            }
+        });
+
+        Tapis.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Joueur = (Group) AllJoueur.getChildren().get(indexJoueur);
+                this.tapis(root, Joueur);
+                if (indexJoueur == init) {
+                    event.consume();
+                } else if (indexJoueur == AllJoueur.getChildren().size() - 2) {
+                    System.out.println("IF IndexJoueur " + indexJoueur);
+                    indexJoueur = 0;
+                } else {
+                    System.out.println("Else IndexJoueur " + indexJoueur);
+                    indexJoueur++;
+                }
+            }
+
+            public void tapis(Group root, Group Joueur) {
+                double bank = 0, pot = 0;
+
+                Fenetre = (AnchorPane) root.getChildren().get(0);
+                Table = (AnchorPane) Fenetre.getChildren().get(0);
+                Plateau = (Group) AllJoueur.getChildren().get(5);
+                Role = (Label) Joueur.getChildren().get(3);
+                Role.setText(Role.getText() + "/T");
+                Bank = (Label) Joueur.getChildren().get(4);
+                Pot = (Label) Plateau.getChildren().get(10);
+                ///////////////////////////////////////////
+                //Bank
+
+                String tmpBank = Bank.getText();
+                String tmpBank2 = tmpBank.substring(0, tmpBank.length() - 2);
+                bank = Double.parseDouble(tmpBank2);
+                Bank.setText(tmpBank.replaceAll(tmpBank2, "0"));
+
+                //////////////////////////////////////////
+                //Pot
+                String tmpPot = Pot.getText();
+                String tmpPot2 = tmpPot.substring(12, tmpPot.length() - 2);
+                pot = bank + Double.parseDouble(tmpPot2);
+                Pot.setText(tmpPot.replaceAll(tmpPot2, Double.toString(pot)));
+            }
+        });
+
+        SeCoucher.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Joueur = (Group) AllJoueur.getChildren().get(indexJoueur);
+                this.seCoucher(root, Joueur);
+                if (indexJoueur == init) {
+                    event.consume();
+                } else if (indexJoueur == AllJoueur.getChildren().size() - 2) {
+                    System.out.println("IF IndexJoueur " + indexJoueur);
+                    indexJoueur = 0;
+                } else {
+                    System.out.println("Else IndexJoueur " + indexJoueur);
+                    indexJoueur++;
+                }
+            }
+
+            public void seCoucher(Group root, Group Joueur) {
+
+                Joueur.getChildren().remove(0);
+                Joueur.getChildren().remove(0);
+                Plateau = (Group) AllJoueur.getChildren().get(5);
+                Role = (Label) Joueur.getChildren().get(Joueur.getChildren().size() - 2);
+                Role.setText(Role.getText() + "/SC");
+            }
+        });
+    }
+
+    public void partiePoker(Group root, Group AllJoueur) {
+
+        this.premierTour(root, AllJoueur);
+    }
+
+
 }
+
+
 
 

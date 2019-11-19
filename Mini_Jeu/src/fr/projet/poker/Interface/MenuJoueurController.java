@@ -63,12 +63,8 @@ public class MenuJoueurController {
             bank.add(getBank.getText());
             i++;
         }
-
-
-
         Stage primaryStage = (Stage) Jouer.getScene().getWindow();
         controller.initTable(primaryStage,name,donneur,bank);
-
     }
 
 

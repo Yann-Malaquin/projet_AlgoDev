@@ -175,7 +175,4 @@ class GrilleBN extends Parent {
 		}
 
 	}
-
-
-
-	 }
+}

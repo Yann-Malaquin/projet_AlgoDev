@@ -1,5 +1,6 @@
 package fr.projet;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +19,14 @@ public class MiniJeux {
 
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
 		int choix=1;
 		
 		while(choix!=0) {
 			Scanner sc1 = new Scanner(System.in);
-			System.out.println("<0> Quitter <1> Menu Principal <2> Loto <3> Poker <4> Bataille Navale <5> Classement" );
+			System.out.println("<0> Quitter <1> Sudoku <2> Loto <3> Poker <4> Bataille Navale <5> Classement" );
 			System.out.println("Choix: ");
 
 			try {
@@ -40,8 +41,13 @@ public class MiniJeux {
 					System.out.println("Fin programme");
 					//System.exit(0);
 				case 1:
-					MenuPrincipal e = new MenuPrincipal();
-        				e.affichageMenuPrincipal();
+					Sudoku test = new Sudoku();
+					try {
+						test.Jouer();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					System.out.println("\n");
 					break;
 				case 2:
 					PartieLoto P = new PartieLoto(4);
@@ -89,17 +95,16 @@ public class MiniJeux {
 					//sc.close();
 
                 case 5:
-                    System.out.println("Test des classements");
-                    Joueur Philippe=new Joueur("Philippe");
-                    Joueur Bernard=new Joueur("Bernard");
-                    Classement C=new Classement();
-                    C.ajouterJoueur(Philippe);
-                    C.DonnerPointAUnJoueur(Bernard,20,1);
-                    C.afficherClassement();
-                    C.SauvegardeClassement(C.FichierSauvegarde);
-                    System.out.println("Sauvegarde effectuée \n Affichage du classement chargé");
+
                     Classement ClassementCharge = new Classement();
-                    ClassementCharge.ChargerClassement(ClassementCharge,C.FichierSauvegarde);
+                    File FichierTMP= new File(ClassementCharge.FichierSauvegarde);
+                    if(!FichierTMP.exists()) {
+						FichierTMP.createNewFile();
+						Joueur Anonyme = new Joueur("Anonyme");
+						ClassementCharge.ajouterJoueur(Anonyme);
+						ClassementCharge.SauvegardeClassement(ClassementCharge.FichierSauvegarde);
+					}
+                    ClassementCharge.ChargerClassement(ClassementCharge,ClassementCharge.FichierSauvegarde);
                     ClassementCharge.afficherClassement();
                     break;
 			}

@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -58,8 +57,7 @@ public class Partie extends Application {
 			TourIA = !cell.tire();
 
 			if (grilleIA.nbbateau == 0) {
-				afficherPopup();
-				System.exit(0);
+				System.out.println("PERDU");
 			}
 
 			if (TourIA)
@@ -98,11 +96,11 @@ public class Partie extends Application {
 			TourIA = cell.tire();
 
 			if (grilleJoueur.nbbateau == 0) {
-				afficherPopup();
-				System.exit(0);
+				System.out.println("PERDU");
 			}
 		}
 	}
+	
  /* Méthode qui permet de choisir aléatoirement les emplacement des bateau de l'IA) */
 	private void startGame() {
 
@@ -119,15 +117,6 @@ public class Partie extends Application {
 
 		lancement = true;
 	}
-
-	public void afficherPopup() {
-		Stage primaryStage = new Stage();
-		HBox root = new HBox();
-		primaryStage.setScene(new Scene(root, 400, 200));
-		primaryStage.setAlwaysOnTop(true);
-		primaryStage.show();
-	}
-
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Scene scene = new Scene(createContent());

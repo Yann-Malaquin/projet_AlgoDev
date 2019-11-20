@@ -2,17 +2,13 @@ package fr.projet.sudoku;
 
 import fr.projet.*;
 
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
 
-public class Sudoku extends JFrame {
+public class Sudoku {
 
     public static final int taille_grille =9;
     public static final int taille_sous_grille =3;
@@ -29,23 +25,13 @@ public class Sudoku extends JFrame {
     private JButton bouton2 = new JButton();
     private JButton bouton3 = new JButton();
     private JButton quitter = new JButton();
-    private ArrayList<Joueur> listeJoueur;
     private Joueur joueur = new Joueur();
     private String pseudo = "defaut";
     private JFrame fenetre = new JFrame();
     private JPanel cp = new JPanel() {
-
         public void paintComponent(Graphics g)
-        {
-        super.paintComponent(g);
-            ImageIcon fond = null;
-            try {
-                fond = new ImageIcon(ImageIO.read(new File("src/Sudoku/Fond_Sudoku.jpg")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            g.drawImage(fond.getImage(), 0, 0, getWidth(), getHeight(), null);
-      }
+        { super.paintComponent(g);
+            g.drawImage(new ImageIcon("src/Sudoku/Fond_Sudoku.jpg").getImage(), 0, 0, getWidth(), getHeight(), null); }
     };
     private JPanel cd = new JPanel();
     private JPanel votreScore =  new JPanel() {
@@ -53,166 +39,89 @@ public class Sudoku extends JFrame {
         public void paintComponent(Graphics g)
         {
             super.paintComponent(g);
-            ImageIcon fond = null;
-            try {
-                fond = new ImageIcon(ImageIO.read(new File("src/Sudoku/Fond_VotreScore.jpg")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            g.drawImage(fond.getImage(), 0, 0, getWidth(), getHeight(), null);
+            g.drawImage(new ImageIcon("src/Sudoku/Fond_VotreScore.jpg").getImage(), 0, 0, getWidth(), getHeight(), null);
         }
     };
     private int CptErreur=0;
     private boolean aCliquer = false;
     private boolean fini = false;
     private boolean retour = false;
-    private int erreurMax = 30;
+    private boolean sudo = false;
+    private boolean mp = false;
+    private boolean quit = false;
+    private int erreurMax = 1;
     private int difficulte; // 1=facile, 2=moyen, 3=difficile
 
 
     public Sudoku() {
         super();
-        this.listeJoueur = new ArrayList<Joueur>();
     }
 
-    /*
-     * Jouer va lancer une partie selon la difficulté
-     */
-    public void Jouer() throws IOException
+
+    /* Jouer va lancer une partie */
+    public void Jouer()
     {
-
-        Scanner sc = new Scanner(System.in);
-        String nomFichier = "listeJoueurs.txt";
-
-        int score = 0;
-
-
-
-
         InputListener listener = new InputListener();
         MouseListener mouse1 = new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                aCliquer=true; difficulte = 1;
-            }
-
+            public void mouseClicked(MouseEvent e) {  aCliquer=true; difficulte = 1; }
             @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
+            public void mousePressed(MouseEvent e) { }
             @Override
-            public void mouseReleased(MouseEvent e) {
-                aCliquer=true; difficulte = 1;
-            }
-
+            public void mouseReleased(MouseEvent e) { aCliquer=true; difficulte = 1; }
             @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
+            public void mouseEntered(MouseEvent e) { }
             @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
+            public void mouseExited(MouseEvent e) { }
         };
         MouseListener mouse2 = new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                aCliquer=true; difficulte = 2;
-            }
-
+            public void mouseClicked(MouseEvent e) { aCliquer=true; difficulte = 2; }
             @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
+            public void mousePressed(MouseEvent e) { }
             @Override
-            public void mouseReleased(MouseEvent e) {
-                aCliquer=true; difficulte = 2;
-            }
-
+            public void mouseReleased(MouseEvent e) { aCliquer=true; difficulte = 2; }
             @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
+            public void mouseEntered(MouseEvent e) { }
             @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
+            public void mouseExited(MouseEvent e) { }
         };
         MouseListener mouse3 = new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                aCliquer=true; difficulte = 3;
-            }
-
+            public void mouseClicked(MouseEvent e) { aCliquer=true; difficulte = 3; }
             @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
+            public void mousePressed(MouseEvent e) { }
             @Override
-            public void mouseReleased(MouseEvent e) {
-                aCliquer=true; difficulte = 3;
-            }
-
+            public void mouseReleased(MouseEvent e) { aCliquer=true; difficulte = 3; }
             @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
+            public void mouseEntered(MouseEvent e) { }
             @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
+            public void mouseExited(MouseEvent e) { }
         };
         MouseListener mouse4 = new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                retour=true;
-                fenetre.setVisible(false);
-                System.exit(0);
-            }
-
+            public void mouseClicked(MouseEvent e) { retour=true;fenetre.setVisible(false); }
             @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
+            public void mousePressed(MouseEvent e) { }
             @Override
-            public void mouseReleased(MouseEvent e) {
-                retour=true;
-                fenetre.setVisible(false);
-                System.exit(0);
-            }
-
+            public void mouseReleased(MouseEvent e) { retour=true;fenetre.setVisible(false); }
             @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
+            public void mouseEntered(MouseEvent e) { }
             @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
+            public void mouseExited(MouseEvent e) { }
         };
-        File f = new File(nomFichier);
-        if (!f.exists()) {
-            nomFichier = "listeJoueurs.txt";
-            f = new File(nomFichier);
-            f.createNewFile();
-        }
 
 
-        ChargerListe(nomFichier);
 
-        /*
-         * On fait entrer au joueur un pseudo valide
-         */
+        /* Affichage du Menu Sudoku */
+        fenetre.setSize(900,900);
+        fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        fenetre.setLocationRelativeTo(null);
+        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.setTitle("Sudoku");
 
-        /* TEST qui n'ont pas fonctionner*/
+
+
         GridBagConstraints aligne = new GridBagConstraints();
         aligne.ipady =  GridBagConstraints.CENTER;
         aligne.ipadx = GridBagConstraints.RELATIVE;
@@ -220,7 +129,7 @@ public class Sudoku extends JFrame {
         aligne.gridy=GridBagConstraints.RELATIVE;
         aligne.fill=GridBagConstraints.HORIZONTAL;
         int espacement;
-        if(getHeight()>800  && getWidth()>800) espacement = 80;
+        if(fenetre.getHeight()>800  && fenetre.getWidth()>800) espacement = 80;
         else espacement = 40;
         aligne.insets = new Insets(espacement,espacement,espacement,espacement);
         ZonePseudo.setEditable(true);
@@ -252,18 +161,15 @@ public class Sudoku extends JFrame {
         b.add(bouton2);
         b.add(espace2);
         b.add(bouton3);
-        fenetre.setSize(900,900);
-        fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        fenetre.setLocationRelativeTo(null);
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetre.setTitle("Sudoku");
+
         fenetre.add(cp);
+
         cp.setLayout(new GridBagLayout());
-        aligne.gridwidth=GridBagConstraints.CENTER;
+        aligne.gridwidth=fenetre.getWidth();
         cp.add(texte,aligne);
-        aligne.gridwidth=GridBagConstraints.CENTER;
+        aligne.gridwidth=fenetre.getWidth();
         cp.add(ZonePseudo,aligne);
-        aligne.gridwidth=getWidth();
+        aligne.gridwidth=fenetre.getWidth();
         cp.add(b,aligne);
         cp.add(quitter,aligne);
         texte.setVisible(true);
@@ -274,8 +180,10 @@ public class Sudoku extends JFrame {
         fenetre.setVisible(true);
         //lancerMusique("src/Sudoku/Musique/Jasmin.wav");
         cd.setPreferredSize(new Dimension(hauteur_max,largeur_max));
+        fenetre.repaint();
         while(!aCliquer)
         {
+            if(retour) {MenuPrincipal e =new MenuPrincipal();e.affichageMenuPrincipal();}
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -330,7 +238,7 @@ public class Sudoku extends JFrame {
                 }
 
                 grilleT[i][j].setHorizontalAlignment(JTextField.CENTER);
-                if( ((j>= 3 && j<=5) && (( i>=0 && i<=2) ||  (i>= 6 && i<=8))) ||  ((i>=3 && i<=5 ) && (( j>=0 && j<=2)  ||  (j>= 6 && j<=8))) )
+                if(j >= 3 && j <= 5 && (i <= 2 || i >= 6) || i >= 3 && i <= 5 && (j <= 2 || j >= 6))
                 {
                     grilleT[i][j].setBackground(Color.LIGHT_GRAY);
                 }
@@ -390,11 +298,9 @@ public class Sudoku extends JFrame {
         fenetre.repaint();
         fenetre.revalidate();
 
-
         /*
          * On lance la partie
          */
-
         while(!fini)
         {
             try {
@@ -404,15 +310,19 @@ public class Sudoku extends JFrame {
             }
         }
 
-        score += calculScore(difficulte);
-        if(CptErreur==erreurMax) score = 0;
+        int score = 0;
+        if(CptErreur<erreurMax) score += calculScore(difficulte);
         joueur.setScore(score);
-        listeJoueur.add(joueur);
-        EnregistrerListe(nomFichier);
+        Classement C = new Classement();
+        File f =new File(C.FichierSauvegarde);
+        if(!f.exists()) {
+            try { f.createNewFile(); } catch (IOException e) { e.printStackTrace(); } }
+        C.ChargerClassement(C,C.FichierSauvegarde);
+        C.DonnerPointAUnJoueur(joueur,score,1);
+        C.SauvegardeClassement(C.FichierSauvegarde);
+
         afficherVotreScore();
 
-
-        sc.close();
 
     }
 
@@ -421,8 +331,6 @@ public class Sudoku extends JFrame {
 
         int LigneChoisie = -1;
         int ColonneChoisie = -1;
-
-
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -479,7 +387,6 @@ public class Sudoku extends JFrame {
 
                 }
                 grilleT[LigneChoisie][ColonneChoisie].setForeground(Color.BLACK);
-                grille.AfficherGrille();
             }
             else {
                 grille.getT()[LigneChoisie][ColonneChoisie].setVal("");
@@ -487,24 +394,12 @@ public class Sudoku extends JFrame {
         }
 
     }
-    /*
-     * Calcule le score d'un joueur en fonction des parametres predefini La maniere
-     * de calculer un score peut etre modifier
-     */
+
     public int calculScore(int difficulte) {
         return (50 - (CptErreur / difficulte));
     }
 
-    /*
-     * Retourne un boolean qui definit si la valeur entree est valide
-     */
-    public boolean valeurValide(String val, int i, int j) {
-        return grille.getT()[i][j].getVal().equals(val);
-    }
 
-    /*
-     * Rend une grille non modifiable
-     */
     public void grilleNonModifiable() {
         for (int i = 0; i < grille.getImax(); i++) {
             for (int j = 0; j < grille.getJmax(); j++) {
@@ -552,136 +447,84 @@ public class Sudoku extends JFrame {
         }
     }
 
-    /*
-     * Ajoute un Joueur a la liste
-     */
-    public void addJoueur(Joueur j) {
-        if (listeJoueur == null)
-            this.listeJoueur = new ArrayList<Joueur>();
-        listeJoueur.add(j);
-    }
 
-    /*
-     * Retire le joueur entree de la liste
-     */
-    public void delJoueur(Joueur j) {
-        for (Joueur x : listeJoueur) {
-            if (j.equals(x)) {
-                listeJoueur.remove(x);
-            }
-        }
-    }
+    public boolean isFini() {return fini;}
+    public boolean isRetour() {return retour;}
 
-    /*
-     * Transforme une liste en String
-     */
-    public String listeToString() {
-        String liste = null;
-        for (Joueur jx : this.listeJoueur) {
-            liste += "" + jx.getPseudo() + "," + jx.getScore() + "\n";
-        }
-        return liste;
-    }
-
-    /*
-     * Transforms un String en Joueur qui est ensuite ajouter a la liste
-     */
-    public void toStringListe(String joueur) {
-        String[] info = joueur.split(",");
-        Joueur j = new Joueur();
-        j.setPseudo(info[0]);
-        j.setScore(Integer.parseInt(info[1]));
-        addJoueur(j);
-    }
-
-    /*
-     * Getter + Setter
-     */
-    public ArrayList<Joueur> getListeJoueur() {
-        return listeJoueur;
-    }
-
-    public void setListeJoueur(ArrayList<Joueur> listeJoueur) {
-        this.listeJoueur = listeJoueur;
-    }
-
-    public boolean isFini() {
-        return fini;
-    }
-
-
-    /*
-     * Enregistre la liste dans un fichier
-     */
-    public void EnregistrerListe(String nomFichier) throws IOException {
-        FileOutputStream ecrire = null;
-        File f;
-        String liste = "";
-        liste = listeToString();
-
-        try {
-            f = new File(nomFichier);
-            ecrire = new FileOutputStream(f);
-
-            // si le fichier n'existe pas
-            if (!f.exists()) {
-                f.createNewFile();
-            }
-
-            // convertion en binaires
-            byte[] listeBinaire = liste.getBytes();
-
-            ecrire.write(listeBinaire);
-            ecrire.flush();
-            ecrire.close();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (ecrire != null)
-                    ecrire.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            }
-        }
-    }
-
-        /*
-         * Charge la liste a partir du fichier
-         */
-        public void ChargerListe (String nomFichier) throws IOException
-        {
-            FileReader fr = null;
-            BufferedReader br = null;
-            try {
-                fr = new FileReader(nomFichier);
-                br = new BufferedReader(fr);
-                if (!fr.ready()) {
-                    File fs = new File(nomFichier);
-                    fs.createNewFile();
-                }
-            } catch (IOException e) { e.printStackTrace(); }
-
-            String ligne ="";
-
-            while ((ligne = br.readLine()) != null) {
-                toStringListe(ligne);
-            }
-            fr.close();
-            br.close();
-
-        }
 
         public void afficherVotreScore()
         {
+
             fenetre.setVisible(false);
             fenetre.remove(cd);
             fenetre.setContentPane(votreScore);
+
+            MouseListener m1 = new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {fenetre.dispose();fenetre.setVisible(false); sudo = true;}
+                @Override
+                public void mousePressed(MouseEvent e) { }
+                @Override
+                public void mouseReleased(MouseEvent e) { }
+                @Override
+                public void mouseEntered(MouseEvent e) { }
+                @Override
+                public void mouseExited(MouseEvent e) { }
+            };
+            MouseListener m2 = new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {fenetre.dispose();fenetre.setVisible(false); mp = true;}
+                @Override
+                public void mousePressed(MouseEvent e) { }
+                @Override
+                public void mouseReleased(MouseEvent e) { }
+                @Override
+                public void mouseEntered(MouseEvent e) { }
+                @Override
+                public void mouseExited(MouseEvent e) { }
+            };
+            MouseListener m3 = new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {fenetre.dispose();fenetre.setVisible(false); quit = true;}
+                @Override
+                public void mousePressed(MouseEvent e) { }
+                @Override
+                public void mouseReleased(MouseEvent e) { }
+                @Override
+                public void mouseEntered(MouseEvent e) { }
+                @Override
+                public void mouseExited(MouseEvent e) { }
+            };
+
+
             GridBagConstraints gbc = new GridBagConstraints();
             votreScore.setLayout(new GridBagLayout());
+
+            JButton espace1 = new JButton();
+            espace1.setFocusPainted(false);
+            espace1.setContentAreaFilled(false);
+            espace1.setVisible(true);
+            espace1.setBorder(BorderFactory.createEmptyBorder(40,40,40,40));
+            JButton espace2 = new JButton();
+            espace2.setFocusPainted(false);
+            espace2.setContentAreaFilled(false);
+            espace2.setVisible(true);
+            espace2.setBorder(BorderFactory.createEmptyBorder(40,40,40,40));
+
+
+            JButton rejouer = new JButton();
+            rejouer.setText("Rejouer");
+            rejouer.setVisible(true);
+            rejouer.addMouseListener(m1);
+            JButton mP = new JButton();
+            mP.setText("Menu Principal");
+            mP.setVisible(true);
+            mP.addMouseListener(m2);
+            JButton quitter = new JButton();
+            quitter.setText("Quitter");
+            quitter.setVisible(true);
+            quitter.addMouseListener(m3);
+
             txt.setText("Votre Score :");
             txt.setHorizontalAlignment(JLabel.CENTER);
             txt.setVerticalAlignment(JLabel.CENTER);
@@ -693,13 +536,22 @@ public class Sudoku extends JFrame {
             txt_score.setVerticalAlignment(JLabel.CENTER);
             txt_score.setHorizontalAlignment(JLabel.CENTER);
             txt_score.setFont(new Font("Arial",Font.BOLD,50));
+
             gbc.ipady =  GridBagConstraints.CENTER;
             gbc.gridx=0;
             gbc.gridy=GridBagConstraints.RELATIVE;
             gbc.fill=GridBagConstraints.HORIZONTAL;
             gbc.insets = new Insets(40,40,40,40);
+
+            Box b = Box.createHorizontalBox();
+            b.add(rejouer);
+            b.add(espace1);
+            b.add(mP);
+            b.add(espace2);
+            b.add(quitter);
             votreScore.add(txt,gbc);
             votreScore.add(txt_score,gbc);
+            votreScore.add(b,gbc);
             txt.setVisible(true);
             txt_score.setVisible(true);
             votreScore.setVisible(true);
@@ -707,15 +559,16 @@ public class Sudoku extends JFrame {
             fenetre.setVisible(true);
 
 
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while(!sudo && !mp && !quit ) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            fenetre.dispose();
-            fenetre.setVisible(false);
-
-
+            if(sudo){ Sudoku s = new Sudoku(); s.Jouer(); }
+            if(mp) { MenuPrincipal m = new MenuPrincipal(); m.affichageMenuPrincipal();}
+            if(quit) {System.exit(0);}
         }
 
         public void lancerMusique(String musique) {
@@ -724,15 +577,11 @@ public class Sudoku extends JFrame {
             AudioInputStream audioInputStream = null;
             try {
                 AudioFileFormat format = AudioSystem.getAudioFileFormat(fichier);
-            } catch (UnsupportedAudioFileException e1) {
-            } catch (IOException e1) {
-            }
+            } catch (UnsupportedAudioFileException ignored) { } catch (IOException e1) { }
 
             try {
                 audioInputStream = AudioSystem.getAudioInputStream(fichier);
-            } catch (UnsupportedAudioFileException e) {
-            } catch (IOException e) {
-            }
+            } catch (UnsupportedAudioFileException e) { } catch (IOException e) {}
 
             AudioFormat audioFormat = audioInputStream.getFormat();
             DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
@@ -759,8 +608,8 @@ public class Sudoku extends JFrame {
                 io.printStackTrace();
                 return;
             }
-
-
         }
 
 }
+
+

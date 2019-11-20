@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import fr.projet.bataillenavale.JoueurBN;
 import fr.projet.loto.PartieLoto;
 import fr.projet.poker.Carte;
 import fr.projet.poker.JoueurPoker;
@@ -39,15 +38,10 @@ public class MiniJeux {
 					System.out.println("Fin programme");
 					//System.exit(0);
 				case 1:
-					Sudoku test = new Sudoku();
-					try {
-						test.Jouer();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					System.out.println("\n");
+					MenuPrincipal e = new MenuPrincipal();
+					e.affichageMenuPrincipal();
 					break;
-				case 2:
+				/*case 2:
 					PartieLoto P = new PartieLoto(4);
 					P.Creationbouleloto();
 					P.CreationGrille();
@@ -80,7 +74,7 @@ public class MiniJeux {
 					p.distribuerCartes(lcarte);
 					break;
 
-					//sc.close();
+					//sc.close();*/
 
                 case 5:
 

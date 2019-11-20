@@ -9,17 +9,17 @@ import java.util.List;
 public class JoueurPoker extends Joueur {
 
     private List<AnchorPane> mainJoueur; // 2 cartes en main
-    private int wallet; // porte feuille du joueur (limite par la table)
+    private double wallet; // porte feuille du joueur (limite par la table)
     private int mise; // mise du joueur
     private List<String> etatJoueur;
     /*List car un joueur peuavoir plusieurs "etats" fold et pblinde ...
      * fold,call,raise,all-in,check,pblinde,gblinde,donneur
      */
 
-    public JoueurPoker(String _pseudo, int _wallet) {
+    public JoueurPoker(String _pseudo, double _wallet) {
         super(_pseudo);
         mainJoueur = new ArrayList<AnchorPane>();
-        int wallet = _wallet;
+        wallet = _wallet;
         etatJoueur = new ArrayList<String>();
     }
 
@@ -31,7 +31,7 @@ public class JoueurPoker extends Joueur {
         this.mainJoueur.add(c);
     }
 
-    public int getWallet() {
+    public double getWallet() {
         return wallet;
     }
 

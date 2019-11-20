@@ -1,5 +1,6 @@
 package fr.projet.poker.Interface;
 
+import fr.projet.poker.JoueurPoker;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -33,7 +34,7 @@ public class MenuJoueurController {
         TextField getName = new TextField();
         TextField getDonneur = new TextField();
         TextField getBank = new TextField();
-        String donneur = null;
+        JoueurPoker jp;
         int i = 0;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Table.fxml"));
         Parent root = null;
@@ -47,24 +48,23 @@ public class MenuJoueurController {
         while (i < Fenetre.getChildren().size() - 2) {
             getGroup = (Group) Fenetre.getChildren().get(i);
             getName = (TextField) getGroup.getChildren().get(3);
-            name.add(getName.getText());
-            i++;
-        }
-        getGroup = (Group) Fenetre.getChildren().get(5);
-        getDonneur = (TextField) getGroup.getChildren().get(1);
-        donneur = getDonneur.getText();
-
-        i = 0;
-
-        while (i < Fenetre.getChildren().size() - 2) {
-
-            getGroup = (Group) Fenetre.getChildren().get(i);
             getBank = (TextField) getGroup.getChildren().get(4);
-            bank.add(getBank.getText());
+            getGroup = (Group) Fenetre.getChildren().get(5);
+            getDonneur = (TextField) getGroup.getChildren().get(1);
+
+            jp = new JoueurPoker(getName.getText(), Double.parseDouble(getBank.getText()));
+
+            if(getName.getText().compareTo(getDonneur.getText())==0)
+            {
+                jp.setEtatJoueur("Donneur");
+            }
+
+            controller.setListJoueurPoker(jp);
             i++;
         }
+
         Stage primaryStage = (Stage) Jouer.getScene().getWindow();
-        controller.initTable(primaryStage,name,donneur,bank);
+        controller.initTable(primaryStage);
     }
 
 

@@ -1,5 +1,6 @@
 package fr.projet;
 
+import fr.projet.bataillenavale.Partie;
 import fr.projet.sudoku.Sudoku;
 
 import javax.swing.*;
@@ -153,7 +154,8 @@ public class MenuPrincipal {
             s.Jouer();
         }
         if(bn) {
-            //lancer BN
+            Partie bn1 = new Partie();
+            bn1.lancer();
         }
         if(loto){
             //lancer loto
@@ -182,6 +184,18 @@ public class MenuPrincipal {
         MouseListener m1 = new MouseListener(){
             @Override
             public void mouseClicked(MouseEvent e) {fenetre1.setVisible(false);sudoku=true;}
+            @Override
+            public void mousePressed(MouseEvent e) { }
+            @Override
+            public void mouseReleased(MouseEvent e) { }
+            @Override
+            public void mouseEntered(MouseEvent e) { }
+            @Override
+            public void mouseExited(MouseEvent e) { }
+        };
+        MouseListener m4 = new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent e) {fenetre1.setVisible(false);bn=true;}
             @Override
             public void mousePressed(MouseEvent e) { }
             @Override
@@ -270,6 +284,7 @@ public class MenuPrincipal {
         BN.setPreferredSize(d);
         BN.setIcon(new ImageIcon("C:\\Users\\Bitfenix\\Desktop\\Projet\\Mini_Jeu\\src\\fr\\projet\\BN.jpg"));
         BN.setText("BN");
+        BN.addMouseListener(m4);
         p2.add(BN);
 
 

@@ -125,4 +125,8 @@ public class Partie extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
+
+	public void lancer() {
+		launch();
+	}
 }

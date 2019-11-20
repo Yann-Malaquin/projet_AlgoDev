@@ -1,15 +1,30 @@
 package fr.projet;
 
-/*public class MiniJeux {
 
-	public static void main(String[] args) {
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import fr.projet.bataillenavale.JoueurBN;
+import fr.projet.loto.PartieLoto;
+import fr.projet.poker.Carte;
+import fr.projet.poker.JoueurPoker;
+import fr.projet.sudoku.Sudoku;
+import fr.projet.poker.*;
+
+public class MiniJeux {
+
+  public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
 		int choix=1;
 		
 		while(choix!=0) {
 			Scanner sc1 = new Scanner(System.in);
-			System.out.println("<0> Quitter <1> Sudoku <2> Loto"/* <3> Poker <4> Bataille Navale);
+			System.out.println("<0> Quitter <1> Sudoku <2> Loto <3> Poker <4> Bataille Navale <5> Classement" );
+
 			System.out.println("Choix: ");
 
 			try {
@@ -22,11 +37,11 @@ package fr.projet;
 			switch (choix) {
 				case 0:
 					System.out.println("Fin programme");
-					System.exit(0);
+					//System.exit(0);
 				case 1:
 					Sudoku test = new Sudoku();
 					try {
-						test.Jouer(3);
+						test.Jouer();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -66,9 +81,23 @@ package fr.projet;
 					break;
 
 					//sc.close();
+
+                case 5:
+
+                    Classement ClassementCharge = new Classement();
+                    File FichierTMP= new File(ClassementCharge.FichierSauvegarde);
+                    if(!FichierTMP.exists()) {
+						FichierTMP.createNewFile();
+						Joueur Anonyme = new Joueur("Anonyme");
+						ClassementCharge.ajouterJoueur(Anonyme);
+						ClassementCharge.SauvegardeClassement(ClassementCharge.FichierSauvegarde);
+					}
+                    ClassementCharge.ChargerClassement(ClassementCharge,ClassementCharge.FichierSauvegarde);
+                    ClassementCharge.afficherClassement();
+                    break;
 			}
 		}
 
 	}
 
-} */
+} 

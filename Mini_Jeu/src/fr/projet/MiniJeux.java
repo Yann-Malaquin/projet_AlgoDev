@@ -25,7 +25,7 @@ public class MiniJeux {
 		
 		while(choix!=0) {
 			Scanner sc1 = new Scanner(System.in);
-			System.out.println("<0> Quitter <1> Sudoku <2> Loto <3> Poker <4> Bataille Navale <5> Classement" );
+			System.out.println("<0> Quitter <1> Menu Principal <2> Loto <3> Poker <4> Bataille Navale <5> Classement" );
 			System.out.println("Choix: ");
 
 			try {
@@ -40,13 +40,8 @@ public class MiniJeux {
 					System.out.println("Fin programme");
 					//System.exit(0);
 				case 1:
-					Sudoku test = new Sudoku();
-					try {
-						test.Jouer();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					System.out.println("\n");
+					MenuPrincipal e = new MenuPrincipal();
+        				e.affichageMenuPrincipal();
 					break;
 				case 2:
 					PartieLoto P = new PartieLoto(4);

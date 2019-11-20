@@ -2,31 +2,17 @@ package fr.projet.bataillenavale;
 
 
 public class Bateau {
-	private int taille;
-	private boolean horizontal = false;
+	public int taille;
+	public boolean horizontal;
 	private int pv ;
 
 
-	public Bateau(int type, boolean horizontal){
+	public Bateau(int taille, boolean horizontal){
 	this.taille = taille;
 	this.horizontal = horizontal;
 	pv = taille;
 	}
 
-
-
-
-	public int getTaille() {
-	return taille;
-	}
-
-	public void setTaille(int taille) {
-	this.taille = taille;
-	}
-
-	public boolean getHorizontal() {
-	return horizontal;
-	}
 
 	public void toucher(){
 	pv = pv--;

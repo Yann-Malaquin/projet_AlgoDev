@@ -285,11 +285,8 @@ public class TableController extends Thread {
                     paquetCartes.remove(indexAlea);
                     i--;
                 }
-
                 return paquetMelange;
             }
-
-
         });
         System.out.println(this.getListJoueurPoker());
         this.partiePoker(root, AllJoueur);

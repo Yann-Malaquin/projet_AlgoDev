@@ -100,6 +100,7 @@ public class Partie extends Application {
 			}
 		}
 	}
+	
  /* Méthode qui permet de choisir aléatoirement les emplacement des bateau de l'IA) */
 	private void startGame() {
 

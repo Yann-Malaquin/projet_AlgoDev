@@ -14,10 +14,9 @@ import java.util.List;
 import java.util.Properties;
 
 class GrilleBN extends Parent {
-	int nbbateau = 5;
+	public int nbbateau = 5;
 	private VBox lignes = new VBox();
-	private boolean adversaire = false;
-	private Properties FXMLLoader;
+	private boolean adversaire;
 
 	GrilleBN(boolean adversaire, EventHandler<? super MouseEvent> handler) {
 		this.adversaire = adversaire;
@@ -162,6 +161,7 @@ class GrilleBN extends Parent {
 
 			utilise = true;
 			setFill(Color.BLACK);
+
 			if(bateau != null){
 				bateau.toucher();
 				setFill(Color.RED);

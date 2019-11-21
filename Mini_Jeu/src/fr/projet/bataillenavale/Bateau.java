@@ -10,12 +10,12 @@ public class Bateau {
 	public Bateau(int taille, boolean horizontal){
 	this.taille = taille;
 	this.horizontal = horizontal;
-	pv = taille;
+	this.pv = taille;
 	}
 
 
 	public void toucher(){
-	pv = pv--;
+	this.pv = pv-1;
 	}
 
 	public boolean vivant() {
@@ -24,5 +24,9 @@ public class Bateau {
 		}
 	return false;
 }
+
+	public int pvrestant(){
+		return pv;
+	}
 
 }

@@ -16,6 +16,7 @@ import java.util.Random;
 public class Partie extends Application {
 
 	private boolean lancement = false;
+	private boolean arret = false;
 	private GrilleBN grilleIA;
 	private GrilleBN grilleJoueur;
 
@@ -55,9 +56,10 @@ public class Partie extends Application {
 				return;
 
 			TourIA = !cell.tire();
-
+			System.out.println("Nb bateau IA RESTANT "  + grilleIA.nbbateau);
 			if (grilleIA.nbbateau == 0) {
-				System.out.println("PERDU");
+				System.out.println("GAGNER");
+				arret = true;
 			}
 
 			if (TourIA)
@@ -96,7 +98,9 @@ public class Partie extends Application {
 			TourIA = cell.tire();
 
 			if (grilleJoueur.nbbateau == 0) {
+
 				System.out.println("PERDU");
+				arret = true;
 			}
 		}
 	}
@@ -124,7 +128,7 @@ public class Partie extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
-	}
+		}
 
 	public void lancer() {
 		launch();

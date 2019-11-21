@@ -23,5 +23,9 @@ public class Main extends Application {
         launch(args);
     }
 
+    public void lancer(){
+        launch();
+    }
+
 
 }

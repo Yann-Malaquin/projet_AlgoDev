@@ -1,6 +1,7 @@
 package fr.projet;
 
 import fr.projet.bataillenavale.Partie;
+import fr.projet.poker.Interface.Main;
 import fr.projet.sudoku.Sudoku;
 
 import javax.swing.*;
@@ -161,7 +162,8 @@ public class MenuPrincipal {
             //lancer loto
         }
         if(poker){
-            //lancer poker
+            Main poker = new Main();
+            poker.lancer();
         }
     }
 
@@ -184,6 +186,18 @@ public class MenuPrincipal {
         MouseListener m1 = new MouseListener(){
             @Override
             public void mouseClicked(MouseEvent e) {fenetre1.setVisible(false);sudoku=true;}
+            @Override
+            public void mousePressed(MouseEvent e) { }
+            @Override
+            public void mouseReleased(MouseEvent e) { }
+            @Override
+            public void mouseEntered(MouseEvent e) { }
+            @Override
+            public void mouseExited(MouseEvent e) { }
+        };
+        MouseListener m3 = new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent e) {fenetre1.setVisible(false);poker=true;}
             @Override
             public void mousePressed(MouseEvent e) { }
             @Override
@@ -277,6 +291,7 @@ public class MenuPrincipal {
         Poker.setPreferredSize(d);
         Poker.setIcon(new ImageIcon("C:\\Users\\Bitfenix\\Desktop\\Projet\\Mini_Jeu\\src\\fr\\projet\\Poker.jpg"));
         Poker.setText("Poker");
+        Poker.addMouseListener(m3);
         p2.add(Poker);
         p2.add(espace3);
 

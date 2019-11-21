@@ -1,66 +1,32 @@
 package fr.projet.bataillenavale;
 
-import java.util.ArrayList;
 
 public class Bateau {
-	private String nom;
-	private int taille;
-	private boolean position; //true Horizontal False Vertical
-	private static ArrayList<Bateau> TabBateau = new ArrayList<Bateau>();
-	private static int totalCase;
+	public int taille;
+	public boolean horizontal;
+	private int pv ;
 
-	
-public Bateau(String nom, int taille, boolean position) {
-	this.setNom(nom);
-	this.setTaille(taille);
-	this.setPosition(position);
-	totalCase = totalCase + taille;
-	TabBateau.add(this);
-}
 
-public Bateau(int taille, boolean position) {
-	setNom("Bateau");
-	this.setTaille(taille);
-	this.setPosition(position);
-	totalCase = totalCase + taille;
-	TabBateau.add(this);
-}
-
-public String getNom() {
-	return nom;
-}
-
-public void setNom(String nom) {
-	this.nom = nom;
-}
-
-public int getTaille() {
-	return taille;
-}
-
-public void setTaille(int taille) {
+	public Bateau(int taille, boolean horizontal){
 	this.taille = taille;
+	this.horizontal = horizontal;
+	this.pv = taille;
+	}
+
+
+	public void toucher(){
+	this.pv = pv-1;
+	}
+
+	public boolean vivant() {
+		if (pv > 0) {
+			return true;
+		}
+	return false;
 }
 
-public boolean getPosition() {
-	return position;
-}
-
-public void setPosition(boolean position) {
-	this.position = position;
-}
-
-public static int getTotalcase() {
-	// TODO Auto-generated method stub
-	return totalCase;
-}
-
-public static ArrayList<Bateau> getTabBateau() {
-	return TabBateau;
-}
-
-public void setTabBateau(ArrayList<Bateau> tabBateau) {
-	TabBateau = tabBateau;
-}
+	public int pvrestant(){
+		return pv;
+	}
 
 }

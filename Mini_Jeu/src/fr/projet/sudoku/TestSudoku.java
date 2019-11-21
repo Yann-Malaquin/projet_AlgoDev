@@ -6,8 +6,7 @@ public class TestSudoku {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		Sudoku test = new Sudoku();
-		test.Jouer(1);
+
 	}
 
 }

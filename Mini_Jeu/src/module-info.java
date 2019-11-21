@@ -12,5 +12,5 @@ module Mini_Jeu {
     exports fr.projet.sudoku;
     exports fr.projet.poker.Interface to javafx.graphics;
     opens fr.projet.poker.Interface to javafx.fxml;
-
+    exports fr.projet.bataillenavale to javafx.graphics;
 }

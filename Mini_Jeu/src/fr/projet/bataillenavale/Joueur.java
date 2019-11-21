@@ -1,4 +1,4 @@
-package fr.projet.bataillenavale;
+/*package fr.projet.bataillenavale;
 
 import java.util.ArrayList;
 
@@ -133,4 +133,4 @@ public class Joueur {
 	public void setListeCoup(ArrayList<Integer> listeCoup) {
 		this.listeCoup = listeCoup;
 	}	 
-}
+} */

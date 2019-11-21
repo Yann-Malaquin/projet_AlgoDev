@@ -10,7 +10,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
-public class MAIN extends Application {
+public class Depart_Loto extends Application {
     @FXML
     AnchorPane A1;
     @FXML
@@ -19,9 +19,10 @@ public class MAIN extends Application {
     Button b1;
     @FXML
     Button b2;
+
     @Override
     public void start(Stage fenetre) throws Exception {
-        Group root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Group root = FXMLLoader.load(getClass().getResource("Page_depart.fxml"));
         double height=Screen.getPrimary().getVisualBounds().getHeight();
         double width=Screen.getPrimary().getVisualBounds().getWidth();
         A1=(AnchorPane) root.getChildren().get(0);

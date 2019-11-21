@@ -82,15 +82,7 @@
                         </Group>
                         <Group fx:id="Plateau" layoutX="144.0" layoutY="69.0">
                            <children>
-                              <AnchorPane fx:id="CarteM" layoutX="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="760.0">
-                                 <children>
-                                    <AnchorPane fx:id="CarteM1" layoutX="228.0" layoutY="147.0" prefHeight="85.0" prefWidth="54.0" />
-                                    <AnchorPane fx:id="CarteM2" layoutX="291.0" layoutY="147.0" prefHeight="85.0" prefWidth="54.0" />
-                                    <AnchorPane fx:id="CarteM3" layoutX="354.0" layoutY="147.0" prefHeight="85.0" prefWidth="54.0" />
-                                    <AnchorPane fx:id="CarteM4" layoutX="415.0" layoutY="147.0" prefHeight="85.0" prefWidth="54.0" />
-                                    <AnchorPane fx:id="CarteM5" layoutX="478.0" layoutY="147.0" prefHeight="85.0" prefWidth="54.0" />
-                                 </children>
-                              </AnchorPane>
+                              <AnchorPane fx:id="CarteP" layoutX="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="760.0" />
                               <Button fx:id="afficher" layoutX="280.0" layoutY="300.0" mnemonicParsing="false" />
                               <Button fx:id="distribuer" layoutX="320.0" layoutY="300.0" mnemonicParsing="false" />
                               <Button fx:id="SeCoucher" layoutX="150.0" mnemonicParsing="false" text="Se coucher" />
@@ -105,6 +97,11 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
+                              <AnchorPane fx:id="CarteM1" layoutX="180.0" layoutY="140.0" prefHeight="85.0" prefWidth="54.0" />
+                              <AnchorPane fx:id="CarteM2" layoutX="260.0" layoutY="140.0" prefHeight="85.0" prefWidth="54.0" />
+                              <AnchorPane fx:id="CarteM3" layoutX="340.0" layoutY="140.0" prefHeight="85.0" prefWidth="54.0" />
+                              <AnchorPane fx:id="CarteM4" layoutX="420.0" layoutY="140.0" prefHeight="85.0" prefWidth="54.0" />
+                              <AnchorPane fx:id="CarteM5" layoutX="500.0" layoutY="140.0" prefHeight="85.0" prefWidth="54.0" />
                            </children>
                         </Group>
                      </children>

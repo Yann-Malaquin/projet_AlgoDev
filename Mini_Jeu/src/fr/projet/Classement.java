@@ -2,10 +2,11 @@ package fr.projet;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Classement implements Serializable{
     public ArrayList<Joueur> ClassementGlobal=new ArrayList<Joueur>();
-    public String FichierSauvegarde="Classement.txt";
+    public String FichierSauvegarde="C:\\Users\\Bitfenix\\Desktop\\Projet\\Classement.txt";
 
     public Classement() {
     }
@@ -14,6 +15,7 @@ public class Classement implements Serializable{
     public void ajouterJoueur(Joueur J){
         // charger fichier
         int indiceJoueur=-1;
+        System.out.println("ajoutPoint" + ClassementGlobal.toString());
         for(int i=0; i<ClassementGlobal.size();i++){
             if(ClassementGlobal.get(i).getPseudo().equals(J.getPseudo()))
                 indiceJoueur=i;
@@ -26,14 +28,16 @@ public class Classement implements Serializable{
     // jeu = 1 Sudoku / 2 Loto / 3 Poker / 4 BN (comme dansle menu du main)
     public void DonnerPointAUnJoueur(Joueur J, int points, int jeu){
         int indiceJoueur=-1;
+        System.out.println("DOnnerPoint" + ClassementGlobal.toString());
         for(int i=0; i<ClassementGlobal.size();i++){
             if(ClassementGlobal.get(i).getPseudo().equals(J.getPseudo()))
                 indiceJoueur=i;
         }
         if(indiceJoueur==-1){
             ClassementGlobal.add(J);
+            indiceJoueur=ClassementGlobal.indexOf(J);
         }
-        indiceJoueur=ClassementGlobal.indexOf(J);
+
         if(jeu==1) {
             ClassementGlobal.get(indiceJoueur).ajoutScoreSudo(points);
         }
@@ -94,8 +98,92 @@ public class Classement implements Serializable{
 
     }
 
+// Trie selon le score du jeu donné : 1 = SUDO / 2= LOTO / 3= Poker / 4= BN / 5=Score Global
+    public void TrierListeSelonScore(int indicePseudoOuJeu){
 
+        // On verifie que l'indice du jeu est compris entre 1 et 4
+        if(indicePseudoOuJeu>=1 && indicePseudoOuJeu<=5){
+            Joueur tmpi=new Joueur();
+            Joueur tmpj=new Joueur();
+
+            int scorei;
+            int scorej;
+            for(int i=0; i<ClassementGlobal.size()-1;i++){
+                tmpi=ClassementGlobal.get(i);
+                // On detecte le jeu à prendre et on associe le score du jeu
+                if(indicePseudoOuJeu==1){
+                    scorei=tmpi.getScoreSudo();
+                }
+                else if(indicePseudoOuJeu==2){
+                    scorei=tmpi.getScoreLoto();
+                }
+                else if(indicePseudoOuJeu==3){
+                    scorei=tmpi.getScorePoker();
+                }
+                else if(indicePseudoOuJeu==4){
+                    scorei=tmpi.getScoreBN();
+                }
+                else{ scorei=tmpi.getScore();}
+
+
+                for(int j=i+1;j<ClassementGlobal.size();j++){
+                    tmpj=ClassementGlobal.get(j);
+                    // On detecte le jeu à prendre et on associe le score du jeu
+                    if(indicePseudoOuJeu==1){
+                        scorej=tmpj.getScoreSudo();
+                    }
+                    else if(indicePseudoOuJeu==2){
+                        scorej=tmpj.getScoreLoto();
+                    }
+                    else if(indicePseudoOuJeu==3){
+                        scorej=tmpj.getScorePoker();
+                    }
+                    else if(indicePseudoOuJeu==4){
+                        scorej=tmpj.getScoreBN();
+                    }
+                    else{
+                        scorej=tmpj.getScore();
+                    }
+                    //On permute les deux éléments pour avoir le plus grand en tête (ordre décroissant)
+                    if(scorej>=scorei){
+                        Collections.swap(ClassementGlobal,i,j);
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    public void TrierSelonPseudo(){
+        Joueur tmpi=new Joueur();
+        Joueur tmpj=new Joueur();
+
+
+        for(int i=0; i<ClassementGlobal.size()-1;i++){
+            tmpi=ClassementGlobal.get(i);
+            for(int j=i+1; j<ClassementGlobal.size();j++){
+                tmpj=ClassementGlobal.get(j);
+                if( (tmpj.getPseudo().compareToIgnoreCase(tmpi.getPseudo()) <0)){
+                    Collections.swap(ClassementGlobal,i,j);
+                }
+
+
+            }
+        }
 
     }
+
+    Joueur TrouverJoueur(String pseudo){
+        for(Joueur J: ClassementGlobal){
+            if(J.getPseudo().equals(pseudo)){
+                return J;
+            }
+        }
+        return null;
+    }
+
+
+}
 
 

@@ -13,9 +13,6 @@ public class GrilleSudoku extends Grille {
 
 	public GrilleSudoku() {
 		super(9, 9);
-		//this.t = new Case[this.getImax()][this.getJmax()];
-	//	this.getT() = this.initialiserCaseDeLaGrille();
-
 	}
 
 	// met les valeurs des cases à " ' ' " et les rends modifiables
@@ -95,14 +92,12 @@ public class GrilleSudoku extends Grille {
 	}
 	
 	// resous une grille sudoku si possible, permet donc d'en generer.
-	// Seul pb, s'il existe déjà une impossibilité dans la grille, le programme sera
-	// incapable de trouver une grille valide associée.
 	// La valeur de la position sera toujours 0 initialement, ce qui générera
 	// entièrement la grille, elle permet une utilisation plus efficace de la
 	// récursivité
 	public boolean ResoudreSudoku(int position) {
 		String tmp=" ";
-
+		//Si on est arrivée à la 81ème case, alors c'est qu'on a généré toutes les cases
 		if (position == 9 * 9)
 			return true;
 		// calcul des coordonnées via la position
@@ -135,7 +130,7 @@ public class GrilleSudoku extends Grille {
 		return false;
 	}
 
-	
+	// inverse les valeurs symetriquement
 	public void retournerGrilleHorizontalement() {
 		String tmp;
 		for(int i=0;i<4;i++) {
@@ -147,7 +142,7 @@ public class GrilleSudoku extends Grille {
 		}
 		
 	}
-	
+	// inverse les valeurs symetriquement
 	public void retournerGrilleVerticalement() {
 		String tmp;
 		for(int i=0;i<9;i++) {
@@ -162,8 +157,8 @@ public class GrilleSudoku extends Grille {
 
 	
 	
-	// Genere des des coordonnées aléatoires, y place 1,2 et 3 (permet la variationd
-	// de grille) et genere la grille
+	// Genere des des coordonnées aléatoires, y place 1,2 et 3 (permet la variation
+	// de grille) et genere la grille en resolvant celle créée
 	public void GenererGrille() {
 		char cpt = '1';
 		String tmp= "123456789";
@@ -184,17 +179,18 @@ public class GrilleSudoku extends Grille {
 			if(this.verifierCarre3x3PourConstruction(tmp3, randi, randj) && this.verifLigneEtColonneCasePourConstruction(tmp3, randi, randj)) 
 					this.getT()[randi][randj].setVal(tmp3);
 					ok=true;
-}
-cpt++;
-ok=false;
+				}
+				cpt++;
+				ok=false;
 		}
-
+		// On génère un random qui va potentiellement retourner la grille pour rendre la résolution moins évidente
 		this.ResoudreSudoku(0);
 		int randRetourner=(int)(Math.random()*3);
 		if(randRetourner==1) this.retournerGrilleHorizontalement();
 		if(randRetourner==2)this.retournerGrilleVerticalement();
 	}
 
+	// Verifie sur toute la grille, qu'il n'y a pas de doublon dans les lignes, colonnes, et que les valeur entrée soient valides (entre 1 et 9)
 	public boolean verifLignesEtColonnesEtCaseValide() {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -215,7 +211,7 @@ ok=false;
 		}
 		return true;
 	}
-
+// Verifie qu'aucune valeur n'est en double dans un carré 3x3
 	public boolean verifCarre3x3() {
 		int PHLC;
 		int CPGC;
@@ -270,7 +266,7 @@ ok=false;
 			for (j = 0; j < this.getJmax(); j++) {
 				if(this.getT()[i][j].isModifiable()) {
 				System.out.print("| " + this.getT()[i][j].getVal() + " |");}
-				else { System.err.print("| " + this.getT()[i][j].getVal() + " |");}
+				else { System.err.print("\033[31m" + "| " + this.getT()[i][j].getVal() + " |" + "\033[30m");}
 				if (j == 2 || j == 5)
 					System.out.print("    ");
 			}
@@ -280,27 +276,5 @@ ok=false;
 				System.out.println("\t\t\t\t\t   -----------------------------------------------------");
 		}
 	}
-/*
-	public static void main(String args[]) {
 
-		GrilleSudoku g = new GrilleSudoku();
-		g.AfficherGrille();
-		
-		
-	
-		for(int i=0;i<1;i++) {
-		g.GenererGrille();
-		g.retournerGrilleVerticalement();
-		System.out.println(g.verifLignesEtColonnesEtCaseValide());
-		System.out.print(g.verifCarre3x3());
-		System.out.println(g.verifierGrille());
-		
-		g.AfficherGrille();
-		g.resetGrille();
-		}
-
-
-	System.out.println("FINI");	
-	} 
-	*/
 }

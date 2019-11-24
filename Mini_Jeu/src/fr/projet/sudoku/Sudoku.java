@@ -330,6 +330,7 @@ public class Sudoku {
                     if ((j == 2) || (j == 5) || (j == 8))
                         grilleT[i][j].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 2, Color.black));
                 }
+                grilleT[i][j].setFont(new Font("Arial",Font.BOLD,18));
             }
         }
 

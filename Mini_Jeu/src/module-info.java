@@ -9,6 +9,7 @@ module Mini_Jeu {
     requires javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
     exports fr.projet.sudoku;
     exports fr.projet.loto to javafx.graphics,javafx.fxml;
     opens fr.projet.loto;

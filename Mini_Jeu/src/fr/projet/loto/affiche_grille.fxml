@@ -982,10 +982,20 @@
                 </children>
             </GridPane>
             </children></AnchorPane>
-      <Button fx:id="b5" mnemonicParsing="false" onAction="#Button5" text="Suivant" layoutX="1000" layoutY="500">
+      <Button fx:id="b5" layoutX="1000" layoutY="500" mnemonicParsing="false" onAction="#GAME" text="GO">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
+      <Label fx:id="nombre" alignment="CENTER" layoutX="987.0" layoutY="350.0" prefHeight="70.0" prefWidth="109.0">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="300.0" layoutY="400.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
     </children>
 </Group>

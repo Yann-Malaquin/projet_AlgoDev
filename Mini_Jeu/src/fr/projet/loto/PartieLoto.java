@@ -23,11 +23,12 @@ public class PartieLoto {
 		super();
 	}
 
-	public void Creationbouleloto() {
+	public List<Integer> Creationbouleloto() {
 		int i;
 		for (i = 0; i < 90; i++) {
 			Lint.add(i + 1);
 		}
+		return this.Lint;
 	}
 
 	public void AffichageBoules() {
@@ -351,4 +352,8 @@ public class PartieLoto {
 	public void setjoueur(JoueurLoto JL){
 		LJ.add(JL);
 	}
+
+	public List<Integer> getLint() { return this.Lint; }
+
+	public List<Integer> getLboulesortie() { return this.Lboulesortie; }
 }

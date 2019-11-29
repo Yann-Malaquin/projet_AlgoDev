@@ -1,5 +1,6 @@
 package fr.projet.poker;
 
+import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -7,220 +8,192 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-import java.io.FileInputStream;
-import java.util.List;
+import java.io.InputStream;
 
 public class Carte {
-	FileInputStream carreau;
-	FileInputStream coeur;
-	FileInputStream pique;
-	FileInputStream trefle;
 
-	public Carte() {
-		super();
-	}
-
-	public AnchorPane Carte(String figure, String couleur, int i) {
-		AnchorPane carte = new AnchorPane();
-		carte.setPrefSize(54,85);
-
-		if (couleur.equals("carreau")) {
-			try {
-				carreau = new FileInputStream("C:\\Users\\Bitfenix\\Desktop\\Projet\\Mini_Jeu\\src\\fr\\projet\\poker\\Interface\\picture\\Couleur_Carreau.png");
-			} catch (Exception e) {
-				System.out.println("Oups");
-			}
+    @FXML
+    Group label = new Group();
+    @FXML
+    AnchorPane carte = new AnchorPane();
+    @FXML
+    Label HG = new Label();
+    @FXML
+    Label C = new Label();
+    @FXML
+    Label BD = new Label();
 
 
-			Label HG = new Label();
-			Label C = new Label();
-			Label BD = new Label();
+    public Carte() {
+        super();
+    }
 
-			carte.setId("Carte_" + i);
-			HG.setId("HG_" + i);
-			C.setId("C_" + i);
-			BD.setId("BD_" + i);
+    public AnchorPane Carte(String figure, String couleur, int _valeur) {
 
-			ImageView iw = new ImageView(new Image(carreau));
+        carte.setPrefSize(54, 85);
 
-			iw.setFitWidth(25);
-			iw.setFitHeight(25);
+        if (couleur.equals("carreau")) {
+            InputStream carreau = this.getClass().getResourceAsStream("/resources/Poker/Couleur_Carreau.png");
+            carte.setId(_valeur + "Ca");
 
-			HG.setPrefSize(15, 15);
-			HG.setLayoutX(10);
-			HG.setLayoutY(10);
+            HG.setId(Integer.toString(_valeur));
+            C.setId("Ca");
+            BD.setId("BD" + _valeur);
 
-			C.setPrefSize(25, 25);
-			C.setLayoutX(14.5);
-			C.setLayoutY(30);
+            ImageView iw = new ImageView(new Image(carreau));
 
-			BD.setPrefSize(15, 15);
-			BD.setRotate(180);
-			BD.setLayoutX(29);
-			BD.setLayoutY(60);
+            iw.setFitWidth(25);
+            iw.setFitHeight(25);
 
-			HG.setText(figure);
-			HG.setTextFill(Color.RED);
-			C.setGraphic(iw);
-			BD.setText(figure);
-			BD.setTextFill(Color.RED);
-			Group label = new Group();
+            HG.setPrefSize(15, 15);
+            HG.setLayoutX(10);
+            HG.setLayoutY(10);
 
-			label.getChildren().addAll(HG, C, BD);
-			carte.getChildren().add(label);
+            C.setPrefSize(25, 25);
+            C.setLayoutX(14.5);
+            C.setLayoutY(30);
 
-			carte.setBorder(new Border(new BorderStroke(Color.BLACK,
-					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            BD.setPrefSize(15, 15);
+            BD.setRotate(180);
+            BD.setLayoutX(29);
+            BD.setLayoutY(60);
 
+            HG.setText(figure);
+            HG.setTextFill(Color.RED);
+            C.setGraphic(iw);
+            BD.setText(figure);
+            BD.setTextFill(Color.RED);
 
-		}
-		if (couleur.equals("coeur")) {
-			try {
-				coeur = new FileInputStream("C:\\Users\\Bitfenix\\Desktop\\Projet\\Mini_Jeu\\src\\fr\\projet\\poker\\Interface\\picture\\Couleur_Coeur.png");
-			} catch (Exception e) {
-				System.out.println("Oups");
-			}
+            label.setId("Carte" + _valeur + "Ca");
+            label.getChildren().addAll(HG, C, BD);
 
-			Label HG = new Label();
-			Label C = new Label();
-			Label BD = new Label();
+            carte.getChildren().add(label);
 
-			carte.setId("Carte_" + i);
-			HG.setId("HG_" + i);
-			C.setId("C_" + i);
-			BD.setId("BD_" + i);
+            carte.setBorder(new Border(new BorderStroke(Color.BLACK,
+                    BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 
-			ImageView iw = new ImageView(new Image(coeur));
+        }
+        if (couleur.equals("coeur")) {
+            InputStream coeur = this.getClass().getResourceAsStream("/resources/Poker/Couleur_Coeur.png");
 
-			iw.setFitWidth(25);
-			iw.setFitHeight(25);
+            carte.setId(_valeur + "Co");
+            HG.setId(Integer.toString(_valeur));
+            C.setId("Co");
+            BD.setId("BD" + _valeur);
 
-			HG.setPrefSize(15, 15);
-			HG.setLayoutX(10);
-			HG.setLayoutY(10);
+            ImageView iw = new ImageView(new Image(coeur));
 
-			C.setPrefSize(25, 25);
-			C.setLayoutX(14.5);
-			C.setLayoutY(30);
+            iw.setFitWidth(25);
+            iw.setFitHeight(25);
 
-			BD.setPrefSize(15, 15);
-			BD.setRotate(180);
-			BD.setLayoutX(29);
-			BD.setLayoutY(60);
+            HG.setPrefSize(15, 15);
+            HG.setLayoutX(10);
+            HG.setLayoutY(10);
 
-			HG.setText(figure);
-			HG.setTextFill(Color.RED);
-			C.setGraphic(iw);
-			BD.setText(figure);
-			BD.setTextFill(Color.RED);
-			Group label = new Group();
+            C.setPrefSize(25, 25);
+            C.setLayoutX(14.5);
+            C.setLayoutY(30);
 
-			label.getChildren().addAll(HG, C, BD);
-			carte.getChildren().add(label);
+            BD.setPrefSize(15, 15);
+            BD.setRotate(180);
+            BD.setLayoutX(29);
+            BD.setLayoutY(60);
 
-			carte.setBorder(new Border(new BorderStroke(Color.BLACK,
-					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            HG.setText(figure);
+            HG.setTextFill(Color.RED);
+            C.setGraphic(iw);
+            BD.setText(figure);
+            BD.setTextFill(Color.RED);
 
+            label.setId("Carte" + _valeur + "Co");
 
-		}
-		if (couleur.equals("trefle")) {
-			try {
-				trefle = new FileInputStream("C:\\Users\\Bitfenix\\Desktop\\Projet\\Mini_Jeu\\src\\fr\\projet\\poker\\Interface\\picture\\Couleur_Trefle.png");
-			} catch (Exception e) {
-				System.out.println("Oups");
-			}
+            label.getChildren().addAll(HG, C, BD);
+            carte.getChildren().add(label);
 
-			Label HG = new Label();
-			Label C = new Label();
-			Label BD = new Label();
-
-			carte.setId("Carte_" + i);
-			HG.setId("HG_" + i);
-			C.setId("C_" + i);
-			BD.setId("BD_" + i);
-
-			ImageView iw = new ImageView(new Image(trefle));
-
-			iw.setFitWidth(25);
-			iw.setFitHeight(25);
-
-			HG.setPrefSize(15, 15);
-			HG.setLayoutX(10);
-			HG.setLayoutY(10);
-
-			C.setPrefSize(25, 25);
-			C.setLayoutX(14.5);
-			C.setLayoutY(30);
-
-			BD.setPrefSize(15, 15);
-			BD.setRotate(180);
-			BD.setLayoutX(29);
-			BD.setLayoutY(60);
-
-			HG.setText(figure);
-			C.setGraphic(iw);
-			BD.setText(figure);
-			Group label = new Group();
-
-			label.getChildren().addAll(HG, C, BD);
-			carte.getChildren().add(label);
-
-			carte.setBorder(new Border(new BorderStroke(Color.BLACK,
-					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            carte.setBorder(new Border(new BorderStroke(Color.BLACK,
+                    BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 
-		}
-		if (couleur.equals("pique")) {
-			try {
-				pique = new FileInputStream("C:\\Users\\Bitfenix\\Desktop\\Projet\\Mini_Jeu\\src\\fr\\projet\\poker\\Interface\\picture\\Couleur_Pique.png");
-			} catch (Exception e) {
-				System.out.println("Oups");
-			}
+        }
+        if (couleur.equals("trefle")) {
+            InputStream trefle = this.getClass().getResourceAsStream("/resources/Poker/Couleur_Trefle.png");
 
-			Label HG = new Label();
-			Label C = new Label();
-			Label BD = new Label();
+            carte.setId(_valeur + "Tr");
+            HG.setId(Integer.toString(_valeur));
+            C.setId("Tr");
+            BD.setId("BD" + _valeur);
 
-			carte.setId("Carte_" + i);
-			HG.setId("HG_" + i);
-			C.setId("C_" + i);
-			BD.setId("BD_" + i);
+            ImageView iw = new ImageView(new Image(trefle));
 
-			ImageView iw = new ImageView(new Image(pique));
+            iw.setFitWidth(25);
+            iw.setFitHeight(25);
 
-			iw.setFitWidth(25);
-			iw.setFitHeight(25);
+            HG.setPrefSize(15, 15);
+            HG.setLayoutX(10);
+            HG.setLayoutY(10);
 
-			HG.setPrefSize(15, 15);
-			HG.setLayoutX(10);
-			HG.setLayoutY(10);
+            C.setPrefSize(25, 25);
+            C.setLayoutX(14.5);
+            C.setLayoutY(30);
 
-			C.setPrefSize(25, 25);
-			C.setLayoutX(14.5);
-			C.setLayoutY(30);
+            BD.setPrefSize(15, 15);
+            BD.setRotate(180);
+            BD.setLayoutX(29);
+            BD.setLayoutY(60);
 
-			BD.setPrefSize(15, 15);
-			BD.setRotate(180);
-			BD.setLayoutX(29);
-			BD.setLayoutY(60);
+            HG.setText(figure);
+            C.setGraphic(iw);
+            BD.setText(figure);
 
-			HG.setText(figure);
-			C.setGraphic(iw);
-			BD.setText(figure);
-			Group label = new Group();
-
-			label.getChildren().addAll(HG, C, BD);
-			carte.getChildren().add(label);
-
-			carte.setBorder(new Border(new BorderStroke(Color.BLACK,
-					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            label.setId("Carte" + _valeur + "Tr");
+            label.getChildren().addAll(HG, C, BD);
+            carte.getChildren().add(label);
+            carte.setBorder(new Border(new BorderStroke(Color.BLACK,
+                    BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 
+        }
+        if (couleur.equals("pique")) {
+            InputStream pique = this.getClass().getResourceAsStream("/resources/Poker/Couleur_Pique.png");
 
-		}
+            carte.setId(_valeur + "Pi");
+            HG.setId(Integer.toString(_valeur));
+            C.setId("Pi");
+            BD.setId("BD" + _valeur);
 
-		return carte;
+            ImageView iw = new ImageView(new Image(pique));
 
-	}
+            iw.setFitWidth(25);
+            iw.setFitHeight(25);
+
+            HG.setPrefSize(15, 15);
+            HG.setLayoutX(10);
+            HG.setLayoutY(10);
+
+            C.setPrefSize(25, 25);
+            C.setLayoutX(14.5);
+            C.setLayoutY(30);
+
+            BD.setPrefSize(15, 15);
+            BD.setRotate(180);
+            BD.setLayoutX(29);
+            BD.setLayoutY(60);
+
+            HG.setText(figure);
+            C.setGraphic(iw);
+            BD.setText(figure);
+
+            label.setId("Carte" + _valeur + "Pi");
+            label.getChildren().addAll(HG, C, BD);
+            carte.getChildren().add(label);
+
+            carte.setBorder(new Border(new BorderStroke(Color.BLACK,
+                    BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+
+        }
+        return carte;
+
+    }
 }

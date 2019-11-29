@@ -1,105 +1,115 @@
 package fr.projet.poker;
 
-import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainsGagnantes {
-
-    private List<AnchorPane> mainGagnante;
+/*
+    private List<Carte> mainGagnante;
 
     public MainsGagnantes() {
-        mainGagnante = new ArrayList<AnchorPane>();
+        mainGagnante = new ArrayList<Carte>();
     }
 
-    public void setMainGagnante(AnchorPane _carte) {
+    public void setMainGagnante(Carte _carte) {
         mainGagnante.add(_carte);
     }
 
-    public List<AnchorPane> getMainGagnante() {
+    public List<Carte> getMainGagnante() {
         return mainGagnante;
     }
 
+    List<Carte> rechercherCarte(List<Carte> paquetCartes, int valeurCarte) {
 
-    public List<AnchorPane> rechercherCarte(List<AnchorPane> carteMains, String valeurCarte) {
+        List<Carte> trouve = new ArrayList<Carte>();
 
-        List<AnchorPane> trouve = new ArrayList<AnchorPane>();
-
-        for (int i = 0; i < carteMains.size(); i++) {
-            if (carteMains.get(i).getId().contains(valeurCarte)) {
-                trouve.add(carteMains.get(i));
+        for (int i = 0; i < paquetCartes.size(); i++) {
+            if (paquetCartes.get(i).getValeur() == valeurCarte) {
+                trouve.add(paquetCartes.get(i));
             }
         }
+
         return trouve;
     }
 
-    public boolean estQFR(List<AnchorPane> carteMains) {
+    public boolean estQFR(List<Carte> carteMains) {
 
-        List<AnchorPane> trouve = new ArrayList<AnchorPane>(); // permet de savoir si As il y a.
+        List<Carte> trouve = new ArrayList<Carte>(); // permet de savoir si As il y a.
         int cpt = 1;
-        int j;
-        trouve = this.rechercherCarte(carteMains, "14");
+        int j = 0;
+        trouve = this.rechercherCarte(carteMains, 14);
 
-        // s'il n'y a pas d'As alors il ne peut y avoir Quinte Flush Royale
-        if (trouve.isEmpty()) {
+        if (trouve.isEmpty()) {// s'il n'y a pas d'As alors il ne peut y avoir Quinte Flush Royale
             return false;
         } else {
             for (int i = 0; i < trouve.size(); i++) { // on parcourt en fonction des as.
                 j = 0;
-                // on cherche s'il y a un dix pour démarrer le comptage des cartes.
-                while (!carteMains.get(j).getId().contains("10") && j < carteMains.size() - 1) {
+                while (carteMains.get(j).getValeur() != 10 && j < carteMains.size() - 1) { // on cherche s'il y a un dix
+                    // pour démarrer le comptage
+                    // des cartes.
                     j++;
                 }
 
-                System.out.println("As trouve" + trouve.toString());
                 while (j < carteMains.size() - 1) { // on parcourt donc de j à 6
-
-                    if ((((Group) trouve.get(i).getChildren().get(0)).getChildren().get(1).getId().compareTo(((Group) carteMains.get(j).getChildren().get(0)).getChildren().get(1).getId()) == 0)
-                            && (((Group) trouve.get(i).getChildren().get(0)).getChildren().get(1).getId().compareTo(((Group) carteMains.get(j + 1).getChildren().get(0)).getChildren().get(1).getId()) == 0)
-                            && ((Integer.parseInt(((Group) carteMains.get(j).getChildren().get(0)).getChildren().get(0).getId()) + 1) == Integer.parseInt(((Group) carteMains.get(j + 1).getChildren().get(0)).getChildren().get(0).getId()))) {
-                        cpt++;
-                        System.out.println("CompteurIf " + cpt);
-
-                        // dès que l'on a 4 cartes alors on sait qu'il y a Quinte Flush Royale. 4
-                        if (cpt == 4) {
-                            // cartes car nous savons qu'il y a déjà un as.
-                            return true;
-                        }
-                        //sinon  si on est supérieur a 2 soit 3 cartes et que l'on a pas encore 3 de correctes cartes alors on ne pourra plus avoir de Quinte Flush Royale ou si la couleur est incorrecte, alors on ne poursuit pas.
-                    } else if ((j > 2 && cpt < 3) || ((Label) ((Group) carteMains.get(j).getChildren().get(0)).getChildren().get(1)).getId().compareTo(((Label) ((Group) trouve.get(i).getChildren().get(0)).getChildren().get(1)).getId()) != 0) {
+                    if ((j > 2 && cpt < 3) // si on est supérieur a 2 soit 3 cartes et que l'on a pas encore 3 de
+                            // correctes cartes alors on ne pourra plus avoir de Quinte Flush Royale ou
+                            // si la couleur est incorrecte, alors on ne poursuit pas.
+                            || (carteMains.get(j).getCouleur().compareTo(trouve.get(i).getCouleur()) != 0)) {
                         break;
-                        // sinon on reset le compteur.
                     } else {
-                        cpt = 1;
-                    }
+                        if ((trouve.get(i).getCouleur().compareTo(carteMains.get(j).getCouleur()) == 0)
+                                && (trouve.get(i).getCouleur().compareTo(carteMains.get(j + 1).getCouleur()) == 0)
+                                && (carteMains.get(j).getValeur() + 1 == carteMains.get(j + 1).getValeur())) { // si on
+                            // a 2
+                            // cartes
+                            // qui
+                            // se
+                            // suivent
+                            // de
+                            // même
+                            // couleur
+                            // alors
+                            // on
+                            // incrémente.
 
-                System.out.println("J while = " + j);
-                j++;
+                            cpt++;
+
+                            if (cpt == 4) { // dès que l'on a 4 cartes alors on sait qu'il y a Quinte Flush Royale. 4
+                                // cartes car nous savons qu'il y a déjà un as.
+                                return true;
+                            }
+                        } else { // sinon on reset le compteur.
+                            cpt = 1;
+                        }
+                    }
+                    j++;
+                }
             }
         }
-    }
         return false;
-}
+    }
 
-    public boolean estQF(List<AnchorPane> carteMains) {
+    public boolean estQF(List<Carte> carteMains) {
         int cpt = 1;
-        for (int i = 0; i < carteMains.size() - 1; i++) // on parcourt le paquet de cartes.
+        for (int i = 0; i < carteMains.size(); i++) // on parcourt le paquet de cartes.
         {
-            if (((Integer.parseInt(((Group) carteMains.get(i).getChildren().get(0)).getChildren().get(0).getId()) + 1) == Integer.parseInt(((Group) carteMains.get(i + 1).getChildren().get(0)).getChildren().get(0).getId()))
-                    && (((Group) carteMains.get(i).getChildren().get(0)).getChildren().get(1).getId().compareTo(((Group) carteMains.get(i + 1).getChildren().get(0)).getChildren().get(1).getId()) == 0)) // si on a 2
-            // cartes de la même couleur qui se suivent on incrémente cpt
+            if (carteMains.get(i).getValeur() + 1 == carteMains.get(i + 1).getValeur()
+                    && (carteMains.get(i).getCouleur().compareTo(carteMains.get(i + 1).getCouleur())) == 0) // si on a 2
+            // cartes de
+            // la même
+            // couleur
+            // qui se
+            // suivent
+            // on
+            // incrémente
+            // cpt
             {
                 cpt++;
-                // si on a les 5 cartes pour une main alors on return true
-                if (cpt == 5)
+                if (cpt == 5) // si on a les 5 cartes pour une main alors on return true
                 {
                     return true;
                 }
-                // test qui coupe si on ne peut pas avoir de Quinte Flush
-            } else if (i > 2 && cpt < 3)
+            } else if (i > 2 && cpt < 3) // test qui coupe si on ne peut pas avoir de Quinte Flush
             {
                 break;
             } else {
@@ -109,13 +119,12 @@ public class MainsGagnantes {
         return false;
     }
 
-    public boolean estCarre(List<AnchorPane> carteMains) {
+    public boolean estCarre(List<Carte> carteMains) {
         int cpt = 1;
-    // on parcourt la liste des cartes 1 par 1 pour tester.
 
-        for (int i = 0; i < carteMains.size() - 1; i++) {
-            for (int j = 0; j < carteMains.size() - 1 ; j++) {// on parcourt la liste pour tester avec les autres valeurs.
-                if (Integer.parseInt(((Group) carteMains.get(i).getChildren().get(0)).getChildren().get(0).getId()) == Integer.parseInt(((Group) carteMains.get(j).getChildren().get(0)).getChildren().get(0).getId())) {// si on a la même valeur
+        for (int i = 0; i < carteMains.size(); i++) {// on parcourt la liste des cartes 1 par 1 pour tester.
+            for (int j = 0; j < carteMains.size(); j++)// on parcourt la liste pour tester avec les autres valeurs.
+                if (carteMains.get(i).getValeur() == carteMains.get(j).getValeur()) {// si on a la même valeur
                     cpt++;// on incrémente le compteur
                     if (cpt == 4)// si on a les 4 cartes on retourne true
                     {
@@ -128,74 +137,71 @@ public class MainsGagnantes {
                 } else {
                     cpt = 1;// sinon on reset le compteur
                 }
-            }
         }
         return false;
     }
 
-    public boolean estFullHouse(List<AnchorPane> carteMains) {
-        //on copie les cartes puisque l'on va les supprimer au fur et a mesure
-        List<AnchorPane> copycarteMains = new ArrayList<AnchorPane>(carteMains);
-        //on recupere l'indice des cartes que l'on ajoute dans une liste
+    // a reverif
+    public boolean estFullHouse(List<Carte> carteMains) {
+        List<Carte> copycarteMains = new ArrayList<Carte>(carteMains);
         List<Integer> indiceCartes = new ArrayList<Integer>();
-        int cpt = 1, i = 0;
+        int cpt = 1, i = 0, brelan = 0, pair = 0;
 
-        while (i < copycarteMains.size() - 1) {
-            //si la la figure a l'indice i est le meme a l'indice i+1 alors on ajoute l'indice a la liste et on incremente le compteur
-                if (Integer.parseInt(((Group) copycarteMains.get(i).getChildren().get(0)).getChildren().get(0).getId()) == Integer.parseInt(((Group) copycarteMains.get(i + 1).getChildren().get(0)).getChildren().get(0).getId())) {
+        while (i < copycarteMains.size()) {
+            if (copycarteMains.get(i).getValeur() == copycarteMains.get(i + 1).getValeur()) {
                 indiceCartes.add(i);
                 cpt++;
 
-                //si l'on trouve nos 3 cartes alors on supprime les cartes de la liste copycarteMains, on affecte le fait que l'on a le brelan et on break pour sortir du while
                 if (cpt == 3) {
                     copycarteMains.remove(indiceCartes.get(0));
-                    copycarteMains.remove(indiceCartes.get(0));
-                    copycarteMains.remove(indiceCartes.get(0));
+                    copycarteMains.remove(indiceCartes.get(1));
+                    copycarteMains.remove(indiceCartes.get(2));
+                    brelan = 1;
+
                     break;
                 }
                 i++;
 
-                // condition permettant de ne pas tester tout le paquet et de pouvoir sortir rapidement
-            } else if (cpt < 3 && i > 4) {
-                    return false;
+            } else if (cpt == 0 && i > 4) {
+                break;
             } else {
-                    //sinon on vide la liste des indices, on reset le compteur
-                indiceCartes.clear();
-                cpt = 1;
+                cpt = 0;
                 i++;
             }
         }
 
-        cpt = 1;
+        cpt = 0;
         i = 0;
         indiceCartes.clear();
 
         while (i < copycarteMains.size()) {
-            //si la la figure a l'indice i est le meme a l'indice i+1 alors on ajoute l'indice a la liste et on incremente le compteur
-            if (Integer.parseInt(((Group) copycarteMains.get(i).getChildren().get(0)).getChildren().get(0).getId()) == Integer.parseInt(((Group) copycarteMains.get(i + 1).getChildren().get(0)).getChildren().get(0).getId())) {
+            if (copycarteMains.get(i).getValeur() == copycarteMains.get(i + 1).getValeur()) {
                 indiceCartes.add(i);
                 cpt++;
-                //si l'on trouve nos 2 cartes alors on supprime les cartes de la liste copycarteMains, on affecte le fait que l'on a le brelan et on break pour sortir du while
+
                 if (cpt == 2) {
                     copycarteMains.remove(indiceCartes.get(0));
-                    copycarteMains.remove(indiceCartes.get(0));
+                    copycarteMains.remove(indiceCartes.get(1));
+                    pair = 1;
                     break;
                 }
                 i++;
-                // condition permettant de ne pas tester tout le paquet et de pouvoir sortir rapidement
-            } else if (cpt == 1 && i >= 3) {
-                return false;
+
+            } else if (cpt == 0 && i >= 3) {
+                break;
             } else {
-                //sinon on vide la liste des indices, on reset le compteur
-                indiceCartes.clear();
-                cpt = 1;
+                cpt = 0;
                 i++;
             }
         }
-            return true;
 
+        if (brelan == 1 && pair == 1) {
+            return true;
+        }
+
+        return false;
     }
-/*
+
     public boolean estFlush(List<Carte> carteMains) {
         int cpt = 1;
 
@@ -223,7 +229,7 @@ public class MainsGagnantes {
         }
         return false;
     }
-/*
+
     public boolean estQuinte(List<Carte> carteMains) {
         int cpt = 1;
 
@@ -246,7 +252,7 @@ public class MainsGagnantes {
 
         return false;
     }
-/*
+
     public boolean estBrelan(List<Carte> carteMains) {
         List<Carte> copycarteMains = new ArrayList<Carte>(carteMains);
 
@@ -271,7 +277,7 @@ public class MainsGagnantes {
         }
         return false;
     }
-/*
+
     public boolean estDoublePaire(List<Carte> carteMains) {
 
         List<Carte> copyCartesMain = new ArrayList<Carte>(carteMains);
@@ -332,7 +338,7 @@ public class MainsGagnantes {
 
         return false;
     }
-/*
+
     public boolean estPaire(List<Carte> carteMains) {
         int cpt = 1;
         for (int i = 0; i < carteMains.size(); i++) {
@@ -353,8 +359,6 @@ public class MainsGagnantes {
         return false;
     }
 
-
- /*
     public List<Carte> trieCarteNbreCouleur (List<Carte> cartesMilieu)
     {
         List<Carte> copyCartesMilieu= new ArrayList<Carte>(cartesMilieu);
@@ -381,7 +385,6 @@ public class MainsGagnantes {
         return cartesMilieuTriee;
     }
 
-/*
     public List<Carte> trieCarteNbre (List<Carte> cartesMilieu)
     {
         List<Carte> copyCartesMilieu= new ArrayList<Carte>(cartesMilieu);
@@ -407,7 +410,5 @@ public class MainsGagnantes {
         }
 
         return cartesMilieuTriee;
-    }
-
- */
+    }*/
 }

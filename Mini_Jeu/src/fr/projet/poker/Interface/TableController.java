@@ -2,12 +2,14 @@ package fr.projet.poker.Interface;
 
 import fr.projet.poker.Carte;
 import fr.projet.poker.JoueurPoker;
+import fr.projet.poker.MainsGagnantes;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,8 +20,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -34,8 +36,7 @@ public class TableController extends Thread {
     private int indexJoueur;
     private double suivre;
     private int init;
-
-    FileInputStream table;
+    MainsGagnantes main = new MainsGagnantes();
 
     @FXML
     private Group root;
@@ -84,16 +85,50 @@ public class TableController extends Thread {
 
 
     public void initTable(Stage primaryStage) {
+
+        Carte carte = new Carte();
+        AnchorPane deux;
+        AnchorPane neuf;
+        AnchorPane dix;
+        AnchorPane valet;
+        AnchorPane reine;
+        AnchorPane roi;
+        AnchorPane as;
+
+
+
+        deux = carte.Carte("2","pique",8);
+        main.setMainGagnante(deux);
+        carte = new Carte();
+        neuf = carte.Carte("9","pique",10);
+        main.setMainGagnante(neuf);
+        carte = new Carte();
+        dix = carte.Carte("4","coeur",8);
+        main.setMainGagnante(dix);
+        carte = new Carte();
+        as = carte.Carte("8","carreau",4);
+        main.setMainGagnante(as);
+        carte = new Carte();
+        valet = carte.Carte("J","carreau",7);
+        main.setMainGagnante(valet);
+        carte = new Carte();
+        reine = carte.Carte("Q","carreau",8);
+        main.setMainGagnante(reine);
+        carte = new Carte();
+        roi = carte.Carte("K","coeur",12);
+        main.setMainGagnante(roi);
+
+        List<AnchorPane> m = new ArrayList<AnchorPane>();
+
+        m = main.trieCarteNbreCouleur(main.getMainGagnante());
+        System.out.println(m.toString());
+
+
+        InputStream input = this.getClass().getResourceAsStream("/resources/Poker/table_poker.png");
         try {
             root = (Group) FXMLLoader.load(this.getClass().getResource("Table.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-        try {
-            table = new FileInputStream("C:\\Users\\Bitfenix\\Desktop\\Projet\\Mini_Jeu\\src\\fr\\projet\\poker\\Interface\\picture\\table_poker.png");
-        } catch (Exception e) {
-            System.out.println("Oups");
         }
 
         primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
@@ -126,7 +161,7 @@ public class TableController extends Thread {
 
         Table.setLayoutX(200);
         Table.setLayoutY(100);
-        Image im = new Image(table, w - (w * 0.20), h - (h * 0.20), false, false);
+        Image im = new Image(input, w - (w * 0.20), h - (h * 0.20), false, false);
         BackgroundImage myBI = new BackgroundImage(im,
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
@@ -136,7 +171,13 @@ public class TableController extends Thread {
         this.setNamePlayer(root);
         this.setBankPlayer(root);
         this.setDonneur(root);
-        paquetCartes = this.genererPaquetCarte();
+        //paquetCartes = this.genererPaquetCarte();
+
+
+
+        List<AnchorPane> trouve = new ArrayList<>();
+        trouve = main.rechercherCarte(paquetCartes,"14");
+
         afficher.setText("Afficher paquet cartes");
         afficher.setVisible(true);
 
@@ -405,7 +446,7 @@ public class TableController extends Thread {
         // tableau regroupant les couleurs
         String couleur[] = {"carreau", "coeur", "trefle", "pique"};
         int x = 0, y = 0;
-        int i = 1;
+        int _valeur = 2;
         // parcourir les 2 tableaux
 
         for (String c : couleur) {
@@ -414,10 +455,12 @@ public class TableController extends Thread {
                 Carte carte = new Carte();
                 AnchorPane ca;
 
-                ca = carte.Carte(n, c, i);
+                ca = carte.Carte(n, c, _valeur);
                 ca.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
                 paquetCartes.add(ca);
+                _valeur++;
             }
+            _valeur = 2;
         }
         return paquetCartes;
     }
@@ -582,12 +625,12 @@ public class TableController extends Thread {
                         tour++;
                     }
                     else if (indexJoueur == AllJoueur.getChildren().size() - 2) {
-                    System.out.println("ELSE IF");
-                    indexJoueur = 0;
-                } else {
-                    System.out.println("ELSE");
-                    indexJoueur++;
-                }
+                        System.out.println("ELSE IF");
+                        indexJoueur = 0;
+                    } else {
+                        System.out.println("ELSE");
+                        indexJoueur++;
+                    }
                 } else if (getetatJoueur().size() == (AllJoueur.getChildren().size() - 2)) {
                     if (tour == 2) {
                         CarteM = (AnchorPane) Plateau.getChildren().get(13);

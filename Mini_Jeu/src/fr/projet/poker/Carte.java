@@ -1,5 +1,6 @@
 package fr.projet.poker;
 
+import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -7,39 +8,37 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-import java.io.FileInputStream;
-import java.util.List;
+import java.io.InputStream;
 
 public class Carte {
-	FileInputStream carreau;
-	FileInputStream coeur;
-	FileInputStream pique;
-	FileInputStream trefle;
+
+	@FXML
+	Group label = new Group();
+	@FXML
+	AnchorPane carte = new AnchorPane();
+	@FXML
+	Label HG = new Label();
+	@FXML
+	Label C = new Label();
+	@FXML
+	Label BD = new Label();
+
 
 	public Carte() {
 		super();
 	}
 
-	public AnchorPane Carte(String figure, String couleur, int i) {
-		AnchorPane carte = new AnchorPane();
-		carte.setPrefSize(54,85);
+	public AnchorPane Carte(String figure, String couleur, int _valeur) {
+
+		carte.setPrefSize(54, 85);
 
 		if (couleur.equals("carreau")) {
-			try {
-				carreau = new FileInputStream("C:\\Users\\Bitfenix\\Desktop\\Projet\\Mini_Jeu\\src\\fr\\projet\\poker\\Interface\\picture\\Couleur_Carreau.png");
-			} catch (Exception e) {
-				System.out.println("Oups");
-			}
+			InputStream carreau = this.getClass().getResourceAsStream("/resources/Poker/Couleur_Carreau.png");
+			carte.setId(_valeur + "Ca");
 
-
-			Label HG = new Label();
-			Label C = new Label();
-			Label BD = new Label();
-
-			carte.setId("Carte_" + i);
-			HG.setId("HG_" + i);
-			C.setId("C_" + i);
-			BD.setId("BD_" + i);
+			HG.setId(Integer.toString(_valeur));
+			C.setId("Ca");
+			BD.setId("BD" + _valeur);
 
 			ImageView iw = new ImageView(new Image(carreau));
 
@@ -64,9 +63,10 @@ public class Carte {
 			C.setGraphic(iw);
 			BD.setText(figure);
 			BD.setTextFill(Color.RED);
-			Group label = new Group();
 
+			label.setId("Carte" + _valeur + "Ca");
 			label.getChildren().addAll(HG, C, BD);
+
 			carte.getChildren().add(label);
 
 			carte.setBorder(new Border(new BorderStroke(Color.BLACK,
@@ -75,21 +75,12 @@ public class Carte {
 
 		}
 		if (couleur.equals("coeur")) {
-			try {
-				coeur = new FileInputStream("C:\\Users\\Bitfenix\\Desktop\\Projet\\Mini_Jeu\\src\\fr\\projet\\poker\\Interface\\picture\\Couleur_Coeur.png");
-			} catch (Exception e) {
-				System.out.println("Oups");
-			}
+			InputStream coeur = this.getClass().getResourceAsStream("/resources/Poker/Couleur_Coeur.png");
 
-			Label HG = new Label();
-			Label C = new Label();
-			Label BD = new Label();
-
-			carte.setId("Carte_" + i);
-			HG.setId("HG_" + i);
-			C.setId("C_" + i);
-			BD.setId("BD_" + i);
-
+			carte.setId(_valeur + "Co");
+			HG.setId(Integer.toString(_valeur));
+			C.setId("Co");
+			BD.setId("BD" + _valeur);
 
 			ImageView iw = new ImageView(new Image(coeur));
 
@@ -114,7 +105,8 @@ public class Carte {
 			C.setGraphic(iw);
 			BD.setText(figure);
 			BD.setTextFill(Color.RED);
-			Group label = new Group();
+
+			label.setId("Carte" + _valeur + "Co");
 
 			label.getChildren().addAll(HG, C, BD);
 			carte.getChildren().add(label);
@@ -125,20 +117,12 @@ public class Carte {
 
 		}
 		if (couleur.equals("trefle")) {
-			try {
-				trefle = new FileInputStream("C:\\Users\\Bitfenix\\Desktop\\Projet\\Mini_Jeu\\src\\fr\\projet\\poker\\Interface\\picture\\Couleur_Trefle.png");
-			} catch (Exception e) {
-				System.out.println("Oups");
-			}
+			InputStream trefle = this.getClass().getResourceAsStream("/resources/Poker/Couleur_Trefle.png");
 
-			Label HG = new Label();
-			Label C = new Label();
-			Label BD = new Label();
-
-			carte.setId("Carte_" + i);
-			HG.setId("HG_" + i);
-			C.setId("C_" + i);
-			BD.setId("BD_" + i);
+			carte.setId(_valeur + "Tr");
+			HG.setId(Integer.toString(_valeur));
+			C.setId("Tr");
+			BD.setId("BD" + _valeur);
 
 			ImageView iw = new ImageView(new Image(trefle));
 
@@ -161,31 +145,22 @@ public class Carte {
 			HG.setText(figure);
 			C.setGraphic(iw);
 			BD.setText(figure);
-			Group label = new Group();
 
+			label.setId("Carte" + _valeur + "Tr");
 			label.getChildren().addAll(HG, C, BD);
 			carte.getChildren().add(label);
-
 			carte.setBorder(new Border(new BorderStroke(Color.BLACK,
 					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 
 		}
 		if (couleur.equals("pique")) {
-			try {
-				pique = new FileInputStream("C:\\Users\\Bitfenix\\Desktop\\Projet\\Mini_Jeu\\src\\fr\\projet\\poker\\Interface\\picture\\Couleur_Pique.png");
-			} catch (Exception e) {
-				System.out.println("Oups");
-			}
+			InputStream pique = this.getClass().getResourceAsStream("/resources/Poker/Couleur_Pique.png");
 
-			Label HG = new Label();
-			Label C = new Label();
-			Label BD = new Label();
-
-			carte.setId("Carte_" + i);
-			HG.setId("HG_" + i);
-			C.setId("C_" + i);
-			BD.setId("BD_" + i);
+			carte.setId(_valeur + "Pi");
+			HG.setId(Integer.toString(_valeur));
+			C.setId("Pi");
+			BD.setId("BD" + _valeur);
 
 			ImageView iw = new ImageView(new Image(pique));
 
@@ -208,8 +183,8 @@ public class Carte {
 			HG.setText(figure);
 			C.setGraphic(iw);
 			BD.setText(figure);
-			Group label = new Group();
 
+			label.setId("Carte" + _valeur + "Pi");
 			label.getChildren().addAll(HG, C, BD);
 			carte.getChildren().add(label);
 
@@ -217,9 +192,7 @@ public class Carte {
 					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 
-
 		}
-
 		return carte;
 
 	}

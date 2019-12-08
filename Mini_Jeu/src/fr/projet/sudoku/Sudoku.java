@@ -240,7 +240,6 @@ public class Sudoku {
             pseudo = ZonePseudo.getText();
         }
         else{ pseudo="Anonyme";}
-        joueur.setPseudo(pseudo);
         cd.setVisible(true);
         fenetre.setContentPane(cd);
         fenetre.repaint();

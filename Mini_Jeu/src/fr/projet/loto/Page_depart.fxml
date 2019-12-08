@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <Group xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet.loto.Controller_sample">
    <children>
       <AnchorPane fx:id="A1" prefHeight="400" prefWidth="600.0" style="-fx-background-color: #FDFEF0;">
@@ -21,7 +20,12 @@
                   <Font size="28.0" />
                </font>
             </Label>
-            <Button fx:id="Conseils" layoutX="185.0" layoutY="200.0" mnemonicParsing="false" text="Conseils" onAction="#Conseils">
+            <Button fx:id="Conseils" layoutY="200.0" mnemonicParsing="false" onAction="#Conseils" text="Conseils">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutY="288.0" mnemonicParsing="false" text="Quitter">
                <font>
                   <Font size="20.0" />
                </font>

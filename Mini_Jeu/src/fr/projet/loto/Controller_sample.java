@@ -100,6 +100,8 @@ public class Controller_sample {
     private Button jeu;
     @FXML
     private Label cadeau;
+    @FXML
+    private Button Quitter;
 
     @FXML
     private void Solo(ActionEvent event) { // page après avoir sélectionné solo
@@ -363,18 +365,127 @@ public class Controller_sample {
             nombre=(Label) root.getChildren().get(4);
             cadeau=(Label) root.getChildren().get(7);
             b5.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                        Random rand = new Random();
-                        int index = rand.nextInt(getMax());
-                        int temp=Lint.get(index);
-                        nombre.setText(String.valueOf(temp));
-                        Lint.remove(index);
-                        setMax();
-                        Lboulesortie.add(temp);
-                        b5.setText("Nombre suivant");
-                }
-            });
+                               @Override
+                               public void handle(ActionEvent actionEvent) {
+                                   Random rand = new Random();
+                                   int index = rand.nextInt(getMax());
+                                   int temp = Lint.get(index);
+                                   nombre.setText(String.valueOf(temp));
+                                   Lint.remove(index);
+                                   setMax();
+                                   Lboulesortie.add(temp);
+                                   for (JoueurLoto lj : LJ) {
+                                       if (t1 == 0) {
+                                           for (GrilleLoto lg : lj.getLGJ()) {
+                                               int l1 = 0, l2 = 0, l3 = 0;
+                                               for (int i = 0; i < 3; i++) {
+                                                   for (int j = 0; j < 9; j++) {
+                                                       if (lg.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
+                                                           if (i == 0 && Lboulesortie.contains(convertirint(lg.getG().getT()[i][j].getVal()))) {
+                                                               l1++;
+                                                           } else if (i == 1 && Lboulesortie.contains(convertirint(lg.getG().getT()[i][j].getVal()))) {
+                                                               l2++;
+                                                           } else if (i == 2 && Lboulesortie.contains(convertirint(lg.getG().getT()[i][j].getVal()))) {
+                                                               l3++;
+                                                           }
+                                                       }
+                                                   }
+                                               }
+                                               if ((l1 == 5 || l2 == 5 || l3 == 5) && t1 != 1) {
+                                                   t1 = 1;
+                                                   while (cad1 == 0) {
+                                                       Random rand1 = new Random();
+                                                       int cad = rand1.nextInt(Lcadeau.size());
+                                                       Lots c = Lcadeau.get(cad);
+                                                       if (c.getLigne() == 1) {
+                                                           cad1++;
+                                                           cadeau.setLayoutX(0);
+                                                           cadeau.setLayoutY(700);
+                                                           cadeau.setText("Félicitation " + lj.getJ().getPseudo() + " a gagné: " + c.getCadeau());
+                                                           Lcadeau.remove(c);
+                                                       }
+                                                   }
+                                                   verif.setText("Avez-vous 2 lignes remplies ?");
+                                                   break;
+                                               }
+                                           }
+                                       } else if (t1 != 0 && t2 == 0) {
+                                           for (GrilleLoto lg : lj.getLGJ()) {
+                                               int l1 = 0, l2 = 0, l3 = 0;
+                                               for (int i = 0; i < 3; i++) {
+                                                   for (int j = 0; j < 9; j++) {
+                                                       if (lg.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
+                                                           if (i == 0 && Lboulesortie.contains(convertirint(lg.getG().getT()[i][j].getVal()))) {
+                                                               l1++;
+                                                           } else if (i == 1 && Lboulesortie.contains(convertirint(lg.getG().getT()[i][j].getVal()))) {
+                                                               l2++;
+                                                           } else if (i == 2 && Lboulesortie.contains(convertirint(lg.getG().getT()[i][j].getVal()))) {
+                                                               l3++;
+                                                           }
+                                                       }
+                                                   }
+                                               }
+                                               if (((l1 == 5 && l2 == 5) || (l2 == 5 && l3 == 5) || (l3 == 5 && l1 == 5)) && t2 != 1) {
+                                                   t2 = 1;
+                                                   while (cad2 == 0) {
+                                                       Random rand1 = new Random();
+                                                       int cad = rand1.nextInt(Lcadeau.size());
+                                                       Lots c = Lcadeau.get(cad);
+                                                       if (c.getLigne() == 2) {
+                                                           cad2++;
+                                                           cadeau.setLayoutX(0);
+                                                           cadeau.setLayoutY(700);
+                                                           cadeau.setText("Félicitation " + lj.getJ().getPseudo() + " a gagné: " + c.getCadeau());
+                                                           Lcadeau.remove(c);
+                                                       }
+                                                   }
+                                                   verif.setText("Avez-vous un carton plein ?");
+                                                   break;
+                                               }
+                                           }
+                                       } else if (t1 != 0 && t2 != 0 && t3 == 0) {
+                                           for (GrilleLoto lg : lj.getLGJ()) {
+                                               int l1 = 0, l2 = 0, l3 = 0;
+                                               for (int i = 0; i < 3; i++) {
+                                                   for (int j = 0; j < 9; j++) {
+                                                       if (lg.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
+                                                           if (i == 0 && Lboulesortie.contains(convertirint(lg.getG().getT()[i][j].getVal()))) {
+                                                               l1++;
+                                                           } else if (i == 1 && Lboulesortie.contains(convertirint(lg.getG().getT()[i][j].getVal()))) {
+                                                               l2++;
+                                                           } else if (i == 2 && Lboulesortie.contains(convertirint(lg.getG().getT()[i][j].getVal()))) {
+                                                               l3++;
+                                                           }
+                                                       }
+                                                   }
+                                               }
+                                               if ((l1 == 5 && l2 == 5 && l3 == 5) && t3 != 1) {
+                                                   t3 = 1;
+                                                   while (cad3 == 0) {
+                                                       Random rand1 = new Random();
+                                                       int cad = rand1.nextInt(Lcadeau.size());
+                                                       Lots c = Lcadeau.get(cad);
+                                                       if (c.getLigne() == 3) {
+                                                           cad3++;
+                                                           cadeau.setLayoutX(0);
+                                                           cadeau.setLayoutY(700);
+                                                           cadeau.setText("Félicitation " + lj.getJ().getPseudo() + " a gagné: " + c.getCadeau());
+                                                           Lcadeau.remove(c);
+                                                       }
+                                                   }
+                                                   verif.setText("Fin du jeu, merci d'avoir joué");
+                                                   jeu.setVisible(false);
+                                                   b.setVisible(true);
+                                                   b.setText("Quitter");
+                                                   b.setLayoutX(630);
+                                                   b.setLayoutY(610);
+                                                   break;
+                                               }
+                                           }
+                                       }
+                                   }
+                               }
+                           });
             jeu=(Button) root.getChildren().get(6);
             jeu.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -592,6 +703,8 @@ public class Controller_sample {
         sol.setLayoutX(width/2 - 64);
         c=(Button) first.getChildren().get(2);
         c.setLayoutX(width/2 - 53);
+        Quitter=(Button) first.getChildren().get(3);
+        Quitter.setLayoutX(width/2 -45.2);
         }
         catch (Exception e) {
             e.printStackTrace();

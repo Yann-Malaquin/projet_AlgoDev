@@ -30,7 +30,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="b4" layoutX="456.0" layoutY="311.0" mnemonicParsing="false" text="Save" onAction="#Button4">
+            <Button fx:id="Save" layoutX="456.0" layoutY="311.0" mnemonicParsing="false" text="Save" onAction="#Save">
                <font>
                   <Font size="14.0" />
                </font>

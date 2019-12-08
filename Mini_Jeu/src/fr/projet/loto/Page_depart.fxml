@@ -11,7 +11,7 @@
    <children>
       <AnchorPane fx:id="A1" prefHeight="400" prefWidth="600.0" style="-fx-background-color: #FDFEF0;">
          <children>
-            <Button fx:id="b1" layoutX="236.0" layoutY="112.0" mnemonicParsing="false" onAction="#Button1" prefHeight="44.0" prefWidth="128.0" text="Solo">
+            <Button fx:id="Solo" layoutX="236.0" layoutY="112.0" mnemonicParsing="false" onAction="#Solo" prefHeight="44.0" prefWidth="128.0" text="Solo">
                <font>
                   <Font size="20.0" />
                </font>
@@ -21,7 +21,7 @@
                   <Font size="28.0" />
                </font>
             </Label>
-            <Button fx:id="b2" layoutX="185.0" layoutY="200.0" mnemonicParsing="false" text="Multijoueur (2 joueurs)" onAction="#Button2">
+            <Button fx:id="Conseils" layoutX="185.0" layoutY="200.0" mnemonicParsing="false" text="Conseils" onAction="#Conseils">
                <font>
                   <Font size="20.0" />
                </font>

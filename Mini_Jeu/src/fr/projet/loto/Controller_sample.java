@@ -1,6 +1,5 @@
 package fr.projet.loto;
 
-import fr.projet.Joueur;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -11,24 +10,21 @@ import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Controller_sample {
     private List<Integer> Lint = new ArrayList<Integer>();
     private List<Integer> Lboulesortie = new ArrayList<Integer>();
     private int NbJoueurs;
+    private int grillepleine=0,t1=0,t2=0,t3=0,cadeau1=0,cadeau2=0,cadeau3=0;
     private List<GrilleLoto> LG = new ArrayList<GrilleLoto>();
     private GrilleLoto G;
     private List<JoueurLoto> LJ = new ArrayList<JoueurLoto>();
@@ -40,15 +36,24 @@ public class Controller_sample {
     private GrilleLoto g_2;
     private GrilleLoto g_3;
     private int max=90;
+    private int cad1=0,cad2=0,cad3=0;
     private EventHandler<? super MouseEvent> handler;
     @FXML
-    private Button b1;
+    private AnchorPane first;
     @FXML
-    private Button b2;
+    private Label l1;
     @FXML
-    private Button b3;
+    private Button Solo;
     @FXML
-    private Button b4;
+    private Button Conseils;
+    @FXML
+    private Button sol;
+    @FXML
+    private Button c;
+    @FXML
+    private Button Retour;
+    @FXML
+    private Button Save;
     @FXML
     private Button b5;
     @FXML
@@ -58,27 +63,11 @@ public class Controller_sample {
     @FXML
     private TextField nomsolo;
     @FXML
-    private TextField nbfavj1;
-    @FXML
-    private TextField nbcartonsj1;
-    @FXML
-    private TextField nomj1;
-    @FXML
-    private TextField nbfavj2;
-    @FXML
-    private TextField nbcartonsj2;
-    @FXML
-    private TextField nomj2;
-    @FXML
     private Label nomjoueur;
-    @FXML
-    private Label voicivos;
     @FXML
     private AnchorPane A2;
     @FXML
     private AnchorPane A3;
-    @FXML
-    private AnchorPane A4;
     @FXML
     private AnchorPane unegrillesolo;
     @FXML
@@ -86,17 +75,17 @@ public class Controller_sample {
     @FXML
     private AnchorPane troisgrillesolo;
     @FXML
-    private AnchorPane A6;
+    private Label conseil1;
     @FXML
-    private Label Joueur1;
+    private Label conseil2;
     @FXML
-    private Label Joueur2;
-    @FXML
-    private Label pseu;
+    private Label conseil;
     @FXML
     private Label nbf;
     @FXML
     private Label nbc;
+    @FXML
+    private Label pseu;
     @FXML
     private GridPane G1;
     @FXML
@@ -107,10 +96,14 @@ public class Controller_sample {
     private Label nombre;
     @FXML
     private Label verif;
+    @FXML
+    private Button jeu;
+    @FXML
+    private Label cadeau;
 
     @FXML
-    private void Button1(ActionEvent event) { // page après avoir sélectionné solo
-        Stage primaryStage = (Stage) b1.getScene().getWindow();
+    private void Solo(ActionEvent event) { // page après avoir sélectionné solo
+        Stage primaryStage = (Stage) Solo.getScene().getWindow();
         Group root = new Group();
         try {
             root = (Group) FXMLLoader.load(this.getClass().getResource("solo_depart.fxml"));
@@ -129,8 +122,8 @@ public class Controller_sample {
             nbf.setLayoutX(width / 2 - 220);
             nbc = (Label) A2.getChildren().get(5);
             nbc.setLayoutX(width / 2 - 220);
-            b4 = (Button) A2.getChildren().get(6);
-            b4.setLayoutX(width / 2 + 148.8);
+            Save = (Button) A2.getChildren().get(6);
+            Save.setLayoutX(width / 2 + 148.8);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -141,19 +134,21 @@ public class Controller_sample {
     }
 
     @FXML
-    private void Button4(ActionEvent event) { //affichage des grilles du joueur solo
-        Stage primaryStage = (Stage) b4.getScene().getWindow();
+    private void Save(ActionEvent event) { //affichage des grilles du joueur solo
+        Stage primaryStage = (Stage) Save.getScene().getWindow();
         Group root = new Group();
-        int va=0,grillepleine=0,t1=0,t2=0,t3=0,cadeau1=0,cadeau2=0,cadeau3=0;
+        int va=0;
         JoueurLoto JL = new JoueurLoto(convertirint(getNbfavsolo().getText()), convertirint(getNbcartonssolo().getText()));
         JL.creation_joueur(getNomsolo().getText());
         LJ.add(JL);
         CreationGrille();
         ordinateur();
         distribution();
+        remplissage_cadeau();
         try {
             root = (Group) FXMLLoader.load(this.getClass().getResource("affiche_grille.fxml"));
             verif = (Label) root.getChildren().get(5);
+            verif.setText("Avez-vous une ligne remplie ?");
             if (convertirint(getNbcartonssolo().getText()) == 1) {
                 unegrillesolo = (AnchorPane) root.getChildren().get(0);
                 unegrillesolo.setPrefHeight(height);
@@ -164,15 +159,6 @@ public class Controller_sample {
                 G1 = (GridPane) unegrillesolo.getChildren().get(2);
                 G1.setGridLinesVisible(true);
                 g_1=LJ.get(0).getLGJ().get(0);
-                if (t1==0){
-                    verif.setText("Avez-vous une ligne remplie ?");
-                }
-                else if (t1!=0 && t2==0){
-                    verif.setText("Avez-vous 2 lignes remplies ?");
-                }
-                else if (t1!=0 && t2!=0 && t3==0){
-                    verif.setText("Avez-vous un carton plein ?");
-                }
                 for (int i=0;i<3;i++){
                     for (int j=0;j<9;j++){
                         if (g_1.getG().getT()[i][j].getVal().compareTo(" ") != 0){
@@ -269,6 +255,12 @@ public class Controller_sample {
                 troisgrillesolo = (AnchorPane) root.getChildren().get(2);
                 troisgrillesolo.setPrefHeight(height);
                 troisgrillesolo.setPrefWidth(width);
+               /* InputStream input = this.getClass().getResourceAsStream("/resources/wooden-1693964_1280.jpg");
+                Image im = new Image(input,width,height,false,false);
+                BackgroundImage myBI = new BackgroundImage(im,
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                        BackgroundSize.DEFAULT);
+                troisgrillesolo.setBackground(new Background(myBI));*/
                 nomjoueur = (Label) troisgrillesolo.getChildren().get(0);
                 nomjoueur.setLayoutX(width / 2 - 121.5);
                 nomjoueur.setText(getNomsolo().getText());
@@ -362,6 +354,189 @@ public class Controller_sample {
                             va++;}
                     }}
             }
+            Creationbouleloto();
+            b5=(Button) root.getChildren().get(3);
+            Button b= (Button) root.getChildren().get(8);
+            b.setOnAction((event1) -> {
+                this.Pagedepart(primaryStage);
+            });
+            nombre=(Label) root.getChildren().get(4);
+            cadeau=(Label) root.getChildren().get(7);
+            b5.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                        Random rand = new Random();
+                        int index = rand.nextInt(getMax());
+                        int temp=Lint.get(index);
+                        nombre.setText(String.valueOf(temp));
+                        Lint.remove(index);
+                        setMax();
+                        Lboulesortie.add(temp);
+                        b5.setText("Nombre suivant");
+                }
+            });
+            jeu=(Button) root.getChildren().get(6);
+            jeu.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (t1 == 0) {
+                        JoueurLoto test = LJ.get(0);
+                        for (GrilleLoto tempo : test.getLGJ()) {
+                            int l1 = 0, l2 = 0, l3 = 0;
+                            for (int i = 0; i < 3; i++) {
+                                for (int j = 0; j < 9; j++) {
+                                    if (tempo.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
+                                        if (i == 0 && Lboulesortie.contains(convertirint(tempo.getG().getT()[i][j].getVal()))) {
+                                            l1++;
+                                        } else if (i == 1 && Lboulesortie.contains(convertirint(tempo.getG().getT()[i][j].getVal()))) {
+                                            l2++;
+                                        } else if (i == 2 && Lboulesortie.contains(convertirint(tempo.getG().getT()[i][j].getVal()))) {
+                                            l3++;
+                                        }
+                                    }
+                                }
+                            }
+                            if ((l1 == 5 || l2 == 5 || l3 == 5) && t1!=1) {
+                                t1 = 1;
+                                while (cad1==0) {
+                                    Random rand1 = new Random();
+                                    int cad = rand1.nextInt(Lcadeau.size());
+                                    Lots c=Lcadeau.get(cad);
+                                    if (c.getLigne()==1) {
+                                        cad1++;
+                                        cadeau.setLayoutX(0);
+                                        cadeau.setLayoutY(700);
+                                        cadeau.setText("Félicitation vous avez gagné: " + c.getCadeau());
+                                        Lcadeau.remove(c);
+                                    }
+                                }
+                                verif.setText("Avez-vous 2 lignes remplies ?");
+                                break;
+                            } else {
+                                String s = " ";
+                                int nb=0;
+                                for (Integer i : Lboulesortie) {
+                                    nb++;
+                                    s= s + i;
+                                    s= s + " ";
+                                    if (nb==30){
+                                        s=s+"\n";
+                                    }
+                                }
+                                cadeau.setLayoutX(0);
+                                cadeau.setLayoutY(650);
+                                cadeau.setText("Vous vous êtes trompés, cochez les boules que vous avez oublié, voici les boules déjà sortiees:");
+                                cadeau.setText(cadeau.getText() + s);
+                            }
+                        }
+                    } else if (t1 != 0 && t2 == 0) {
+                        JoueurLoto test = LJ.get(0);
+                        for (GrilleLoto tempo : test.getLGJ()) {
+                            int l1 = 0, l2 = 0, l3 = 0;
+                            for (int i = 0; i < 3; i++) {
+                                for (int j = 0; j < 9; j++) {
+                                    if (tempo.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
+                                        if (i == 0 && Lboulesortie.contains(convertirint(tempo.getG().getT()[i][j].getVal()))) {
+                                            l1++;
+                                        } else if (i == 1 && Lboulesortie.contains(convertirint(tempo.getG().getT()[i][j].getVal()))) {
+                                            l2++;
+                                        } else if (i == 2 && Lboulesortie.contains(convertirint(tempo.getG().getT()[i][j].getVal()))) {
+                                            l3++;
+                                        }
+                                    }
+                                }
+                            }
+                            if (((l1 == 5 && l2 == 5) || (l2 == 5 && l3 == 5) || (l3 == 5 && l1 == 5)) && t2!=1) {
+                                t2 = 1;
+                                while (cad2==0) {
+                                    Random rand1 = new Random();
+                                    int cad = rand1.nextInt(Lcadeau.size());
+                                    Lots c=Lcadeau.get(cad);
+                                    if (c.getLigne()==2) {
+                                        cad2++;
+                                        cadeau.setLayoutX(0);
+                                        cadeau.setLayoutY(700);
+                                        cadeau.setText("Félicitation vous avez gagné: " + c.getCadeau());
+                                        Lcadeau.remove(c);
+                                    }
+                                }
+                                verif.setText("Avez-vous un carton plein ?");
+                                break;
+                            } else {
+                                String s = " ";
+                                int nb=0;
+                                for (Integer i : Lboulesortie) {
+                                    nb++;
+                                    s= s + i;
+                                    s= s + " ";
+                                    if (nb==30){
+                                        s=s+"\n";
+                                    }
+                                }
+                                cadeau.setLayoutX(0);
+                                cadeau.setLayoutY(650);
+                                cadeau.setText("Vous vous êtes trompés, cochez les boules que vous avez oublié, voici les boules déjà sortiees:");
+                                cadeau.setText(cadeau.getText() + s);
+
+                            }
+                        }
+                    } else if (t1 != 0 && t2 != 0 && t3 == 0) {
+                        JoueurLoto test = LJ.get(0);
+                        for (GrilleLoto tempo : test.getLGJ()) {
+                            int l1 = 0, l2 = 0, l3 = 0;
+                            for (int i = 0; i < 3; i++) {
+                                for (int j = 0; j < 9; j++) {
+                                    if (tempo.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
+                                        if (i == 0 && Lboulesortie.contains(convertirint(tempo.getG().getT()[i][j].getVal()))) {
+                                            l1++;
+                                        } else if (i == 1 && Lboulesortie.contains(convertirint(tempo.getG().getT()[i][j].getVal()))) {
+                                            l2++;
+                                        } else if (i == 2 && Lboulesortie.contains(convertirint(tempo.getG().getT()[i][j].getVal()))) {
+                                            l3++;
+                                        }
+                                    }
+                                }
+                            }
+                            if ((l1 == 5 && l2 == 5 && l3 == 5) && t3!=1) {
+                                t3 = 1;
+                                while (cad3==0) {
+                                    Random rand1 = new Random();
+                                    int cad = rand1.nextInt(Lcadeau.size());
+                                    Lots c=Lcadeau.get(cad);
+                                    if (c.getLigne()==3) {
+                                        cad3++;
+                                        cadeau.setLayoutX(0);
+                                        cadeau.setLayoutY(700);
+                                        cadeau.setText("Félicitation vous avez gagné: " + c.getCadeau());
+                                        Lcadeau.remove(c);
+                                    }
+                                }
+                                verif.setText("Fin du jeu, merci d'avoir joué");
+                                jeu.setVisible(false);
+                                b.setVisible(true);
+                                b.setText("Quitter");
+                                b.setLayoutX(630);
+                                b.setLayoutY(610);
+                                break;
+                            } else {
+                                String s = " ";
+                                int nb=0;
+                                for (Integer i : Lboulesortie) {
+                                    nb++;
+                                    s= s + i;
+                                    s= s + " ";
+                                    if (nb==30){
+                                        s=s+"\n";
+                                    }
+                                }
+                                cadeau.setLayoutX(0);
+                                cadeau.setLayoutY(650);
+                                cadeau.setText("Vous vous êtes trompés, cochez les boules que vous avez oublié, voici les boules déjà sortiees:");
+                                cadeau.setText(cadeau.getText() + s);
+                            }
+                        }
+                    }
+                } });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -372,63 +547,27 @@ public class Controller_sample {
     }
 
     @FXML
-    public void GAME(ActionEvent event){
-        Creationbouleloto();
-        //nombre= (Label) root.getChildren().get(4);
-        //b5.setOnAction(actionEvent -> nombre.setText(String.valueOf(index)));
-        b5.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                Random rand = new Random();
-                int index = rand.nextInt(getMax());
-                int temp=Lint.get(index);
-                nombre.setText(String.valueOf(temp));
-                Lint.remove(index);
-                setMax();
-                Lboulesortie.add(temp);
-                b5.setText("Nombre suivant");
-            }
-        });
-    }
-
-    @FXML
-    private void Button2(ActionEvent event) { //page après avoir appuyé sur multi
-        Stage primaryStage = (Stage) b2.getScene().getWindow();
+    private void Conseils(ActionEvent event) { //page après avoir appuyé sur conseils
+        Stage primaryStage = (Stage) Conseils.getScene().getWindow();
         Group root = new Group();
         try {
-            root = (Group) FXMLLoader.load(this.getClass().getResource("multi_depart.fxml"));
+            root = (Group) FXMLLoader.load(this.getClass().getResource("Conseils.fxml"));
             A3 = (AnchorPane) root.getChildren().get(0);
             A3.setPrefHeight(height);
             A3.setPrefWidth(width);
-            Group j1= new Group();
-            j1 = (Group) A3.getChildren().get(0);
-            Group j2= new Group();
-            j2 = (Group) A3.getChildren().get(1);
-            nomj1 = (TextField) j1.getChildren().get(0);
-            nomj1.setLayoutX(width / 4);
-            nbfavj1 = (TextField) j1.getChildren().get(1);
-            nbfavj1.setLayoutX(width / 4);
-            nbcartonsj1 = (TextField) j1.getChildren().get(2);
-            nbcartonsj1.setLayoutX(width / 4);
-            pseu = (Label) j1.getChildren().get(3);
-            pseu.setLayoutX(width / 4 - 220);
-            nbf = (Label) j1.getChildren().get(4);
-            nbf.setLayoutX(width / 4 - 220);
-            nbc = (Label) j1.getChildren().get(5);
-            nbc.setLayoutX(width / 4 - 220);
-            Joueur1 = (Label) j1.getChildren().get(6);
-            Joueur1.setLayoutX(width / 4 + 34);
-            nomj2 = (TextField) j2.getChildren().get(0);
-            nomj2.setLayoutX(width / 4 + 200);
-            nbfavj2 = (TextField) j2.getChildren().get(1);
-            nbfavj2.setLayoutX(width / 4 + 200);
-            nbcartonsj2 = (TextField) j2.getChildren().get(2);
-            nbcartonsj2.setLayoutX(width / 4 + 200);
-            Joueur2 = (Label) j2.getChildren().get(3);
-            Joueur2.setLayoutX(width / 4 + 234);
-            b3 = (Button) A3.getChildren().get(2);
-            b3.setLayoutX(width / 2);
-        } catch (IOException e) {
+            conseil= (Label) A3.getChildren().get(0);
+            conseil.setLayoutX(width/2 - 65.6);
+            conseil1= (Label) A3.getChildren().get(1);
+            conseil1.setLayoutX(width/2 -313.6);
+            conseil2= (Label) A3.getChildren().get(2);
+            conseil2.setLayoutX(width/2 -153.6);
+            Retour= (Button) A3.getChildren().get(3);
+            Retour.setLayoutX(width/2 + 300);
+            Retour.setOnAction((event1) -> {
+                this.Pagedepart(primaryStage);
+            });
+            }
+        catch (IOException e) {
             e.printStackTrace();
         }
         primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
@@ -437,393 +576,34 @@ public class Controller_sample {
         primaryStage.show();
     }
 
-    @FXML
-    private void Button3(ActionEvent event) { // affichage info premier joueur
-        Stage primaryStage = (Stage) b3.getScene().getWindow();
-        Group root = new Group();
-        int va=0;
-        JoueurLoto JL1 = new JoueurLoto(convertirint(getNbfavj1().getText()), convertirint(getNbcartonsj1().getText()));
-        JL1.creation_joueur(getNomj1().getText());
-        LJ.add(JL1);
-        JoueurLoto JL2 = new JoueurLoto(convertirint(getNbfavj2().getText()), convertirint(getNbcartonsj2().getText()));
-        JL2.creation_joueur(getNomj2().getText());
-        LJ.add(JL2);
-        debut_game();
-        distribution();
-        try {
-            root = (Group) FXMLLoader.load(this.getClass().getResource("affiche_grille.fxml"));
-            if ((LJ.get(0).getNombredecartonsvoulus()) == 1) {
-                unegrillesolo = (AnchorPane) root.getChildren().get(0);
-                unegrillesolo.setPrefHeight(height);
-                unegrillesolo.setPrefWidth(width);
-                nomjoueur = (Label) unegrillesolo.getChildren().get(0);
-                nomjoueur.setLayoutX(width / 2 - 121.5);
-                nomjoueur.setText(LJ.get(0).getJ().getPseudo());
-                G1 = (GridPane) unegrillesolo.getChildren().get(2);
-                G1.setGridLinesVisible(true);
-                g_1 = LJ.get(0).getLGJ().get(0);
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (g_1.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
-                            Pane P = (Pane) G1.getChildren().get(va);
-                            Label L = (Label) P.getChildren().get(0);
-                            L.setText(g_1.getG().getT()[i][j].getVal());
-                            P.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    if (L.getTextFill()==Color.BLACK) {
-                                        P.setStyle("-fx-background-color: #000000;");
-                                        L.setTextFill(Color.WHITE);
-                                    }
-                                    else {
-                                        P.setStyle("-fx-background-color: #FDFFF1;");
-                                        L.setTextFill(Color.BLACK);
-                                    }
-                                }
-                            });
-                            va++;
-                        } else {
-                            Pane P = (Pane) G1.getChildren().get(va);
-                            P.setStyle("-fx-background-color: #FD6526;");
-                            va++;
-                        }
-                    }
-                }
-                // G1.getChildren().get(0).setOnMouseClicked(handler);
-                root.getChildren().add(G1);
-            } else if ((LJ.get(0).getNombredecartonsvoulus()) == 2) {
-                deuxgrillesolo = (AnchorPane) root.getChildren().get(1);
-                deuxgrillesolo.setPrefHeight(height);
-                deuxgrillesolo.setPrefWidth(width);
-                nomjoueur = (Label) deuxgrillesolo.getChildren().get(0);
-                nomjoueur.setLayoutX(width / 2 - 121.5);
-                nomjoueur.setText(LJ.get(0).getJ().getPseudo());
-                G1 = (GridPane) deuxgrillesolo.getChildren().get(2);
-                G1.setGridLinesVisible(true);
-                G2 = (GridPane) deuxgrillesolo.getChildren().get(3);
-                G2.setGridLinesVisible(true);
-                G2.setLayoutX(height - 42);
-                g_1 = LJ.get(0).getLGJ().get(0);
-                g_2 = LJ.get(0).getLGJ().get(1);
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (g_1.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
-                            Pane P = (Pane) G1.getChildren().get(va);
-                            Label L = (Label) P.getChildren().get(0);
-                            L.setText(g_1.getG().getT()[i][j].getVal());
-                            P.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    if (L.getTextFill()==Color.BLACK) {
-                                        P.setStyle("-fx-background-color: #000000;");
-                                        L.setTextFill(Color.WHITE);
-                                    }
-                                    else {
-                                        P.setStyle("-fx-background-color: #FDFFF1;");
-                                        L.setTextFill(Color.BLACK);
-                                    }
-                                }
-                            });
-                            va++;
-                        } else {
-                            Pane P = (Pane) G1.getChildren().get(va);
-                            P.setStyle("-fx-background-color: #FD6526;");
-                            va++;
-                        }
-                    }
-                }
-                va = 0;
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (g_2.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
-                            Pane P = (Pane) G2.getChildren().get(va);
-                            Label L = (Label) P.getChildren().get(0);
-                            L.setText(g_2.getG().getT()[i][j].getVal());
-                            P.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    if (L.getTextFill()==Color.BLACK) {
-                                        P.setStyle("-fx-background-color: #000000;");
-                                        L.setTextFill(Color.WHITE);
-                                    }
-                                    else {
-                                        P.setStyle("-fx-background-color: #FDFFF1;");
-                                        L.setTextFill(Color.BLACK);
-                                    }
-                                }
-                            });
-                            va++;
-                        } else {
-                            Pane P = (Pane) G2.getChildren().get(va);
-                            P.setStyle("-fx-background-color: #FD6526;");
-                            va++;
-                        }
-                    }
-                }
-                root.getChildren().add(G1);
-            } else {
-                troisgrillesolo = (AnchorPane) root.getChildren().get(2);
-                troisgrillesolo.setPrefHeight(height);
-                troisgrillesolo.setPrefWidth(width);
-                nomjoueur = (Label) troisgrillesolo.getChildren().get(0);
-                nomjoueur.setLayoutX(width / 2 - 121.5);
-                nomjoueur.setText(LJ.get(0).getJ().getPseudo());
-                G1 = (GridPane) troisgrillesolo.getChildren().get(2);
-                G1.setGridLinesVisible(true);
-                G2 = (GridPane) troisgrillesolo.getChildren().get(3);
-                G2.setGridLinesVisible(true);
-                G2.setLayoutX(height - 42);
-                G3 = (GridPane) troisgrillesolo.getChildren().get(4);
-                G3.setGridLinesVisible(true);
-                G3.setLayoutX(height / 2);
-                G3.setLayoutY(350);
-                g_1 = LJ.get(0).getLGJ().get(0);
-                g_2 = LJ.get(0).getLGJ().get(1);
-                g_3 = LJ.get(0).getLGJ().get(2);
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (g_1.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
-                            Pane P = (Pane) G1.getChildren().get(va);
-                            Label L = (Label) P.getChildren().get(0);
-                            L.setText(g_1.getG().getT()[i][j].getVal());
-                            P.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    if (L.getTextFill()==Color.BLACK) {
-                                        P.setStyle("-fx-background-color: #000000;");
-                                        L.setTextFill(Color.WHITE);
-                                    }
-                                    else {
-                                        P.setStyle("-fx-background-color: #FDFFF1;");
-                                        L.setTextFill(Color.BLACK);
-                                    }
-                                }
-                            });
-                            va++;
-                        } else {
-                            Pane P = (Pane) G1.getChildren().get(va);
-                            P.setStyle("-fx-background-color: #FD6526;");
-                            va++;
-                        }
-                    }
-                }
-                va = 0;
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (g_2.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
-                            Pane P = (Pane) G2.getChildren().get(va);
-                            Label L = (Label) P.getChildren().get(0);
-                            L.setText(g_2.getG().getT()[i][j].getVal());
-                            P.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    if (L.getTextFill()==Color.BLACK) {
-                                        P.setStyle("-fx-background-color: #000000;");
-                                        L.setTextFill(Color.WHITE);
-                                    }
-                                    else {
-                                        P.setStyle("-fx-background-color: #FDFFF1;");
-                                        L.setTextFill(Color.BLACK);
-                                    }
-                                }
-                            });
-                            va++;
-                        } else {
-                            Pane P = (Pane) G2.getChildren().get(va);
-                            P.setStyle("-fx-background-color: #FD6526;");
-                            va++;
-                        }
-                    }
-                }
-                va = 0;
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (g_3.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
-                            Pane P = (Pane) G3.getChildren().get(va);
-                            Label L = (Label) P.getChildren().get(0);
-                            L.setText(g_3.getG().getT()[i][j].getVal());
-                            P.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    if (L.getTextFill()==Color.BLACK) {
-                                        P.setStyle("-fx-background-color: #000000;");
-                                        L.setTextFill(Color.WHITE);
-                                    }
-                                    else {
-                                        P.setStyle("-fx-background-color: #FDFFF1;");
-                                        L.setTextFill(Color.BLACK);
-                                    }
-                                }
-                            });
-                            va++;
-                        } else {
-                            Pane P = (Pane) G3.getChildren().get(va);
-                            P.setStyle("-fx-background-color: #FD6526;");
-                            va++;
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
+@FXML
+    public void Pagedepart(Stage fenetre){
+        Group root =new Group();
+        try{
+        root = FXMLLoader.load(this.getClass().getResource("Page_depart.fxml"));
+        double height=Screen.getPrimary().getVisualBounds().getHeight();
+        double width=Screen.getPrimary().getVisualBounds().getWidth();
+        first=(AnchorPane) root.getChildren().get(0);
+        first.setPrefHeight(height);
+        first.setPrefWidth(width);
+        l1=(Label) first.getChildren().get(1);
+        l1.setLayoutX(width/2 - 64);
+        sol=(Button) first.getChildren().get(0);
+        sol.setLayoutX(width/2 - 64);
+        c=(Button) first.getChildren().get(2);
+        c.setLayoutX(width/2 - 53);
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
-        primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-        primaryStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-    }
+        Scene scene = new Scene(root);
+        fenetre.setTitle("Loto");
+        fenetre.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+        fenetre.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+        fenetre.setScene(scene);
+        fenetre.show();
 
-    /*@FXML
-    private void Button5(ActionEvent event) { // affichage info premier joueur
-        Stage primaryStage = (Stage) b5.getScene().getWindow();
-        Group root = new Group();
-        int va=0;
-        System.out.println(getNbcartonsj1());
-        System.out.println(P.getLJ().size());
-        try {
-            root = (Group) FXMLLoader.load(this.getClass().getResource("affiche_grille.fxml"));
-            if ((LJ.get(1).getNombredecartonsvoulus()) == 1) {
-                unegrillesolo = (AnchorPane) root.getChildren().get(0);
-                unegrillesolo.setPrefHeight(height);
-                unegrillesolo.setPrefWidth(width);
-                nomjoueur = (Label) unegrillesolo.getChildren().get(0);
-                nomjoueur.setLayoutX(width / 2 - 121.5);
-                nomjoueur.setText(LJ.get(1).getJ().getPseudo());
-                G1 = (GridPane) unegrillesolo.getChildren().get(2);
-                G1.setGridLinesVisible(true);
-                g_1 = LJ.get(1).getLGJ().get(0);
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (g_1.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
-                            Pane P = (Pane) G1.getChildren().get(va);
-                            Label L = (Label) P.getChildren().get(0);
-                            L.setText(g_1.getG().getT()[i][j].getVal());
-                            va++;
-                        } else {
-                            Pane P = (Pane) G1.getChildren().get(va);
-                            P.setStyle("-fx-background-color: #FD6526;");
-                            va++;
-                        }
-                    }
-                }
-                // G1.getChildren().get(0).setOnMouseClicked(handler);
-                root.getChildren().add(G1);
-            } else if ((LJ.get(1).getNombredecartonsvoulus()) == 2) {
-                deuxgrillesolo = (AnchorPane) root.getChildren().get(1);
-                deuxgrillesolo.setPrefHeight(height);
-                deuxgrillesolo.setPrefWidth(width);
-                nomjoueur = (Label) deuxgrillesolo.getChildren().get(0);
-                nomjoueur.setLayoutX(width / 2 - 121.5);
-                nomjoueur.setText(LJ.get(0).getJ().getPseudo());
-                G1 = (GridPane) deuxgrillesolo.getChildren().get(2);
-                G1.setGridLinesVisible(true);
-                G2 = (GridPane) deuxgrillesolo.getChildren().get(3);
-                G2.setGridLinesVisible(true);
-                G2.setLayoutX(height - 42);
-                g_1 = LJ.get(1).getLGJ().get(0);
-                g_2 = LJ.get(1).getLGJ().get(1);
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (g_1.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
-                            Pane P = (Pane) G1.getChildren().get(va);
-                            Label L = (Label) P.getChildren().get(0);
-                            L.setText(g_1.getG().getT()[i][j].getVal());
-                            va++;
-                        } else {
-                            Pane P = (Pane) G1.getChildren().get(va);
-                            P.setStyle("-fx-background-color: #FD6526;");
-                            va++;
-                        }
-                    }
-                }
-                va = 0;
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (g_2.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
-                            Pane P = (Pane) G2.getChildren().get(va);
-                            Label L = (Label) P.getChildren().get(0);
-                            L.setText(g_2.getG().getT()[i][j].getVal());
-                            va++;
-                        } else {
-                            Pane P = (Pane) G2.getChildren().get(va);
-                            P.setStyle("-fx-background-color: #FD6526;");
-                            va++;
-                        }
-                    }
-                }
-                root.getChildren().add(G1);
-            } else {
-                troisgrillesolo = (AnchorPane) root.getChildren().get(2);
-                troisgrillesolo.setPrefHeight(height);
-                troisgrillesolo.setPrefWidth(width);
-                nomjoueur = (Label) troisgrillesolo.getChildren().get(0);
-                nomjoueur.setLayoutX(width / 2 - 121.5);
-                nomjoueur.setText(LJ.get(0).getJ().getPseudo());
-                G1 = (GridPane) troisgrillesolo.getChildren().get(2);
-                G1.setGridLinesVisible(true);
-                G2 = (GridPane) troisgrillesolo.getChildren().get(3);
-                G2.setGridLinesVisible(true);
-                G2.setLayoutX(height - 42);
-                G3 = (GridPane) troisgrillesolo.getChildren().get(4);
-                G3.setGridLinesVisible(true);
-                G3.setLayoutX(height / 2);
-                G3.setLayoutY(350);
-                g_1 = LJ.get(1).getLGJ().get(0);
-                g_2 = LJ.get(1).getLGJ().get(1);
-                g_3 = LJ.get(1).getLGJ().get(2);
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (g_1.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
-                            Pane P = (Pane) G1.getChildren().get(va);
-                            Label L = (Label) P.getChildren().get(0);
-                            L.setText(g_1.getG().getT()[i][j].getVal());
-                            va++;
-                        } else {
-                            Pane P = (Pane) G1.getChildren().get(va);
-                            P.setStyle("-fx-background-color: #FD6526;");
-                            va++;
-                        }
-                    }
-                }
-                va = 0;
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (g_2.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
-                            Pane P = (Pane) G2.getChildren().get(va);
-                            Label L = (Label) P.getChildren().get(0);
-                            L.setText(g_2.getG().getT()[i][j].getVal());
-                            va++;
-                        } else {
-                            Pane P = (Pane) G2.getChildren().get(va);
-                            P.setStyle("-fx-background-color: #FD6526;");
-                            va++;
-                        }
-                    }
-                }
-                va = 0;
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (g_3.getG().getT()[i][j].getVal().compareTo(" ") != 0) {
-                            Pane P = (Pane) G3.getChildren().get(va);
-                            Label L = (Label) P.getChildren().get(0);
-                            L.setText(g_3.getG().getT()[i][j].getVal());
-                            va++;
-                        } else {
-                            Pane P = (Pane) G3.getChildren().get(va);
-                            P.setStyle("-fx-background-color: #FD6526;");
-                            va++;
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-        primaryStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-    }*/
+    }
 
     public TextField getNomsolo() {
         return this.nomsolo;
@@ -837,33 +617,8 @@ public class Controller_sample {
         return this.nbcartonssolo;
     }
 
-    public TextField getNomj1() {
-        return this.nomj1;
-    }
-
-    public TextField getNbfavj1() {
-        return this.nbfavj1;
-    }
-
-    public TextField getNbcartonsj1() {
-        return this.nbcartonsj1;
-    }
-
-    public TextField getNomj2() {
-        return this.nomj2;
-    }
-
-    public TextField getNbfavj2() {
-        return this.nbfavj2;
-    }
-
-    public TextField getNbcartonsj2() {
-        return this.nbcartonsj2;
-    }
-
     public void debut_game() {
         Creationbouleloto();
-        remplissage_cadeau();
     }
 
     public void setMax(){
@@ -1125,7 +880,7 @@ public class Controller_sample {
         }
     }*/
 
-    public Lots remplissage_cadeau() {
+    public void remplissage_cadeau() {
         Lots L;
         L=new Lots("Blu-Ray", 1);
         Lcadeau.add(L);
@@ -1143,7 +898,6 @@ public class Controller_sample {
         Lcadeau.add(L);
         L=new Lots("Casquette tour de France", 1);
         Lcadeau.add(L);
-        return L;
     }
 
     public int convertirint(String t) {

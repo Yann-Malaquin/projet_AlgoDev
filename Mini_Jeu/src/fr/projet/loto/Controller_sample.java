@@ -1,5 +1,6 @@
 package fr.projet.loto;
 
+import fr.projet.Joueur;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -143,6 +144,7 @@ public class Controller_sample {
         JoueurLoto JL = new JoueurLoto(convertirint(getNbfavsolo().getText()), convertirint(getNbcartonssolo().getText()));
         JL.creation_joueur(getNomsolo().getText());
         LJ.add(JL);
+        Joueur joueur = new Joueur(JL.getJ().getPseudo());
         CreationGrille();
         ordinateur();
         distribution();
@@ -403,6 +405,10 @@ public class Controller_sample {
                                                            cadeau.setLayoutY(700);
                                                            cadeau.setText("Félicitation " + lj.getJ().getPseudo() + " a gagné: " + c.getCadeau());
                                                            Lcadeau.remove(c);
+                                                           Classement C = new Classement();
+                                                           C.ChargerClassement(C,C.FichierSauvegarde);
+                                                           C.DonnerPointAUnJoueur(joueur,1,2);
+                                                           C.SauvegardeClassement(C.FichierSauvegarde);
                                                        }
                                                    }
                                                    verif.setText("Avez-vous 2 lignes remplies ?");
@@ -437,6 +443,10 @@ public class Controller_sample {
                                                            cadeau.setLayoutY(700);
                                                            cadeau.setText("Félicitation " + lj.getJ().getPseudo() + " a gagné: " + c.getCadeau());
                                                            Lcadeau.remove(c);
+                                                           Classement C = new Classement();
+                                                           C.ChargerClassement(C,C.FichierSauvegarde);
+                                                           C.DonnerPointAUnJoueur(joueur,1,2);
+                                                           C.SauvegardeClassement(C.FichierSauvegarde);
                                                        }
                                                    }
                                                    verif.setText("Avez-vous un carton plein ?");
@@ -471,6 +481,10 @@ public class Controller_sample {
                                                            cadeau.setLayoutY(700);
                                                            cadeau.setText("Félicitation " + lj.getJ().getPseudo() + " a gagné: " + c.getCadeau());
                                                            Lcadeau.remove(c);
+                                                           Classement C = new Classement();
+                                                           C.ChargerClassement(C,C.FichierSauvegarde);
+                                                           C.DonnerPointAUnJoueur(joueur,1,2);
+                                                           C.SauvegardeClassement(C.FichierSauvegarde);
                                                        }
                                                    }
                                                    verif.setText("Fin du jeu, merci d'avoir joué");

@@ -3,6 +3,9 @@ package fr.projet.loto;
 import java.util.ArrayList;
 import java.util.List;
 import fr.projet.Joueur;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 public class JoueurLoto {
 	private Joueur J;

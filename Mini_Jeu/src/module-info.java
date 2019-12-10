@@ -1,7 +1,4 @@
 /**
- * 
- */
-/**
  * @author Bitfenix
  *
  */
@@ -13,4 +10,6 @@ module Mini_Jeu {
     exports fr.projet.poker.Interface to javafx.graphics;
     opens fr.projet.poker.Interface to javafx.fxml;
     exports fr.projet.bataillenavale to javafx.graphics;
+    exports fr.projet.loto to javafx.graphics,javafx.fxml;
+    opens fr.projet.loto;
 }

@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class PartiePoker {
 
-	private List<Carte> paquetCartes = new ArrayList<Carte>();
+	/*private List<Carte> paquetCartes = new ArrayList<Carte>();
 	private List<JoueurPoker> joueurs;
 
 	public PartiePoker() {
@@ -26,7 +26,7 @@ public class PartiePoker {
 	
 	public List<Carte> genererPaquetCarte() {
 		String numero[] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Valet", "Dame", "Roi", "As" }; // tableau regroupant toutes les figures
-		String couleur[] = { "Pique", "Trèfle", "Coeur", "Carreau" }; // tableau regroupant les couleurs
+		String couleur[] = { "Pique", "Trï¿½fle", "Coeur", "Carreau" }; // tableau regroupant les couleurs
 		int i;
 
 		// parcourir les 2 tableaux
@@ -48,13 +48,13 @@ public class PartiePoker {
 		}
 	}
 
-	public List<Carte> melangerPaquetCartes(List<Carte> paquetCartes) { // permet de mélanger le paquet de cartes
+	public List<Carte> melangerPaquetCartes(List<Carte> paquetCartes) { // permet de mï¿½langer le paquet de cartes
 		List<Carte> paquetMelange = new ArrayList<Carte>();
 		int indexAlea;
 		int i=paquetCartes.size();
 		Random rand=new Random(); // utilisation du random pour chercher parmis le paquet
 
-		while (i > 0) { // tant que l'on a encore des cartes alors on "mélange" (ajout dans une liste tampon et suppression de la liste initiale)
+		while (i > 0) { // tant que l'on a encore des cartes alors on "mï¿½lange" (ajout dans une liste tampon et suppression de la liste initiale)
 			indexAlea = rand.nextInt(i);
 			paquetMelange.add(paquetCartes.get(indexAlea));
 			paquetCartes.remove(indexAlea);
@@ -68,11 +68,11 @@ public class PartiePoker {
 		List<Carte> paquetCartesMelangees = new ArrayList<Carte>();
 		List<Carte> paquetCartesMelangeestmp = new ArrayList<Carte>();
 		int pdonneur = 0; // position du donneur dans la liste
-		int init; //départ du donneur pour distribution
+		int init; //dï¿½part du donneur pour distribution
 		paquetCartes = this.genererPaquetCarte();
 		boolean find=false;
 		
-		for (int i = 0; i < 2; i++) { // on mélange le paquet de carte
+		for (int i = 0; i < 2; i++) { // on mï¿½lange le paquet de carte
 			paquetCartesMelangeestmp = this.melangerPaquetCartes(paquetCartes);
 			paquetCartes = this.melangerPaquetCartes(paquetCartesMelangeestmp);
 		}
@@ -112,7 +112,7 @@ public class PartiePoker {
 			
 		
 			System.out.println("pdonneur: "+pdonneur);
-			while (pdonneur < joueurs.size()) { // tant que l'on est pas supérieur au nombre de joueur
+			while (pdonneur < joueurs.size()) { // tant que l'on est pas supï¿½rieur au nombre de joueur
 				
 				joueurs.get(pdonneur).setMainJoueur(paquetCartesMelangees.get(0));
 				paquetCartesMelangees.remove(0);
@@ -132,7 +132,7 @@ public class PartiePoker {
 				}				
 			}
 			
-			pdonneur=init; // on redonne le donneur pour rédémarrer
+			pdonneur=init; // on redonne le donneur pour rï¿½dï¿½marrer
 		}
-	}
+	}*/
 }

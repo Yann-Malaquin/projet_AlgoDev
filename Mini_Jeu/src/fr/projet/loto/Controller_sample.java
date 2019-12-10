@@ -705,6 +705,9 @@ public class Controller_sample {
         c.setLayoutX(width/2 - 53);
         Quitter=(Button) first.getChildren().get(3);
         Quitter.setLayoutX(width/2 -45.2);
+        Quitter.setOnAction((event) -> {
+            fenetre.close();
+        });
         }
         catch (Exception e) {
             e.printStackTrace();

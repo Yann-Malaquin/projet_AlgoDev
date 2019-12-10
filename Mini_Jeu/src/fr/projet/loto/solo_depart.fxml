@@ -10,7 +10,7 @@
 
 <Group xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet.loto.Controller_sample">
    <children>
-      <AnchorPane fx:id="A2" prefHeight="400" prefWidth="600.0" style="-fx-background-color: #FDFEF0;">
+      <AnchorPane fx:id="A2" prefHeight="400" prefWidth="600.0">
          <children>
             <TextField fx:id="nomsolo" layoutX="277.0" layoutY="95.0" />
             <TextField fx:id="nbfavsolo" layoutX="277.0" layoutY="175.0" />

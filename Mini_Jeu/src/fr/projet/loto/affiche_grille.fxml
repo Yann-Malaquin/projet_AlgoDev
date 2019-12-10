@@ -12,7 +12,7 @@
 
 <Group xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet.loto.Controller_sample">
     <children>
-        <AnchorPane fx:id="unegrillesolo" prefHeight="400" prefWidth="600.0" style="-fx-background-color: #FDFFF1;">
+        <AnchorPane fx:id="unegrillesolo" prefHeight="400" prefWidth="600.0">
          <children>
             <Label layoutX="215.0" layoutY="14.0" prefHeight="35.0" prefWidth="170.0" text="Nom du joueur">
                <font>
@@ -181,7 +181,7 @@
                </children>
             </GridPane>
          </children></AnchorPane>
-        <AnchorPane fx:id="deuxgrillesolo" prefHeight="400" prefWidth="600.0" style="-fx-background-color: #FDFFF1;">
+        <AnchorPane fx:id="deuxgrillesolo" prefHeight="400" prefWidth="600.0">
             <children>
                 <Label layoutX="215.0" layoutY="14.0" prefHeight="35.0" prefWidth="170.0" text="Nom du joueur">
                     <font>
@@ -504,7 +504,7 @@
                 </children>
             </GridPane>
             </children></AnchorPane>
-        <AnchorPane fx:id="troisgrillesolo" prefHeight="400" prefWidth="600.0" style="-fx-background-color: #FDFFF1;">
+        <AnchorPane fx:id="troisgrillesolo" prefHeight="400" prefWidth="600.0">
             <children>
                 <Label layoutX="215.0" layoutY="14.0" prefHeight="35.0" prefWidth="170.0">
                     <font>

@@ -8,9 +8,9 @@
 
 <Group xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet.loto.Controller_sample">
    <children>
-      <AnchorPane fx:id="A1" prefHeight="400" prefWidth="600.0" style="-fx-background-color: #FDFEF0;">
+      <AnchorPane fx:id="A1" prefHeight="400" prefWidth="600.0">
          <children>
-            <Button fx:id="Solo" layoutX="236.0" layoutY="112.0" mnemonicParsing="false" onAction="#Solo" prefHeight="44.0" prefWidth="128.0" text="Solo">
+            <Button fx:id="Solo" layoutX="236.0" layoutY="112.0" mnemonicParsing="false" onAction="#Solo" prefHeight="44.0" prefWidth="128.0" text="Play">
                <font>
                   <Font size="20.0" />
                </font>

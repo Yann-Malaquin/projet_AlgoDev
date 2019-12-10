@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -105,7 +107,7 @@ public class Controller_sample {
     private Button Quitter;
 
     @FXML
-    private void Solo(ActionEvent event) { // page après avoir sélectionné solo
+    private void Solo(ActionEvent event) { // page après avoir sélectionné le mode solo, elle sert à indiquer nos renseignements pour le jeu
         Stage primaryStage = (Stage) Solo.getScene().getWindow();
         Group root = new Group();
         try {
@@ -127,6 +129,10 @@ public class Controller_sample {
             nbc.setLayoutX(width / 2 - 220);
             Save = (Button) A2.getChildren().get(6);
             Save.setLayoutX(width / 2 + 148.8);
+            InputStream input = this.getClass().getResourceAsStream("/resources/Lotto2-1080x675.jpg");
+            Image im = new Image(input,width,height,false,false);
+            BackgroundImage myBI = new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+            A2.setBackground(new Background(myBI));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -137,7 +143,7 @@ public class Controller_sample {
     }
 
     @FXML
-    private void Save(ActionEvent event) { //affichage des grilles du joueur solo
+    private void Save(ActionEvent event) { //après avoir enregistré les infos du joueur, nous lui présentons ces grilles et le jeu peut commencer
         Stage primaryStage = (Stage) Save.getScene().getWindow();
         Group root = new Group();
         int va=0;
@@ -157,6 +163,10 @@ public class Controller_sample {
                 unegrillesolo = (AnchorPane) root.getChildren().get(0);
                 unegrillesolo.setPrefHeight(height);
                 unegrillesolo.setPrefWidth(width);
+                InputStream input = this.getClass().getResourceAsStream("/resources/Lotto2-1080x675.jpg");
+                Image im = new Image(input,width,height,false,false);
+                BackgroundImage myBI = new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+                unegrillesolo.setBackground(new Background(myBI));
                 nomjoueur = (Label) unegrillesolo.getChildren().get(0);
                 nomjoueur.setLayoutX(width / 2 - 121.5);
                 nomjoueur.setText(getNomsolo().getText());
@@ -167,6 +177,7 @@ public class Controller_sample {
                     for (int j=0;j<9;j++){
                         if (g_1.getG().getT()[i][j].getVal().compareTo(" ") != 0){
                 Pane P= (Pane) G1.getChildren().get(va);
+                P.setStyle("-fx-background-color: WHITE");
                 Label L= (Label) P.getChildren().get(0);
                 L.setText(g_1.getG().getT()[i][j].getVal());
                 P.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -177,7 +188,7 @@ public class Controller_sample {
                             L.setTextFill(Color.WHITE);
                        }
                         else {
-                            P.setStyle("-fx-background-color: #FDFFF1;");
+                            P.setStyle("-fx-background-color: WHITE;");
                             L.setTextFill(Color.BLACK);
                         }
                     }
@@ -193,6 +204,10 @@ public class Controller_sample {
                 deuxgrillesolo = (AnchorPane) root.getChildren().get(1);
                 deuxgrillesolo.setPrefHeight(height);
                 deuxgrillesolo.setPrefWidth(width);
+                InputStream input = this.getClass().getResourceAsStream("/resources/Lotto2-1080x675.jpg");
+                Image im = new Image(input,width,height,false,false);
+                BackgroundImage myBI = new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+                deuxgrillesolo.setBackground(new Background(myBI));
                 nomjoueur = (Label) deuxgrillesolo.getChildren().get(0);
                 nomjoueur.setLayoutX(width / 2 - 121.5);
                 nomjoueur.setText(getNomsolo().getText());
@@ -207,6 +222,7 @@ public class Controller_sample {
                     for (int j=0;j<9;j++){
                         if (g_1.getG().getT()[i][j].getVal().compareTo(" ") != 0){
                             Pane P= (Pane) G1.getChildren().get(va);
+                            P.setStyle("-fx-background-color: WHITE");
                             Label L= (Label) P.getChildren().get(0);
                             L.setText(g_1.getG().getT()[i][j].getVal());
                             P.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -217,7 +233,7 @@ public class Controller_sample {
                                         L.setTextFill(Color.WHITE);
                                     }
                                     else {
-                                        P.setStyle("-fx-background-color: #FDFFF1;");
+                                        P.setStyle("-fx-background-color: WHITE;");
                                         L.setTextFill(Color.BLACK);
                                     }
                                 }
@@ -233,6 +249,7 @@ public class Controller_sample {
                     for (int j=0;j<9;j++){
                         if (g_2.getG().getT()[i][j].getVal().compareTo(" ") != 0){
                             Pane P= (Pane) G2.getChildren().get(va);
+                            P.setStyle("-fx-background-color: WHITE");
                             Label L= (Label) P.getChildren().get(0);
                             L.setText(g_2.getG().getT()[i][j].getVal());
                             P.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -243,7 +260,7 @@ public class Controller_sample {
                                         L.setTextFill(Color.WHITE);
                                     }
                                     else {
-                                        P.setStyle("-fx-background-color: #FDFFF1;");
+                                        P.setStyle("-fx-background-color: WHITE;");
                                         L.setTextFill(Color.BLACK);
                                     }
                                 }
@@ -259,12 +276,10 @@ public class Controller_sample {
                 troisgrillesolo = (AnchorPane) root.getChildren().get(2);
                 troisgrillesolo.setPrefHeight(height);
                 troisgrillesolo.setPrefWidth(width);
-               /* InputStream input = this.getClass().getResourceAsStream("/resources/wooden-1693964_1280.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/resources/Lotto2-1080x675.jpg");
                 Image im = new Image(input,width,height,false,false);
-                BackgroundImage myBI = new BackgroundImage(im,
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                        BackgroundSize.DEFAULT);
-                troisgrillesolo.setBackground(new Background(myBI));*/
+                BackgroundImage myBI = new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+                troisgrillesolo.setBackground(new Background(myBI));
                 nomjoueur = (Label) troisgrillesolo.getChildren().get(0);
                 nomjoueur.setLayoutX(width / 2 - 121.5);
                 nomjoueur.setText(getNomsolo().getText());
@@ -284,6 +299,7 @@ public class Controller_sample {
                     for (int j=0;j<9;j++){
                         if (g_1.getG().getT()[i][j].getVal().compareTo(" ") != 0){
                             Pane P= (Pane) G1.getChildren().get(va);
+                            P.setStyle("-fx-background-color: WHITE");
                             Label L= (Label) P.getChildren().get(0);
                             L.setText(g_1.getG().getT()[i][j].getVal());
                             P.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -294,7 +310,7 @@ public class Controller_sample {
                                         L.setTextFill(Color.WHITE);
                                     }
                                     else {
-                                        P.setStyle("-fx-background-color: #FDFFF1;");
+                                        P.setStyle("-fx-background-color: WHITE;");
                                         L.setTextFill(Color.BLACK);
                                     }
                                 }
@@ -310,6 +326,7 @@ public class Controller_sample {
                     for (int j=0;j<9;j++){
                         if (g_2.getG().getT()[i][j].getVal().compareTo(" ") != 0){
                             Pane P= (Pane) G2.getChildren().get(va);
+                            P.setStyle("-fx-background-color: WHITE");
                             Label L= (Label) P.getChildren().get(0);
                             L.setText(g_2.getG().getT()[i][j].getVal());
                             P.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -320,7 +337,7 @@ public class Controller_sample {
                                         L.setTextFill(Color.WHITE);
                                     }
                                     else {
-                                        P.setStyle("-fx-background-color: #FDFFF1;");
+                                        P.setStyle("-fx-background-color: WHITE;");
                                         L.setTextFill(Color.BLACK);
                                     }
                                 }
@@ -336,6 +353,7 @@ public class Controller_sample {
                     for (int j=0;j<9;j++){
                         if (g_3.getG().getT()[i][j].getVal().compareTo(" ") != 0){
                             Pane P= (Pane) G3.getChildren().get(va);
+                            P.setStyle("-fx-background-color: WHITE");
                             Label L= (Label) P.getChildren().get(0);
                             L.setText(g_3.getG().getT()[i][j].getVal());
                             P.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -346,7 +364,7 @@ public class Controller_sample {
                                         L.setTextFill(Color.WHITE);
                                     }
                                     else {
-                                        P.setStyle("-fx-background-color: #FDFFF1;");
+                                        P.setStyle("-fx-background-color: WHITE;");
                                         L.setTextFill(Color.BLACK);
                                     }
                                 }
@@ -368,7 +386,7 @@ public class Controller_sample {
             cadeau=(Label) root.getChildren().get(7);
             b5.setOnAction(new EventHandler<ActionEvent>() {
                                @Override
-                               public void handle(ActionEvent actionEvent) {
+                               public void handle(ActionEvent actionEvent) { // a chaque appui sur le bouton nombre suivant on verifie si un autre des joueurs a la ligne et on affiche un nouveau nombre
                                    Random rand = new Random();
                                    int index = rand.nextInt(getMax());
                                    int temp = Lint.get(index);
@@ -405,10 +423,6 @@ public class Controller_sample {
                                                            cadeau.setLayoutY(700);
                                                            cadeau.setText("Félicitation " + lj.getJ().getPseudo() + " a gagné: " + c.getCadeau());
                                                            Lcadeau.remove(c);
-                                                           Classement C = new Classement();
-                                                           C.ChargerClassement(C,C.FichierSauvegarde);
-                                                           C.DonnerPointAUnJoueur(joueur,1,2);
-                                                           C.SauvegardeClassement(C.FichierSauvegarde);
                                                        }
                                                    }
                                                    verif.setText("Avez-vous 2 lignes remplies ?");
@@ -443,10 +457,6 @@ public class Controller_sample {
                                                            cadeau.setLayoutY(700);
                                                            cadeau.setText("Félicitation " + lj.getJ().getPseudo() + " a gagné: " + c.getCadeau());
                                                            Lcadeau.remove(c);
-                                                           Classement C = new Classement();
-                                                           C.ChargerClassement(C,C.FichierSauvegarde);
-                                                           C.DonnerPointAUnJoueur(joueur,1,2);
-                                                           C.SauvegardeClassement(C.FichierSauvegarde);
                                                        }
                                                    }
                                                    verif.setText("Avez-vous un carton plein ?");
@@ -481,10 +491,6 @@ public class Controller_sample {
                                                            cadeau.setLayoutY(700);
                                                            cadeau.setText("Félicitation " + lj.getJ().getPseudo() + " a gagné: " + c.getCadeau());
                                                            Lcadeau.remove(c);
-                                                           Classement C = new Classement();
-                                                           C.ChargerClassement(C,C.FichierSauvegarde);
-                                                           C.DonnerPointAUnJoueur(joueur,1,2);
-                                                           C.SauvegardeClassement(C.FichierSauvegarde);
                                                        }
                                                    }
                                                    verif.setText("Fin du jeu, merci d'avoir joué");
@@ -501,7 +507,7 @@ public class Controller_sample {
                                }
                            });
             jeu=(Button) root.getChildren().get(6);
-            jeu.setOnAction(new EventHandler<ActionEvent>() {
+            jeu.setOnAction(new EventHandler<ActionEvent>() { //vérification si le joueur a menti ou non s'il n'a pas menti il remporte le lot sinon on lui affiche les boules deja sorties pour qu'il se corrige
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (t1 == 0) {
@@ -533,6 +539,10 @@ public class Controller_sample {
                                         cadeau.setLayoutY(700);
                                         cadeau.setText("Félicitation vous avez gagné: " + c.getCadeau());
                                         Lcadeau.remove(c);
+                                        Classement C = new Classement();
+                                                           C.ChargerClassement(C,C.FichierSauvegarde);
+                                                           C.DonnerPointAUnJoueur(joueur,1,2);
+                                                           C.SauvegardeClassement(C.FichierSauvegarde);
                                     }
                                 }
                                 verif.setText("Avez-vous 2 lignes remplies ?");
@@ -583,6 +593,10 @@ public class Controller_sample {
                                         cadeau.setLayoutY(700);
                                         cadeau.setText("Félicitation vous avez gagné: " + c.getCadeau());
                                         Lcadeau.remove(c);
+                                        Classement C = new Classement();
+                                                           C.ChargerClassement(C,C.FichierSauvegarde);
+                                                           C.DonnerPointAUnJoueur(joueur,1,2);
+                                                           C.SauvegardeClassement(C.FichierSauvegarde);
                                     }
                                 }
                                 verif.setText("Avez-vous un carton plein ?");
@@ -634,6 +648,10 @@ public class Controller_sample {
                                         cadeau.setLayoutY(700);
                                         cadeau.setText("Félicitation vous avez gagné: " + c.getCadeau());
                                         Lcadeau.remove(c);
+                                        Classement C = new Classement();
+                                                           C.ChargerClassement(C,C.FichierSauvegarde);
+                                                           C.DonnerPointAUnJoueur(joueur,1,2);
+                                                           C.SauvegardeClassement(C.FichierSauvegarde);
                                     }
                                 }
                                 verif.setText("Fin du jeu, merci d'avoir joué");
@@ -672,25 +690,29 @@ public class Controller_sample {
     }
 
     @FXML
-    private void Conseils(ActionEvent event) { //page après avoir appuyé sur conseils
+    private void Conseils(ActionEvent event) { //page qui indique des petits conseils après avoir appuyé sur le bouton conseils
         Stage primaryStage = (Stage) Conseils.getScene().getWindow();
         Group root = new Group();
         try {
-            root = (Group) FXMLLoader.load(this.getClass().getResource("Conseils.fxml"));
+            root = (Group) FXMLLoader.load(this.getClass().getResource("Aide.fxml"));
             A3 = (AnchorPane) root.getChildren().get(0);
             A3.setPrefHeight(height);
             A3.setPrefWidth(width);
             conseil= (Label) A3.getChildren().get(0);
             conseil.setLayoutX(width/2 - 65.6);
             conseil1= (Label) A3.getChildren().get(1);
-            conseil1.setLayoutX(width/2 -313.6);
+            conseil1.setLayoutX(width/2 -453.2);
             conseil2= (Label) A3.getChildren().get(2);
-            conseil2.setLayoutX(width/2 -153.6);
+            conseil2.setLayoutX(width/2 -154.4);
             Retour= (Button) A3.getChildren().get(3);
             Retour.setLayoutX(width/2 + 300);
             Retour.setOnAction((event1) -> {
                 this.Pagedepart(primaryStage);
             });
+            InputStream input = this.getClass().getResourceAsStream("/resources/images-gratuites-libres-de-droits-sans-droits-d-auteur-82-1560x832.jpg");
+            Image im = new Image(input,width,height,false,false);
+            BackgroundImage myBI = new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+            A3.setBackground(new Background(myBI));
             }
         catch (IOException e) {
             e.printStackTrace();
@@ -702,7 +724,7 @@ public class Controller_sample {
     }
 
 @FXML
-    public void Pagedepart(Stage fenetre){
+    public void Pagedepart(Stage fenetre){ //la première page qui s'affiche à l'ouverture du jeu avec trois options jeu, conseils et quitter
         Group root =new Group();
         try{
         root = FXMLLoader.load(this.getClass().getResource("Page_depart.fxml"));
@@ -722,6 +744,10 @@ public class Controller_sample {
         Quitter.setOnAction((event) -> {
             fenetre.close();
         });
+            InputStream input = this.getClass().getResourceAsStream("/resources/Lotto2-1080x675.jpg");
+            Image im = new Image(input,width,height,false,false);
+            BackgroundImage myBI = new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+            first.setBackground(new Background(myBI));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -859,156 +885,6 @@ public class Controller_sample {
         }
         return false;
     }
-
-   /* public void debut_partie() {
-        int grillepleine=0,t1=0,t2=0,t3=0,cadeau1=0,cadeau2=0,cadeau3=0,max=90;
-        remplissage_cadeau();
-        while (grillepleine !=1) {
-            int x=0,y=0,z=0;
-            Random rand = new Random();
-            int index = rand.nextInt(max);
-            int temp = Lint.get(index);
-            Lint.remove(index);
-            max--;
-            Lboulesortie.add(temp);
-            for (JoueurLoto test : LJ) {
-                System.out.println("\n\n" + test.getJ().getPseudo() + ":");
-                for (GrilleLoto tempo: test.getLGJ()) {
-                    System.out.println("Le num�ro de cette grille: " + (test.getLGJ().indexOf(tempo)+1) );
-                    tempo.Affichage(tempo.getG());
-                    System.out.println("\nCette grille contient-elle le num�ro ? " + temp + "\n1=Oui, 2=Non");
-                    Scanner sc1 = new Scanner(System.in);
-                    int verif = sc1.nextInt();
-                    sc1.nextLine();
-                    if(verif==1) {
-                        System.out.println("Donnez le num�ro de la ligne, puis de la colonne:");
-                        int l = sc1.nextInt();
-                        int c = sc1.nextInt();
-                        tempo.getG().getT()[l-1][c-1].setModifiable(false);
-                    }
-                    System.out.println("Rappel des num�ros d�j� tir�es:");
-                    for (int c:Lboulesortie) {
-                        System.out.println(c + " ");
-                    }
-                    if (t1==0) {
-                        System.out.println("Avez-vous obtenu 1 ligne ? 1=Oui, 2=Non");
-                        int a = sc1.nextInt();
-                        a--;
-                        if(a==0) {
-                            for (int t=0;t<10;t++) {
-                                if ((tempo.getG().getT()[0][t].isModifiable()==false) && (Lboulesortie.contains(Integer.valueOf(tempo.getG().getT()[0][t].getVal())))) {
-                                    x++;
-                                }
-                                if (tempo.getG().getT()[1][t].isModifiable()==false && (Lboulesortie.contains(Integer.valueOf(tempo.getG().getT()[1][t].getVal())))) {
-                                    y++;
-                                }
-                                if (tempo.getG().getT()[2][t].isModifiable()==false && (Lboulesortie.contains(Integer.valueOf(tempo.getG().getT()[2][t].getVal())))) {
-                                    z++;
-                                }
-                            }
-                            if ((x==5 && y!=5 && z!=5) || (x!=5 && y==5 && z!=5) || (x!=5 && y!=5 && z==5)) {
-                                //vainqueur 1 ligne
-                                System.out.println("\nBravo vous avez obtenu 1 ligne voici votre cadeau:");
-                                while (cadeau1==0) {
-                                    Random rand1 = new Random();
-                                    int taille = rand1.nextInt(Lcadeau.size());
-                                    Lots c=Lcadeau.get(taille);
-                                    if (c.getLigne()==1) {
-                                        cadeau1++;
-                                        System.out.println("\nVotre cadeau:" + c.getCadeau());
-                                        Lcadeau.remove(c);
-                                    }
-                                }
-                                t1++;
-                            }
-                            else {
-                                System.out.println("\nVous vous �tes tromp�s!");
-                                t1=0;
-                            }
-                        }
-
-                    }
-                    if (t2==0 && t1==1) {
-                        System.out.println("Avez-vous obtenu 2 lignes ? 1=Oui, 2=Non");
-                        int a = sc1.nextInt();
-                        a--;
-                        if(a==0) {
-                            for (int t=0;t<10;t++) {
-                                if ((tempo.getG().getT()[0][t].isModifiable()==false) && (Lboulesortie.contains(Integer.valueOf(tempo.getG().getT()[0][t].getVal())))) {
-                                    x++;
-                                }
-                                if (tempo.getG().getT()[1][t].isModifiable()==false && (Lboulesortie.contains(Integer.valueOf(tempo.getG().getT()[1][t].getVal())))) {
-                                    y++;
-                                }
-                                if (tempo.getG().getT()[2][t].isModifiable()==false && (Lboulesortie.contains(Integer.valueOf(tempo.getG().getT()[2][t].getVal())))) {
-                                    z++;
-                                }
-                            }
-                            if((x==5 && y==5 && z!=5) || (x!=5 && y==5 && z==5) || (x==5 && y!=5 && z==5)) {
-                                //vainqueur 2 lignes
-                                System.out.println("\nBravo vous avez obtenu 2 lignes voici votre cadeau:");
-                                while (cadeau2==0) {
-                                    Random rand1 = new Random();
-                                    int taille = rand1.nextInt(Lcadeau.size());
-                                    Lots c=Lcadeau.get(taille);
-                                    if (c.getLigne()==2) {
-                                        cadeau2++;
-                                        System.out.println("\nVotre cadeau:" + c.getCadeau());
-                                        Lcadeau.remove(c);
-                                    }
-                                }
-                                t2++;
-                            }
-                            else {
-                                System.out.println("\nVous vous �tes tromp�s!");
-                                t2=0;
-                            }
-                        }
-                    }
-                    if (t3==0 && t1==1 && t2==1) {
-                        System.out.println("Avez-vous obtenu 1 carton plein ? 1=Oui, 2=Non");
-                        int a = sc1.nextInt();
-                        a--;
-                        if(a==0) {
-                            for (int t=0;t<10;t++) {
-                                if ((tempo.getG().getT()[0][t].isModifiable()==false) && (Lboulesortie.contains(Integer.valueOf(tempo.getG().getT()[0][t].getVal())))) {
-                                    x++;
-                                }
-                                if (tempo.getG().getT()[1][t].isModifiable()==false && (Lboulesortie.contains(Integer.valueOf(tempo.getG().getT()[1][t].getVal())))) {
-                                    y++;
-                                }
-                                if (tempo.getG().getT()[2][t].isModifiable()==false && (Lboulesortie.contains(Integer.valueOf(tempo.getG().getT()[2][t].getVal())))) {
-                                    z++;
-                                }
-                            }
-                            if(x==5 && y==5 && z==5) {
-                                //vainqueur carton plein
-                                System.out.println("\nBravo vous avez obtenu 1 carton plein voici votre cadeau:");
-                                while (cadeau3==0) {
-                                    Random rand1 = new Random();
-                                    int taille = rand1.nextInt(Lcadeau.size());
-                                    Lots c=Lcadeau.get(taille);
-                                    if (c.getLigne()==3) {
-                                        cadeau3++;
-                                        System.out.println("\nVotre cadeau:" + c.getCadeau());
-                                        Lcadeau.remove(c);
-                                    }
-                                }
-                                t3++;
-                                tempo.Affichage(tempo.getG());
-                                grillepleine=1;
-                                break;
-                            }
-                            else {
-                                System.out.println("\nVous vous �tes tromp�s!");
-                                t3=0;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }*/
 
     public void remplissage_cadeau() {
         Lots L;

@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -20,7 +21,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
       MenuController controller = new MenuController();
-        controller.initMenu(primaryStage);
+      controller.initMenu(primaryStage);
+
 
         /*JoueurPoker jp1 = new JoueurPoker("jp1",150);
         JoueurPoker jp2 = new JoueurPoker("jp2",150);

@@ -45,6 +45,7 @@ public class TableController extends Thread {
     private MainsGagnantes m = new MainsGagnantes();
     private double pb;
     private int initJoueur;
+    private AnchorPane carteJ;
 
     public TableController() {
         super();
@@ -139,7 +140,7 @@ public class TableController extends Thread {
         }
 
         //on recupere les differentes partie de l'interface pour pouvoir ensuite les MAJ
-        fenetre = (AnchorPane) root.getChildren().get(0);
+        fenetre = (AnchorPane) ((Group)root.getChildren().get(0)).getChildren().get(0);
         table = (AnchorPane) fenetre.getChildren().get(0);
         allJoueur = (Group) table.getChildren().get(0);
         plateau = (Group) allJoueur.getChildren().get(5);
@@ -193,6 +194,19 @@ public class TableController extends Thread {
             this.distributeCard(allJoueur, mixDeck);
             this.cardPGenerate(allJoueur);
             bnDistrib.setVisible(false);
+
+            joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+            carteJ = (AnchorPane) joueur.getChildren().get(3);
+            AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+            i = new AnchorPane();
+            i =(AnchorPane)  carteJ.getChildren().get(0);
+            i.getChildren().remove(i.getChildren().get(1));
+
+            carteJ = (AnchorPane) joueur.getChildren().get(4);
+            i = new AnchorPane();
+            i =(AnchorPane)  carteJ.getChildren().get(0);
+            i.getChildren().remove(i.getChildren().get(1));
         });
 
         this.turn(allJoueur);
@@ -211,7 +225,7 @@ public class TableController extends Thread {
         c.setId("Carte_" + _figure + "_" + _couleur);
 
         //different label accueillant la figure et la couleur
-        Label HG = new Label(), C = new Label(), BD = new Label();
+        Label HG = new Label(), C = new Label(), BD = new Label(), HGC = new Label(), BDC = new Label();
         Group label = new Group();
 
         HG.setId(Integer.toString(_valeur));
@@ -219,32 +233,49 @@ public class TableController extends Thread {
         BD.setId("BD" + _valeur);
 
         ImageView iw = new ImageView(new Image(couleur));
-
-        iw.setFitWidth(25);
-        iw.setFitHeight(25);
+        iw.setId("arriere");
 
         HG.setPrefSize(15, 15);
         HG.setLayoutX(10);
         HG.setLayoutY(10);
 
+
+        iw.setFitWidth(25);
+        iw.setFitHeight(25);
         C.setPrefSize(25, 25);
         C.setLayoutX(14.5);
         C.setLayoutY(30);
+        C.setGraphic(iw);
 
         BD.setPrefSize(15, 15);
         BD.setRotate(180);
         BD.setLayoutX(29);
         BD.setLayoutY(60);
 
-        HG.setText(_figure);
-        HG.setTextFill(Color.RED);
-        C.setGraphic(iw);
-        BD.setText(_figure);
-        BD.setTextFill(Color.RED);
+        if (_couleur.compareTo("Carreau") == 0 || _couleur.compareTo("Coeur") == 0) {
+            HG.setText(_figure);
+            HG.setTextFill(Color.RED);
+            BD.setText(_figure);
+            BD.setTextFill(Color.RED);
+        } else {
+            HG.setText(_figure);
+            HG.setTextFill(Color.BLACK);
+            BD.setText(_figure);
+            BD.setTextFill(Color.BLACK);
+        }
 
-        label.setId("Carte" + _valeur + "Ca");
+        if (_couleur.compareTo("Carreau") == 0) {
+            label.setId("Carte" + _valeur + "Ca");
+        } else if (_couleur.compareTo("Coeur") == 0) {
+            label.setId("Carte" + _valeur + "Co");
+        } else if (_couleur.compareTo("Trefle") == 0) {
+            label.setId("Carte" + _valeur + "Tr");
+        } else {
+            label.setId("Carte" + _valeur + "Pi");
+        }
+
         //ajout des 3 label a un groupe
-        label.getChildren().addAll(HG, C, BD);
+        label.getChildren().addAll(HG, C, BD, HGC, BDC);
         //ajout du groupe label a l'anchorpane c
         c.getChildren().add(label);
         c.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -483,6 +514,9 @@ public class TableController extends Thread {
         Group joueur;
         JoueurPoker jp;
         int i, pdonneur = 0, init;
+
+
+
         for (i = 0; i < this.getlJP().size(); i++) {
             if (this.getlJP().get(i).getEtatJoueur().contains("Donneur")) {
                 break;
@@ -513,6 +547,11 @@ public class TableController extends Thread {
                 joueur = (Group) allJoueur.getChildren().get(pdonneur);
                 carteJ = (AnchorPane) joueur.getChildren().get(i);
                 jp = lJP.get(pdonneur);
+                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                Image im = new Image(input);
+                ImageView iw = new ImageView(im);
+                iw.setFitHeight(85);
+                iw.setFitWidth(54);
 
                 tmp = mixDeck.get(0);
                 mixDeck.remove(0);
@@ -521,8 +560,10 @@ public class TableController extends Thread {
                 tmp.setRotate(0);
                 tmp.setPrefHeight(85);
                 tmp.setPrefWidth(54);
+                tmp.getChildren().add(iw);
                 jp.setMainJoueur(tmp);
                 carteJ.getChildren().add(tmp);
+
 
                 // si on arrive sur le donneur alors on quitte le 1er et on entame le 2e tour
                 if (pdonneur == init) {
@@ -584,11 +625,12 @@ public class TableController extends Thread {
 
     public void turn(Group allJoueur) {
         turn = 1;
-        joueur = new Group();
+        joueur = (Group) allJoueur.getChildren().get(indexJoueur);
 
         /*donne l'action au bouton miser
          **on appelle la fonction miser et on incremente l'index en verifiant toujours si l'on est pas sur le dernier joueur
          */
+
         bnMiser.setOnAction((event) -> {
             double mise = 0;
             mise = Double.parseDouble(barreMiser.getText());
@@ -616,9 +658,73 @@ public class TableController extends Thread {
                 this.tapis(allJoueur, (Group) allJoueur.getChildren().get(indexJoueur), this.getlJP().get(indexJoueur));
             }
             if (indexJoueur + 1 == this.getlJP().size()) {
+                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                Image im = new Image(input);
+                ImageView iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
+                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                im = new Image(input);
+                iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane) carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
                 this.setIndexJoueur(0);
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
             } else {
+                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                Image im = new Image(input);
+                ImageView iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
+                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                im = new Image(input);
+                iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane) carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
                 indexJoueur++;
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
             }
 
             this.getFinTour().clear();
@@ -645,6 +751,29 @@ public class TableController extends Thread {
                 joueur = (Group) allJoueur.getChildren().get(indexJoueur);
 
                 if ((this.getFinTour().size() == this.getlJP().size() - 1) && (((Label) joueur.getChildren().get(1)).getText().compareTo("PB /S") == 0)) {
+
+                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    Image im = new Image(input);
+                    ImageView iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    im = new Image(input);
+                    iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i =(AnchorPane) carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
                     this.displayCardT(allJoueur, 0, 3);
                     bnMiser.setVisible(true);
                     bnSuivre.setVisible(false);
@@ -653,11 +782,59 @@ public class TableController extends Thread {
                     bnSeCoucher.setVisible(false);
                     if ((initJoueur + 1) == this.getlJP().size()) {
                         indexJoueur = 0;
+
+                        joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(3);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(4);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
+
                     } else {
                         indexJoueur = (initJoueur + 1);
+
+                        joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(3);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(4);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
                     }
                     turn++;
                 } else if (this.getFinTour().size() == (this.getlJP().size() - 1)) {
+
+                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    Image im = new Image(input);
+                    ImageView iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    im = new Image(input);
+                    iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i =(AnchorPane) carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
                     this.displayCardT(allJoueur, 0, 3);
                     bnMiser.setVisible(true);
                     bnSuivre.setVisible(false);
@@ -667,17 +844,108 @@ public class TableController extends Thread {
 
                     if ((initJoueur + 1) == this.getlJP().size()) {
                         indexJoueur = 0;
+
+                        joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(3);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(4);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
                     } else {
                         indexJoueur = (initJoueur + 1);
+
+                        joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(3);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(4);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
                     }
                     turn++;
                 } else if (indexJoueur == this.getlJP().size() - 1) {
                     indexJoueur = 0;
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i = new AnchorPane();
+                    i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().remove(i.getChildren().get(1));
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().remove(i.getChildren().get(1));
                 } else {
+                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    Image im = new Image(input);
+                    ImageView iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    im = new Image(input);
+                    iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i =(AnchorPane) carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
                     indexJoueur++;
+
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    i = new AnchorPane();
+                    i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().remove(i.getChildren().get(1));
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().remove(i.getChildren().get(1));
                 }
             } else if (this.getFinTour().size() == (this.getlJP().size() - 1)) {
                 if (turn == 2) {
+                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    Image im = new Image(input);
+                    ImageView iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    im = new Image(input);
+                    iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i =(AnchorPane) carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
                     this.displayCardT(allJoueur, 3, 4);
                     bnMiser.setVisible(true);
                     bnSuivre.setVisible(false);
@@ -686,12 +954,76 @@ public class TableController extends Thread {
                     bnSeCoucher.setVisible(false);
 
                     if ((initJoueur + 1) == this.getlJP().size()) {
+                        input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                         im = new Image(input);
+                         iw = new ImageView(im);
+                        iw.setFitWidth(54);
+                        iw.setFitHeight(85);
+                        joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(3);
+                         i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().add(iw);
+
+                        input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                        im = new Image(input);
+                        iw = new ImageView(im);
+                        iw.setFitWidth(54);
+                        iw.setFitHeight(85);
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(4);
+                        i = new AnchorPane();
+                        i =(AnchorPane) carteJ.getChildren().get(0);
+                        i.getChildren().add(iw);
                         indexJoueur = 0;
+                        joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(3);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(4);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
                     } else {
                         indexJoueur = (initJoueur + 1);
+                        joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(3);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(4);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
                     }
                     turn++;
                 } else if (turn == 3) {
+                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    Image im = new Image(input);
+                    ImageView iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    im = new Image(input);
+                    iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i =(AnchorPane) carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
                     this.displayCardT(allJoueur, 4, 5);
                     bnMiser.setVisible(true);
                     bnSuivre.setVisible(false);
@@ -701,8 +1033,30 @@ public class TableController extends Thread {
 
                     if ((initJoueur + 1) == this.getlJP().size()) {
                         indexJoueur = 0;
+                        joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(3);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(4);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
                     } else {
                         indexJoueur = (initJoueur + 1);
+                        joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(3);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
+
+                        carteJ = (AnchorPane) joueur.getChildren().get(4);
+                        i = new AnchorPane();
+                        i =(AnchorPane)  carteJ.getChildren().get(0);
+                        i.getChildren().remove(i.getChildren().get(1));
                     }
                     turn++;
                 } else if (turn == 4) {
@@ -718,8 +1072,33 @@ public class TableController extends Thread {
                 }
             } else if (indexJoueur == this.getlJP().size() - 1) {
                 indexJoueur = 0;
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
             } else {
                 indexJoueur++;
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
             }
 
         });
@@ -740,6 +1119,22 @@ public class TableController extends Thread {
                 joueur = (Group) allJoueur.getChildren().get(indexJoueur);
 
                 if ((this.getFinTour().size() == this.getlJP().size() - 1) && (((Label) joueur.getChildren().get(1)).getText().compareTo("PB /S") == 0)) {
+                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    Image im = new Image(input);
+                    ImageView iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    im = new Image(input);
+                    iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
                     this.displayCardT(allJoueur, 0, 3);
                     bnMiser.setVisible(true);
                     bnSuivre.setVisible(false);
@@ -749,6 +1144,22 @@ public class TableController extends Thread {
                     indexJoueur = (initJoueur + 1);
                     turn++;
                 } else if (this.getFinTour().size() == (this.getlJP().size() - 1)) {
+                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    Image im = new Image(input);
+                    ImageView iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    im = new Image(input);
+                    iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
                     this.displayCardT(allJoueur, 0, 3);
                     bnMiser.setVisible(true);
                     bnSuivre.setVisible(false);
@@ -759,12 +1170,85 @@ public class TableController extends Thread {
                     indexJoueur = (initJoueur + 1);
                     turn++;
                 } else if (indexJoueur == this.getlJP().size() - 1) {
+                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    Image im = new Image(input);
+                    ImageView iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    im = new Image(input);
+                    iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
                     indexJoueur = 0;
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                     i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i = new AnchorPane();
+                    i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().remove(i.getChildren().get(1));
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().remove(i.getChildren().get(1));
                 } else {
+                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    Image im = new Image(input);
+                    ImageView iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    im = new Image(input);
+                    iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+
                     indexJoueur++;
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i = new AnchorPane();
+                    i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().remove(i.getChildren().get(1));
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().remove(i.getChildren().get(1));
                 }
             } else if (this.getFinTour().size() == (this.getlJP().size() - 1)) {
                 if (turn == 2) {
+                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    Image im = new Image(input);
+                    ImageView iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    im = new Image(input);
+                    iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
                     this.displayCardT(allJoueur, 3, 4);
                     bnMiser.setVisible(true);
                     bnSuivre.setVisible(false);
@@ -775,6 +1259,22 @@ public class TableController extends Thread {
                     indexJoueur = (initJoueur + 1);
                     turn++;
                 } else if (turn == 3) {
+                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    Image im = new Image(input);
+                    ImageView iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
+                    joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(3);
+                    AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    im = new Image(input);
+                    iw = new ImageView(im);
+                    iw.setFitWidth(54);
+                    iw.setFitHeight(85);
                     this.displayCardT(allJoueur, 4, 5);
                     bnMiser.setVisible(true);
                     bnSuivre.setVisible(false);
@@ -795,9 +1295,65 @@ public class TableController extends Thread {
                     turn = 1;
                 }
             } else if (indexJoueur == this.getlJP().size() - 1) {
+                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                Image im = new Image(input);
+                ImageView iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
+                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                im = new Image(input);
+                iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
                 indexJoueur = 0;
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
             } else {
+                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                Image im = new Image(input);
+                ImageView iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
+                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                im = new Image(input);
+                iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
                 indexJoueur++;
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
             }
 
         });
@@ -825,9 +1381,65 @@ public class TableController extends Thread {
             }
 
             if ((indexJoueur + 1) == this.getlJP().size()) {
+                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                Image im = new Image(input);
+                ImageView iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
+                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                im = new Image(input);
+                iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
                 indexJoueur = 0;
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
             } else {
+                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                Image im = new Image(input);
+                ImageView iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
+                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                im = new Image(input);
+                iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
                 indexJoueur++;
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
             }
 
             this.getFinTour().clear();
@@ -847,16 +1459,74 @@ public class TableController extends Thread {
             this.tapis(allJoueur, (Group) allJoueur.getChildren().get(indexJoueur), this.getlJP().get(indexJoueur));
 
             if ((indexJoueur + 1) == this.getlJP().size()) {
+                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                Image im = new Image(input);
+                ImageView iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
+                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                im = new Image(input);
+                iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
                 indexJoueur = 0;
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
             } else {
+                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                Image im = new Image(input);
+                ImageView iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
+                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                im = new Image(input);
+                iw = new ImageView(im);
+                iw.setFitWidth(54);
+                iw.setFitHeight(85);
                 indexJoueur++;
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
             }
+
+
 
             this.getFinTour().clear();
         });
 
         bnSeCoucher.setOnAction((event) ->
-
         {
             while (this.getlFold().contains(indexJoueur)) {
                 this.setFinTour(this.lJP.get(indexJoueur));
@@ -871,8 +1541,33 @@ public class TableController extends Thread {
 
             if ((indexJoueur + 1) == this.getlJP().size()) {
                 indexJoueur = 0;
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
             } else {
                 indexJoueur++;
+                joueur = (Group) allJoueur.getChildren().get(indexJoueur);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(3);
+                AnchorPane i =(AnchorPane)  carteJ.getChildren().get(0);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i =(AnchorPane)  carteJ.getChildren().get(0);
+                i.getChildren().remove(i.getChildren().get(1));
+
             }
         });
     }
@@ -1521,6 +2216,7 @@ public class TableController extends Thread {
     }
 
 
+    //permet d'initialiser le donneur lors de changement de tour
     public void initDonneur() {
         int i = 0, tmp = this.getInitJoueur();
         tmp--;
@@ -1534,22 +2230,24 @@ public class TableController extends Thread {
             } else {
                 break;
             }
+            i++;
         }
 
-        if (tmp == 3) {
+        if (tmp+1 == 3) {
             lJP.get(2).setEtatJoueur("Donneur");
-        } else if (tmp == 4) {
+        } else if (tmp+1 == 4) {
             lJP.get(3).setEtatJoueur("Donneur");
-        } else if (tmp == 0) {
+        } else if (tmp+1 == 0) {
             lJP.get(4).setEtatJoueur("Donneur");
-        } else if (tmp == 1) {
+        } else if (tmp+1 == 1) {
             lJP.get(0).setEtatJoueur("Donneur");
-        } else if (tmp == 2) {
+        } else if (tmp+1 == 2) {
             lJP.get(1).setEtatJoueur("Donneur");
         }
 
     }
 
+    //permet d'initialiser la petite blinde lors de changement de tour
     public void initPb() {
         int i = 0, tmp = this.getInitJoueur();
         while (i < getlEndGame().size()) {
@@ -1564,20 +2262,21 @@ public class TableController extends Thread {
             }
         }
 
-        if (tmp - 1 == 3) {
+        if (tmp == 3) {
             lJP.get(3).setEtatJoueur("PB");
-        } else if (tmp - 1 == 4) {
+        } else if (tmp == 4) {
             lJP.get(4).setEtatJoueur("PB");
-        } else if (tmp - 1 == 0) {
+        } else if (tmp == 0) {
             lJP.get(0).setEtatJoueur("PB");
-        } else if (tmp - 1 == 1) {
+        } else if (tmp == 1) {
             lJP.get(1).setEtatJoueur("PB");
-        } else if (tmp - 1 == 2) {
+        } else if (tmp == 2) {
             lJP.get(2).setEtatJoueur("PB");
         }
 
     }
 
+    //permet d'initialiser la grosse blinde lors de changement de tour
     public void initGb() {
         int i = 0, tmp = this.getInitJoueur();
         tmp++;
@@ -1592,15 +2291,15 @@ public class TableController extends Thread {
                 break;
             }
         }
-        if (tmp - 1 == 3) {
+        if (tmp-1 == 3) {
             lJP.get(4).setEtatJoueur("GB");
-        } else if (tmp - 1 == 4) {
+        } else if (tmp-1 == 4) {
             lJP.get(0).setEtatJoueur("GB");
-        } else if (tmp - 1 == 0) {
+        } else if (tmp-1 == 0) {
             lJP.get(1).setEtatJoueur("GB");
-        } else if (tmp - 1 == 1) {
+        } else if (tmp-1 == 1) {
             lJP.get(2).setEtatJoueur("GB");
-        } else if (tmp - 1 == 2) {
+        } else if (tmp-1 == 2) {
             lJP.get(3).setEtatJoueur("GB");
         }
     }

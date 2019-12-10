@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class GrilleLoto {
 	private List<Integer> LI = new ArrayList<Integer>();
-	private Grille G = new Grille(3, 10);
+	private Grille G = new Grille(3, 9);
 
 	public GrilleLoto() {
 		super();
@@ -21,7 +21,7 @@ public class GrilleLoto {
 				x = 0;
 				while (x != 1) {
 					Random rand = new Random();
-					int nbAlea = rand.nextInt(99 - 1 + 1) + 1;
+					int nbAlea = rand.nextInt(90 - 1 + 1) + 1;
 					if (LI.contains(nbAlea) == false) {
 						LI.add(nbAlea);
 						x = 1;
@@ -47,7 +47,7 @@ public class GrilleLoto {
 
 	public Boolean verif(Grille G, int ligne) {
 		int cpt = 0;
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 9; i++) {
 			if (G.getT()[ligne][i].getVal().compareTo(" ") != 0) {
 				cpt++;
 			}
@@ -79,11 +79,8 @@ public class GrilleLoto {
 				cpt6++;
 			} else if (70 <= temp && temp <= 79) {
 				cpt7++;
-			} else if (80 <= temp && temp <= 89) {
-				cpt8++;
-			} else if (90 <= temp && temp <= 99) {
-				cpt9++;
-			}
+			} else if (80 <= temp && temp <= 90) {
+				cpt8++;}
 		}
 		if(cpt<=3 && cpt1<=3 && cpt2<=3 && cpt3<=3 && cpt4<=3 && cpt5<=3 && cpt6<=3 && cpt7<=3 && cpt8<=3 && cpt9<=3) {
 			return true;
@@ -193,7 +190,7 @@ public class GrilleLoto {
 
 				}
 			}
-			if (80 <= temp && temp <= 89) {
+			if (80 <= temp && temp <= 90) {
 				if (G.getT()[0][8].getVal() == " " && verif(G, 0)==true) {
 					String x = convertir(temp);
 					G.getT()[0][8].setVal(x);
@@ -203,18 +200,6 @@ public class GrilleLoto {
 				} else {
 					String x = convertir(temp);
 					G.getT()[2][8].setVal(x);
-				}
-			}
-			if (90 <= temp && temp <= 99) {
-				if (G.getT()[0][9].getVal() == " " && verif(G, 0)==true) {
-					String x = convertir(temp);
-					G.getT()[0][9].setVal(x);
-				} else if (G.getT()[1][9].getVal() == " " && verif(G, 1)==true) {
-					String x = convertir(temp);
-					G.getT()[1][9].setVal(x);
-				} else {
-					String x = convertir(temp);
-					G.getT()[2][9].setVal(x);
 				}
 			}
 		}
@@ -227,7 +212,7 @@ public class GrilleLoto {
 		System.out.println("\n");
 		for (i = 0; i < 3; i++) {
 			System.out.println("\n______________________________");
-			for (j = 0; j < 10; j++) {
+			for (j = 0; j < 9; j++) {
 				System.out.print("|");
 				if (G.getT()[i][j].getVal() == " ") {
 					System.out.print(" ");

@@ -1,6 +1,7 @@
 package fr.projet.poker;
 
 import fr.projet.Joueur;
+import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
@@ -8,26 +9,40 @@ import java.util.List;
 
 public class JoueurPoker extends Joueur {
 
-    private List<AnchorPane> mainJoueur; // 2 cartes en main
-    private double wallet; // porte feuille du joueur (limite par la table)
-    private int mise; // mise du joueur
-    private List<String> etatJoueur;
-    /*List car un joueur peuavoir plusieurs "etats" fold et pblinde ...
+    // 2 cartes en main
+    private List<Carte> mainJoueur;
+    // porte feuille du joueur (limite par la table)
+    private double wallet;
+    // mise du joueur
+    private int mise;
+    /*List car un joueur peu avoir plusieurs "etats" fold et pblinde ...
      * fold,call,raise,all-in,check,pblinde,gblinde,donneur
      */
+    private List<String> etatJoueur;
+    //s'il a une QuinteFlushRoayle, QuinteFlush ..... fait avec l'ajout des valeurs de la main
+    private int typeDeMain;
 
     public JoueurPoker(String _pseudo, double _wallet) {
         super(_pseudo);
-        mainJoueur = new ArrayList<AnchorPane>();
+        mainJoueur = new ArrayList<Carte>();
         wallet = _wallet;
         etatJoueur = new ArrayList<String>();
+        typeDeMain = 0;
     }
 
-    public List<AnchorPane> getMainJoueur() {
+    public JoueurPoker() {
+        super();
+        mainJoueur = new ArrayList<Carte>();
+        wallet = 0;
+        etatJoueur = new ArrayList<String>();
+        typeDeMain = 0;
+    }
+
+    public List<Carte> getMainJoueur() {
         return mainJoueur;
     }
 
-    public void setMainJoueur(AnchorPane c) {
+    public void setMainJoueur(Carte c) {
         this.mainJoueur.add(c);
     }
 
@@ -35,7 +50,7 @@ public class JoueurPoker extends Joueur {
         return wallet;
     }
 
-    public void setWallet(int _wallet) {
+    public void setWallet(double _wallet) {
         this.wallet = _wallet;
     }
 
@@ -47,9 +62,15 @@ public class JoueurPoker extends Joueur {
         this.etatJoueur.add(_etatJoueur);
     }
 
-    @Override
-    public String toString() {
-        return this.getPseudo() + "\nmainJoueur= [" + mainJoueur + "]\nwallet=" + wallet + " �\netatJoueur=["
-                + etatJoueur + "]\n";
+    public void setTypeDeMain(int _typeDeMain){
+        this.typeDeMain = _typeDeMain;
+    }
+
+    public int getTypeDeMain(){
+        return typeDeMain;
+    }
+
+    public String toString(){
+        return "[ "+getPseudo()+", etatJoueur"+ this.getEtatJoueur()+" ]\n";
     }
 }

@@ -1,82 +1,102 @@
 package fr.projet.poker;
 
-import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainsGagnantes {
 
-    private List<AnchorPane> mainGagnante;
+    private List<Carte> mainGagnante;
+    public List<Carte> sumHand;
 
     public MainsGagnantes() {
-        mainGagnante = new ArrayList<AnchorPane>();
+        mainGagnante = new ArrayList<Carte>();
+        sumHand = new ArrayList<Carte>();
     }
 
-    public void setMainGagnante(AnchorPane _carte) {
+    public void setMainGagnante(Carte _carte) {
         mainGagnante.add(_carte);
     }
 
-    public List<AnchorPane> getMainGagnante() {
+    public List<Carte> getMainGagnante() {
         return mainGagnante;
     }
 
+    public void setSumHand(Carte _sumHand) {
+        this.sumHand.add(_sumHand);
+    }
 
-    public List<AnchorPane> rechercherCarte(List<AnchorPane> carteMains, String valeurCarte) {
+    public List<Carte> getSumHand() {
+        return this.sumHand;
+    }
 
-        List<AnchorPane> trouve = new ArrayList<AnchorPane>();
-
-        for (int i = 0; i < carteMains.size(); i++) {
-            if (carteMains.get(i).getId().contains(valeurCarte)) {
-                trouve.add(carteMains.get(i));
+    public List<Carte> deleteDouble(List<Carte> deck) {
+        int i = 0;
+        while (i < deck.size() - 1) {
+            if (deck.get(i).getValeur() == deck.get(i + 1).getValeur()) {
+                deck.remove(i);
+                i = i;
+            } else {
+                i++;
             }
         }
+        return deck;
+    }
+
+    //methode qui permet de rechercher une carte precise.
+    List<Carte> rechercherCarte(List<Carte> paquetCartes, int valeurCarte) {
+
+        List<Carte> trouve = new ArrayList<Carte>();
+
+        for (int i = 0; i < paquetCartes.size(); i++) {
+            if (paquetCartes.get(i).getValeur() == 14) {
+                trouve.add(paquetCartes.get(i));
+            }
+        }
+
         return trouve;
     }
 
-    public boolean estQFR(List<AnchorPane> carteMains) {
+    //methode qui renvoie vraie si on a une Quinte Flush Royal
+    public boolean estQFR(List<Carte> carteMains, JoueurPoker jp) {
 
-        List<AnchorPane> trouve = new ArrayList<AnchorPane>(); // permet de savoir si As il y a.
+        // permet de savoir si As il y a.
+        List<Carte> trouve = new ArrayList<Carte>();
         int cpt = 1;
-        int j;
-        trouve = this.rechercherCarte(carteMains, "14");
+        int j = 0;
+        trouve = this.rechercherCarte(carteMains, 14);
 
         // s'il n'y a pas d'As alors il ne peut y avoir Quinte Flush Royale
         if (trouve.isEmpty()) {
             return false;
         } else {
-            for (int i = 0; i < trouve.size(); i++) { // on parcourt en fonction des as.
+            // on parcourt en fonction des as.
+            for (int i = 0; i < trouve.size(); i++) {
                 j = 0;
-                // on cherche s'il y a un dix pour démarrer le comptage des cartes.
-                while (!carteMains.get(j).getId().contains("10") && j < carteMains.size() - 1) {
+                //on cherche s'il y a un dix
+                while (carteMains.get(j).getValeur() != 10 && j < carteMains.size() - 1) {
+                    // pour démarrer le comptage des cartes.
                     j++;
                 }
-
-                System.out.println("As trouve" + trouve.toString());
-                while (j < carteMains.size() - 1) { // on parcourt donc de j à 6
-
-                    if ((((Group) trouve.get(i).getChildren().get(0)).getChildren().get(1).getId().compareTo(((Group) carteMains.get(j).getChildren().get(0)).getChildren().get(1).getId()) == 0)
-                            && (((Group) trouve.get(i).getChildren().get(0)).getChildren().get(1).getId().compareTo(((Group) carteMains.get(j + 1).getChildren().get(0)).getChildren().get(1).getId()) == 0)
-                            && ((Integer.parseInt(((Group) carteMains.get(j).getChildren().get(0)).getChildren().get(0).getId()) + 1) == Integer.parseInt(((Group) carteMains.get(j + 1).getChildren().get(0)).getChildren().get(0).getId()))) {
-                        cpt++;
-                        System.out.println("CompteurIf " + cpt);
-
-                        // dès que l'on a 4 cartes alors on sait qu'il y a Quinte Flush Royale. 4
-                        if (cpt == 4) {
-                            // cartes car nous savons qu'il y a déjà un as.
-                            return true;
-                        }
-                        //sinon  si on est supérieur a 2 soit 3 cartes et que l'on a pas encore 3 de correctes cartes alors on ne pourra plus avoir de Quinte Flush Royale ou si la couleur est incorrecte, alors on ne poursuit pas.
-                    } else if ((j > 2 && cpt < 3) || ((Label) ((Group) carteMains.get(j).getChildren().get(0)).getChildren().get(1)).getId().compareTo(((Label) ((Group) trouve.get(i).getChildren().get(0)).getChildren().get(1)).getId()) != 0) {
+                // on parcourt donc de j à 6
+                while (j < carteMains.size() - 1) {
+                    // si on est supérieur a 2 soit 3 cartes et que l'on a pas encore 3 de correctes cartes alors on ne pourra plus avoir de Quinte Flush Royale ou si la couleur est incorrecte, alors on ne poursuit pas.
+                    if ((j > 2 && cpt < 2) || (carteMains.get(j).getCouleur().compareTo(trouve.get(i).getCouleur()) != 0)) {
                         break;
-                        // sinon on reset le compteur.
                     } else {
-                        cpt = 1;
+                        if ((trouve.get(i).getCouleur().compareTo(carteMains.get(j).getCouleur()) == 0)
+                                && (trouve.get(i).getCouleur().compareTo(carteMains.get(j + 1).getCouleur()) == 0)
+                                && (carteMains.get(j).getValeur() + 1 == carteMains.get(j + 1).getValeur())) {
+                            cpt++;
+                            // dès que l'on a 4 cartes alors on sait qu'il y a Quinte Flush Royale. 4 cartes car nous savons qu'il y a déjà un as et on calcule la somme de la main pour pouvoir tester ensuite
+                            if (cpt == 4) {
+                                jp.setTypeDeMain(900);
+                                return true;
+                            }
+                            // sinon on reset le compteur.
+                        } else {
+                            cpt = 1;
+                        }
                     }
-
-                    System.out.println("J while = " + j);
                     j++;
                 }
             }
@@ -84,284 +104,358 @@ public class MainsGagnantes {
         return false;
     }
 
-    public boolean estQF(List<AnchorPane> carteMains) {
-        int cpt = 1;
-        for (int i = 0; i < carteMains.size() - 1; i++) // on parcourt le paquet de cartes.
-        {
-            if (((Integer.parseInt(((Group) carteMains.get(i).getChildren().get(0)).getChildren().get(0).getId()) + 1) == Integer.parseInt(((Group) carteMains.get(i + 1).getChildren().get(0)).getChildren().get(0).getId()))
-                    && (((Group) carteMains.get(i).getChildren().get(0)).getChildren().get(1).getId().compareTo(((Group) carteMains.get(i + 1).getChildren().get(0)).getChildren().get(1).getId()) == 0)) // si on a 2
-            // cartes de la même couleur qui se suivent on incrémente cpt
-            {
-                cpt++;
-                // si on a les 5 cartes pour une main alors on return true
-                if (cpt == 5) {
-                    return true;
-                }
-                // test qui coupe si on ne peut pas avoir de Quinte Flush
-            } else if (i > 2 && cpt < 3) {
-                break;
+    //methode qui renvoie vraie si on a une Quinte Flush
+    public boolean estQF(List<Carte> carteMains, JoueurPoker jp) {
+        int cpt = 1, _sumHand = 0;
+        //on parcourt le paquet de cartes.
+        for (int i = 0; i < carteMains.size(); i++) {
+            if (i + 1 == carteMains.size()) {
+                return false;
             } else {
-                cpt = 1;
-            }
-        }
-        return false;
-    }
+                if (carteMains.get(i).getValeur() + 1 == carteMains.get(i + 1).getValeur()
+                        && (carteMains.get(i).getCouleur().compareTo(carteMains.get(i + 1).getCouleur())) == 0)
+                //si on a 2 cartes de la même couleurs alors on incremente le compteur
+                {
+                    cpt++;
+                    this.setSumHand(carteMains.get(i));
+                    // si on a les 5 cartes pour une main alors on return true et on calcule la somme de la main pour pouvoir tester ensuite
+                    if (cpt == 5) {
+                        this.setSumHand(carteMains.get(i + 1));
+                        for (Carte _c : this.sumHand) {
+                            _sumHand += _c.getValeur();
+                        }
 
-    public boolean estCarre(List<AnchorPane> carteMains) {
-        int cpt = 1;
-        // on parcourt la liste des cartes 1 par 1 pour tester.
-
-        for (int i = 0; i < carteMains.size() - 1; i++) {
-            for (int j = 0; j < carteMains.size() - 1; j++) {// on parcourt la liste pour tester avec les autres valeurs.
-                if (Integer.parseInt(((Group) carteMains.get(i).getChildren().get(0)).getChildren().get(0).getId()) == Integer.parseInt(((Group) carteMains.get(j).getChildren().get(0)).getChildren().get(0).getId())) {// si on a la même valeur
-                    cpt++;// on incrémente le compteur
-                    if (cpt == 4)// si on a les 4 cartes on retourne true
-                    {
+                        jp.setTypeDeMain(800 + _sumHand);
+                        this.getSumHand().clear();
                         return true;
                     }
-                } else if (i > 4 && cpt < 2)// si on a déjà parcouru 5 cartes et que le compteur est = a 1 alors on ne
-                // pourra plus former de carré, donc on quitte
-                {
+                    // test qui coupe si on ne peut pas avoir de Quinte Flush
+                } else if (i > 2 && cpt < 3) {
+                    this.getSumHand().clear();
                     break;
                 } else {
-                    cpt = 1;// sinon on reset le compteur
+                    this.getSumHand().clear();
+                    cpt = 1;
                 }
             }
         }
         return false;
     }
 
-    public boolean estFullHouse(List<AnchorPane> carteMains) {
-        //on copie les cartes puisque l'on va les supprimer au fur et a mesure
-        List<AnchorPane> copycarteMains = new ArrayList<AnchorPane>(carteMains);
-        //on recupere l'indice des cartes que l'on ajoute dans une liste
+    //methode qui retourne vraie si on a un carre
+    public boolean estCarre(List<Carte> carteMains, JoueurPoker jp) {
+        int cpt = 1;
+        // on parcourt la liste pour tester avec les autres valeurs.
+        for (int j = 0; j < carteMains.size(); j++) {
+            if (j + 1 == carteMains.size()) {
+                return false;
+            } else {
+                if (carteMains.get(j).getValeur() == carteMains.get(j + 1).getValeur()) {
+                    // si on a la même valeur on incrémente le compteur
+                    cpt++;
+                    // si on a les 4 cartes on retourne true et on calcule la somme de la main pour pouvoir tester ensuite
+                    if (cpt == 4) {
+                        jp.setTypeDeMain(700 + (4 * carteMains.get(j).getValeur()));
+                        return true;
+                    }
+                }
+                // si on a déjà parcouru 5 cartes et que le compteur est = a 1 alors on ne pourra plus former de carré, donc on quitte
+                else if (j > 4 && cpt < 2) {
+                    break;
+                } else {
+                    // sinon on reset le compteur
+                    cpt = 1;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    //methode qui retourne vraie si l'on a un FullHouse
+    public boolean estFullHouse(List<Carte> carteMains, JoueurPoker jp) {
+        List<Carte> copycarteMains = new ArrayList<Carte>(carteMains);
         List<Integer> indiceCartes = new ArrayList<Integer>();
-        int cpt = 1, i = 0;
+        int cpt = 1, i = 0, _sumHand = 0;
 
         while (i < copycarteMains.size() - 1) {
-            //si la la figure a l'indice i est le meme a l'indice i+1 alors on ajoute l'indice a la liste et on incremente le compteur
-            if (Integer.parseInt(((Group) copycarteMains.get(i).getChildren().get(0)).getChildren().get(0).getId()) == Integer.parseInt(((Group) copycarteMains.get(i + 1).getChildren().get(0)).getChildren().get(0).getId())) {
+            //on cherche si l'on  3 cartes de la meme valeur et on calcule la somme uniquement du brelan  pour pouvoir tester ensuite
+            if (copycarteMains.get(i).getValeur() == copycarteMains.get(i + 1).getValeur()) {
                 indiceCartes.add(i);
                 cpt++;
 
-                //si l'on trouve nos 3 cartes alors on supprime les cartes de la liste copycarteMains, on affecte le fait que l'on a le brelan et on break pour sortir du while
+                this.setSumHand(copycarteMains.get(i));
+
                 if (cpt == 3) {
+                    indiceCartes.add(i + 1);
+                    this.setSumHand(copycarteMains.get(i + 1));
                     copycarteMains.remove(indiceCartes.get(0));
-                    copycarteMains.remove(indiceCartes.get(0));
-                    copycarteMains.remove(indiceCartes.get(0));
+                    indiceCartes.remove(0);
+                    copycarteMains.remove(indiceCartes.get(0) - 1);
+                    indiceCartes.remove(0);
+                    copycarteMains.remove(indiceCartes.get(0) - 2);
+
+
+                    for (Carte _c : this.getSumHand()) {
+                        _sumHand += _c.getValeur();
+                    }
+
+                    jp.setTypeDeMain(600 + _sumHand);
+                    this.getSumHand().clear();
                     break;
                 }
                 i++;
-
-                // condition permettant de ne pas tester tout le paquet et de pouvoir sortir rapidement
-            } else if (cpt < 3 && i > 4) {
+            } else if (cpt <= 2 && i >= 5) {
+                this.getSumHand().clear();
                 return false;
             } else {
-                //sinon on vide la liste des indices, on reset le compteur
-                indiceCartes.clear();
+                this.getSumHand().clear();
                 cpt = 1;
                 i++;
             }
         }
 
-        cpt = 1;
+        if (cpt <= 2 && i >= 5) {
+            this.getSumHand().clear();
+            return false;
+        }
         i = 0;
         indiceCartes.clear();
+        cpt = 1;
 
-        while (i < copycarteMains.size()) {
-            //si la la figure a l'indice i est le meme a l'indice i+1 alors on ajoute l'indice a la liste et on incremente le compteur
-            if (Integer.parseInt(((Group) copycarteMains.get(i).getChildren().get(0)).getChildren().get(0).getId()) == Integer.parseInt(((Group) copycarteMains.get(i + 1).getChildren().get(0)).getChildren().get(0).getId())) {
-                indiceCartes.add(i);
-                cpt++;
-                //si l'on trouve nos 2 cartes alors on supprime les cartes de la liste copycarteMains, on affecte le fait que l'on a le brelan et on break pour sortir du while
-                if (cpt == 2) {
-                    copycarteMains.remove(indiceCartes.get(0));
-                    copycarteMains.remove(indiceCartes.get(0));
-                    break;
-                }
-                i++;
-                // condition permettant de ne pas tester tout le paquet et de pouvoir sortir rapidement
-            } else if (cpt == 1 && i >= 3) {
+        //on cherche si l'on a une paire
+        while (i < copycarteMains.size() - 1) {
+            if (copycarteMains.get(i).getValeur() == copycarteMains.get(i + 1).getValeur()) {
+                return true;
+            } else if (cpt <= 2 && i == 4) {
                 return false;
             } else {
-                //sinon on vide la liste des indices, on reset le compteur
-                indiceCartes.clear();
-                cpt = 1;
                 i++;
             }
         }
-        return true;
-
+        return false;
     }
 
-    public boolean estFlush(List<AnchorPane> carteMains) {
-        int cpt = 1;
+
+    //methode qui retourne vraie si l'on a une flush
+    public boolean estFlush(List<Carte> carteMains, JoueurPoker jp) {
+        int cpt = 1, _sumHand = 0;
+
 
         for (int i = 0; i < carteMains.size(); i++) {
-            //si on est sur la derniere carte et que celle-ci est de la meme couleur que la precedente alors on a notre flush a condition que le compteur soit à 3
-            if ((i + 1) == 7 && cpt == 3 && ((((Group) carteMains.get(6).getChildren().get(0)).getChildren().get(1).getId().compareTo(((Group) carteMains.get(5).getChildren().get(0)).getChildren().get(1).getId()) == 0))) {
-                return true;
+            if (i + 1 == carteMains.size()) {
+                return false;
+            } else {
+                //si les cartes se suivent alors on incremente le compteur.
+                if ((carteMains.get(i).getCouleur().compareTo(carteMains.get(i + 1).getCouleur())) == 0) {
+                    cpt++;
+                    this.setSumHand(carteMains.get(i));
+
+                    //si l'on est sur l'avant derniere carte et que la derniere est differente on incremente le compteur
+                    if (cpt == 5) {
+                        this.setSumHand(carteMains.get(i + 1));
+
+                        for (Carte _c : this.sumHand) {
+                            _sumHand += _c.getValeur();
+                        }
+
+                        jp.setTypeDeMain(500 + _sumHand);
+                        this.getSumHand().clear();
+                        return true;
+                    }
+
+                } else if (i > 3 && cpt == 1) {
+                    this.getSumHand().clear();
+                    break;
+                } else {
+                    this.getSumHand().clear();
+                    cpt = 1;
+                }
             }
-            //si la carte actuelle est de meme couleur que la suivante on incremente le compteur
-            if ((((Group) carteMains.get(i).getChildren().get(0)).getChildren().get(1).getId().compareTo(((Group) carteMains.get(i + 1).getChildren().get(0)).getChildren().get(1).getId()) == 0)) {
+        }
+        return false;
+    }
+
+    //methode qui renvoie vraie si l'on a une Quinte
+    public boolean estQuinte(List<Carte> carteMains, JoueurPoker jp) {
+        int cpt = 1, _sumHand = 0;
+
+        //si l 'est sur la derniere et que le compteur n'est pas a 5 alors on quitte
+        for (int i = 0; i < carteMains.size(); i++) {
+            if (i + 1 == carteMains.size()) {
+                return false;
+            }
+            //si les cartes se suivent alors on incremente le compteur
+            if (carteMains.get(i).getValeur() + 1 == carteMains.get(i + 1).getValeur()) {
                 cpt++;
-                //si on a les 4 cartes alors on return true
+                this.setSumHand(carteMains.get(i));
+
+                //si l'on est sur l'avant derniere carte et que la derniere est differente on incremente le compteur
                 if (cpt == 5) {
+                    this.setSumHand(carteMains.get(i + 1));
+
+                    for (Carte _c : this.sumHand) {
+                        _sumHand += _c.getValeur();
+                    }
+
+                    jp.setTypeDeMain(400 + _sumHand);
+                    this.getSumHand().clear();
                     return true;
                 }
-                //test de sortie de boucle pour eviter de  tout parcourir
-            } else if (i > 3 && cpt == 1) {
+            } else if (i > 3 && cpt < 2) {
+                this.getSumHand().clear();
                 break;
             } else {
+                this.getSumHand().clear();
                 cpt = 1;
             }
         }
         return false;
     }
 
-    public boolean estQuinte(List<AnchorPane> carteMains) {
-        int cpt = 1;
-
-        for (int i = 0; i < carteMains.size(); i++) {
-            //si on est a la derniere carte et que l'on a pas notre suite on return false
-            if (i + 1 >= carteMains.size() && cpt <= 4) {
-                return false;
-            }
-            //on teste si l'on a la suite
-            if ((Integer.parseInt(((Group) carteMains.get(i).getChildren().get(0)).getChildren().get(0).getId()) + 1) == Integer.parseInt(((Group) carteMains.get(i + 1).getChildren().get(0)).getChildren().get(0).getId())) {
-                cpt++;
-                //si nous avons les 5 cartes alors on return true
-                if (cpt == 5) {
-                    return true;
-                    //condition de sortie pour eviter de tout parcourir
-                } else if (i > 3 && cpt < 2) {
-                    break;
-                }
-                //sinon on remet a 1 le compteur
-            } else {
-                cpt = 1;
-            }
-        }
-        return false;
-    }
-
-    public boolean estBrelan(List<AnchorPane> carteMains) {
-
-        List<AnchorPane> copycarteMains = new ArrayList<AnchorPane>(carteMains);
-
-        int cpt = 1;
+    //methode qui retourne vraie si l'on a un Brelan
+    public boolean estBrelan(List<Carte> carteMains, JoueurPoker jp) {
+        List<Carte> copycarteMains = new ArrayList<Carte>(carteMains);
+        int cpt = 1, _sumHand = 0;
 
         for (int i = 0; i < copycarteMains.size(); i++) {
-            //si la carte suivante est égale a la carte carte i alors on incremente le compteur
-            if (Integer.parseInt(((Group) carteMains.get(i).getChildren().get(0)).getChildren().get(0).getId()) == Integer.parseInt(((Group) carteMains.get(i + 1).getChildren().get(0)).getChildren().get(0).getId())) {
+            //condition de sortie si l'on est sur la derniere carte
+            if (i + 1 == carteMains.size()) {
+                return false;
+            }
+            //si les cartes se suivent ont la meme valeur, alors on incremente le compteur
+            if (carteMains.get(i).getValeur() == carteMains.get(i + 1).getValeur()) {
                 cpt++;
-                //si nous avons les 3 cartes alors on retourne true
+                this.setSumHand(carteMains.get(i));
+
+                //si l'on est sur l'avant derniere carte et que la derniere est differente on incremente le compteur
                 if (cpt == 3) {
+                    this.setSumHand(carteMains.get(i + 1));
+
+                    for (Carte _c : this.sumHand) {
+                        _sumHand += _c.getValeur();
+                    }
+
+                    jp.setTypeDeMain(300 + _sumHand);
+                    this.getSumHand().clear();
                     return true;
                 }
-                //condition de sortie pour eviter de parcourir toute la liste
-            } else if (cpt <= 2 && i > 5) {
+            } else if (cpt == 1 && i > 5) {
+                this.getSumHand().clear();
                 break;
-                //sinon on reset le compteur
             } else {
+                this.getSumHand().clear();
                 cpt = 1;
             }
         }
         return false;
     }
 
-    public boolean estDoublePaire(List<AnchorPane> carteMains) {
-        //on copie la liste pour eviter de perdre l'originale
-        List<AnchorPane> copyCartesMain = new ArrayList<AnchorPane>(carteMains);
-        List<Integer> indiceCarte = new ArrayList<Integer>();
-        int i;
+    //methode qui retourne vraie si l'on a une double paire.
+    public boolean estDoublePaire(List<Carte> deck, JoueurPoker jp) {
+        List<Integer> stockPaire = new ArrayList<Integer>();
 
-        //1ere paire
-        for (i = 0; i < copyCartesMain.size(); i++) {
-            //on teste si la carte suivante est de la meme valeur
-            if (Integer.parseInt(((Group) copyCartesMain.get(i).getChildren().get(0)).getChildren().get(0).getId()) == Integer.parseInt(((Group) copyCartesMain.get(i + 1).getChildren().get(0)).getChildren().get(0).getId())) {
-                //on ajoute les 2 cartes a la liste des indices
-                indiceCarte.add(i);
-                indiceCarte.add(i + 1);
-
-                //on supprime les cartes trouvees de la liste des cartes
-                copyCartesMain.remove(indiceCarte.get(0));
-                copyCartesMain.remove(indiceCarte.get(0));
-                break;
-                //condition d'arret
-            } else if (i > 5) {
-                return false;
+        for (int i = 0; i < deck.size() - 1; i++) {
+            if (deck.get(i).getValeur() == deck.get(i + 1).getValeur()) {
+                stockPaire.add(deck.get(i).getValeur());
             }
         }
 
-        //on vide la liste des indices
-        indiceCarte.clear();
-
-        //2e paire
-        for (i = 0; i < copyCartesMain.size(); i++) {
-            if ((Integer.parseInt(((Group) copyCartesMain.get(i).getChildren().get(0)).getChildren().get(0).getId()) == Integer.parseInt(((Group) copyCartesMain.get(i + 1).getChildren().get(0)).getChildren().get(0).getId()))) {
-                indiceCarte.add(i);
-                indiceCarte.add(i + 1);
-
-                copyCartesMain.remove(indiceCarte.get(0));
-                copyCartesMain.remove(indiceCarte.get(0));
-                break;
-            } else if (i > 5) {
-                return false;
-            }
-        }
-
-
-        return true;
-    }
-
-    public boolean estPaire(List<AnchorPane> carteMains) {
-        int cpt = 1;
-        for (int i = 0; i < carteMains.size(); i++) {
-            //si la carte suivante est egale a la carte i alors on retoure true, on a trouve notre paire.
-            if ((Integer.parseInt(((Group) carteMains.get(i).getChildren().get(0)).getChildren().get(0).getId()) == Integer.parseInt(((Group) carteMains.get(i + 1).getChildren().get(0)).getChildren().get(0).getId()))) {
-                return true;
-                //condition de sortie.
-            } else if (i >= 5) {
-                break;
-            }
+        if (stockPaire.size() >= 2) {
+            jp.setTypeDeMain(200 + stockPaire.get(stockPaire.size() - 1) * 2);
+            return true;
         }
         return false;
     }
 
 
-    public List<AnchorPane> trieCarteNbreCouleur(List<AnchorPane> cartesMilieu) {
-        List<AnchorPane> copyCartesMilieu = new ArrayList<AnchorPane>(cartesMilieu);
-        List<AnchorPane> cartesMilieuTriee = new ArrayList<AnchorPane>();
-
-        List<AnchorPane> ca = new ArrayList<AnchorPane>();
-        List<AnchorPane> co = new ArrayList<AnchorPane>();
-        List<AnchorPane> tr = new ArrayList<AnchorPane>();
-        List<AnchorPane> pi = new ArrayList<AnchorPane>();
-
-        AnchorPane min = null;
-
-        for (int j = 0; j < copyCartesMilieu.size(); j++) {
-            if (((Group) copyCartesMilieu.get(j).getChildren().get(0)).getChildren().get(1).getId().compareTo("Pi") == 0) {
-                pi.add(copyCartesMilieu.get(j));
-            } else if (((Group) copyCartesMilieu.get(j).getChildren().get(0)).getChildren().get(1).getId().compareTo("Ca") == 0) {
-                ca.add(copyCartesMilieu.get(j));
+    //methode qui retourne vraie si l'on a une paire.
+    public boolean estPaire(List<Carte> carteMains, JoueurPoker jp) {
+        int _sumHand = 0;
+        for (int i = 0; i < carteMains.size(); i++) {
+            if (i + 1 == carteMains.size()) {
+                return false;
             }
-            else if (((Group) copyCartesMilieu.get(j).getChildren().get(0)).getChildren().get(1).getId().compareTo("Co") == 0) {
-                co.add(copyCartesMilieu.get(j));
+            if (carteMains.get(i).getValeur() == carteMains.get(i + 1).getValeur()) {
+
+                this.setSumHand(carteMains.get(i));
+                this.setSumHand(carteMains.get(i + 1));
+                for (Carte _c : this.sumHand) {
+                    _sumHand += _c.getValeur();
+                }
+                jp.setTypeDeMain(100 + _sumHand);
+                this.getSumHand().clear();
+                break;
+            } else if (i > 5) {
+                this.getSumHand().clear();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void highCard(List<Carte> carteMains, JoueurPoker jp) {
+        int _sumHand = 0;
+        for (Carte _c : carteMains) {
+            _sumHand += _c.getValeur();
+        }
+        jp.setTypeDeMain(_sumHand);
+        this.getSumHand().clear();
+    }
+
+    //methode qui trie par couleur et par figure
+    public List<Carte> trieCarteNbreCouleur(List<Carte> cartesMilieu) {
+        List<Carte> copyCartesMilieu = new ArrayList<Carte>(cartesMilieu);
+        List<Carte> cartesMilieuTriee = new ArrayList<Carte>(), tmpCarreau = new ArrayList<Carte>(), tmpCoeur = new ArrayList<Carte>(), tmpPique = new ArrayList<Carte>(), tmpTrefle = new ArrayList<Carte>();
+
+        List<Carte> carreau = new ArrayList<Carte>();
+        List<Carte> coeur = new ArrayList<Carte>();
+        List<Carte> trefle = new ArrayList<Carte>();
+        List<Carte> pique = new ArrayList<Carte>();
+
+
+        int i = 0;
+
+        for (Carte _c : cartesMilieu) {
+            if (_c.getCouleur().compareTo("carreau") == 0) {
+                carreau.add(_c);
+            } else if (_c.getCouleur().compareTo("coeur") == 0) {
+                coeur.add(_c);
+            } else if (_c.getCouleur().compareTo("trefle") == 0) {
+                trefle.add(_c);
             } else {
-                tr.add(copyCartesMilieu.get(j));
+                pique.add(_c);
             }
+        }
+
+        tmpCarreau = trieCarteNbre(carreau);
+        tmpCoeur = trieCarteNbre(coeur);
+        tmpPique = trieCarteNbre(trefle);
+        tmpTrefle = trieCarteNbre(pique);
+
+        for (Carte _c : tmpPique) {
+            cartesMilieuTriee.add(_c);
+        }
+
+        for (Carte _c : tmpCarreau) {
+            cartesMilieuTriee.add(_c);
+        }
+        for (Carte _c : tmpCoeur) {
+            cartesMilieuTriee.add(_c);
+        }
+        for (Carte _c : tmpTrefle) {
+            cartesMilieuTriee.add(_c);
         }
 
         return cartesMilieuTriee;
     }
 
-    public List<AnchorPane> trieCarteNbre(List<AnchorPane> cartesMilieu) {
-        List<AnchorPane> copyCartesMilieu = new ArrayList<AnchorPane>(cartesMilieu);
-        List<AnchorPane> cartesMilieuTriee = new ArrayList<AnchorPane>();
+    //methode qui trie par figure
+    public List<Carte> trieCarteNbre(List<Carte> cartesMilieu) {
+        List<Carte> copyCartesMilieu = new ArrayList<Carte>(cartesMilieu);
+        List<Carte> cartesMilieuTriee = new ArrayList<Carte>();
 
-        AnchorPane min = null;
+        Carte min = null;
         int i = 0;
 
         while (copyCartesMilieu.size() > 0) {
@@ -369,15 +463,15 @@ public class MainsGagnantes {
 
             for (int j = 0; j < copyCartesMilieu.size(); j++) {
 
-                if (Integer.parseInt(((Group) min.getChildren().get(0)).getChildren().get(0).getId()) > (Integer.parseInt(((Group) copyCartesMilieu.get(j).getChildren().get(0)).getChildren().get(0).getId()))) {
+                if (min.getValeur() > copyCartesMilieu.get(j).getValeur()) {
                     min = copyCartesMilieu.get(j);
                 }
             }
             cartesMilieuTriee.add(min);
             copyCartesMilieu.remove(min);
         }
-
         return cartesMilieuTriee;
     }
+
 
 }

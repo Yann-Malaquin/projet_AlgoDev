@@ -15,24 +15,5 @@ public class PopupController {
     @FXML
     private TextField getDonneur = new TextField();
 
-    public void sendDonneur() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Table.fxml"));
-        Parent root = null;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        TableController controller = loader.<TableController>getController();
-        //controller.getDonneur(getDonneur.getText());
-
-
-        Stage popup = new Stage();
-        popup = (Stage) Valider.getScene().getWindow();
-
-        popup.close();
-
-
-    }
 
 }

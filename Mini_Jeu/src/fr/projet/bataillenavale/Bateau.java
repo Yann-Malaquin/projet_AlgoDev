@@ -1,32 +1,40 @@
 package fr.projet.bataillenavale;
 
+import javafx.scene.Parent;
 
-public class Bateau {
-	public int taille;
-	public boolean horizontal;
-	private int pv ;
-
+public class Bateau extends Parent {
+	private int taille;
+	private boolean horizontal = true;
+	private int hp;
 
 	public Bateau(int taille, boolean horizontal){
-	this.taille = taille;
-	this.horizontal = horizontal;
-	this.pv = taille;
+		this.taille = taille;
+		this.horizontal = horizontal;
+		hp = taille;
+	}
+
+	public void touche(){
+		hp--;
+	}
+
+	public boolean estVivant() {
+		return hp > 0;
 	}
 
 
-	public void toucher(){
-	this.pv = pv-1;
+	public int getTaille() {
+		return taille;
 	}
 
-	public boolean vivant() {
-		if (pv > 0) {
-			return true;
-		}
-	return false;
-}
-
-	public int pvrestant(){
-		return pv;
+	public void setTaille(int taille) {
+		this.taille = taille;
 	}
 
+	public boolean isHorizontal() {
+		return horizontal;
+	}
+
+	public void setHorizontal(boolean horizontal) {
+		this.horizontal = horizontal;
+	}
 }

@@ -4,110 +4,103 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.Random;
 
-public class Partie extends Application {
 
-	private boolean lancement = false;
-	private boolean arret = false;
+public class Partie extends Application {
+	private boolean lancer = false;
 	private GrilleBN grilleIA;
 	private GrilleBN grilleJoueur;
-
 	private int nbBateau = 5;
-
-	private boolean TourIA = false;
+	private boolean tourAdverse = false;
+	private JoueurBN joueur1;
+	private JoueurBN joueur2 = new JoueurBN("",true);
 
 	private Random random = new Random();
+	private boolean victoire = Boolean.parseBoolean(null);
 
+	private Parent LancerPartie() {
+		AnchorPane root = new AnchorPane();
+		root.setPrefSize(800, 600);
+		root.setStyle(String.valueOf(Color.valueOf("#E6E6FA")));
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-
-
-
-	private Parent createContent() {
-		Text regle = new Text();
-		regle.setFont(Font.font("Verdana",15));
-		regle.getLocalToSceneTransform();
-		regle.setText("\t Vous placez vos bateaux sur la grille du bas\n"+
-				"\t Pour placer vos bateaux horizontalement : Clique gauche\n" +
-				"\t Pour placer vos bateaux verticalement : Clique droit\n" +
-				"\t La grille du haut est la grille ou vous allez tirer \n");
-
-		BorderPane page = new BorderPane();
-		page.setPrefSize(600, 800);
-		page.setTop(regle);
-
-
-		this.grilleIA = new GrilleBN(true, event -> {
-			if (!lancement)
+		grilleIA = new GrilleBN(joueur2, event -> {
+			if (!lancer)
 				return;
 
-			GrilleBN.CaseBN cell = (GrilleBN.CaseBN) event.getSource();
-			if (cell.utilise)
+			CaseBN c = (CaseBN) event.getSource();
+			if (c.isUtilise())
 				return;
 
-			TourIA = !cell.tire();
-			System.out.println("Nb bateau IA RESTANT "  + grilleIA.nbbateau);
-			if (grilleIA.nbbateau == 0) {
-				System.out.println("GAGNER");
-				arret = true;
+			tourAdverse = !c.tirer();
+
+			if (grilleIA.getBateau() == 0) {
+				victoire = true;
+				Scene scene = new Scene(Popup(victoire));
+				Stage popup = new Stage();
+				popup.setScene(scene);
+				popup.centerOnScreen();
+				popup.setResizable(false);
+				popup.show();
 			}
 
-			if (TourIA)
-				TireIA();
+			if (tourAdverse)
+				CoupIA();
 		});
 
-		grilleJoueur = new GrilleBN(false, event -> {
-			if (lancement)
+		grilleJoueur = new GrilleBN(joueur1, event -> {
+			if (lancer)
 				return;
 
-			GrilleBN.CaseBN cell = (GrilleBN.CaseBN) event.getSource();
-			if (grilleJoueur.placerBateau(new Bateau(nbBateau, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
+			CaseBN cell = (CaseBN) event.getSource();
+			if (grilleJoueur.placerBateau(new Bateau(nbBateau, event.getButton() == MouseButton.PRIMARY), cell.get_X(), cell.get_Y())) {
 				if (--nbBateau == 0) {
-					startGame();
+					demarerPartie();
 				}
 			}
 		});
 
-		VBox vbox = new VBox(50, grilleIA, grilleJoueur);
-		vbox.setAlignment(Pos.CENTER);
-
-		page.setCenter(vbox);
-
-		return page;
+		HBox hbox = new HBox(50, grilleJoueur, grilleIA);
+		root.getChildren().add(hbox);
+		hbox.setLayoutX(55);
+		hbox.setLayoutY(140);
+		return root;
 	}
-
-	private void TireIA() {
-		while (TourIA) {
+	/*  Genere des coups aléatoire pour l'IA */
+	private void CoupIA() {
+		while (tourAdverse) {
 			int x = random.nextInt(10);
 			int y = random.nextInt(10);
 
-			GrilleBN.CaseBN cell = grilleJoueur.getCase(x, y);
-			if (cell.utilise)
+			CaseBN c = grilleJoueur.getCase(x, y);
+			if (c.isUtilise())
 				continue;
 
-			TourIA = cell.tire();
+			tourAdverse = c.tirer();
 
-			if (grilleJoueur.nbbateau == 0) {
-
-				System.out.println("PERDU");
-				arret = true;
+			if (grilleJoueur.getBateau() == 0) {
+				Scene scene = new Scene(Popup(victoire));
+				Stage popup = new Stage();
+				popup.setScene(scene);
+				popup.centerOnScreen();
+				popup.setResizable(false);
+				popup.show();
 			}
 		}
 	}
-	
- /* Méthode qui permet de choisir aléatoirement les emplacement des bateau de l'IA) */
-	private void startGame() {
-
+	/* Place les bateau de l'IA et lance le jeu */
+	private void demarerPartie() {
 		int taille = 5;
 
 		while (taille > 0) {
@@ -119,18 +112,67 @@ public class Partie extends Application {
 			}
 		}
 
-		lancement = true;
+		lancer = true;
 	}
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Scene scene = new Scene(createContent());
+		GridPane Page = new GridPane();
+		Page.setPrefSize(300,200);
+		// Custom Label
+		Label PseudoLabel = new Label("Pseudo du joueur");
+
+		// Custom du TextField
+		TextField PseudoTextField = new TextField();
+
+		//Custom du bouton
+		Button valider = new Button("Valider");
+		valider.setOnAction(e-> {
+			String pseudo = PseudoTextField.getText();
+			joueur1 = new JoueurBN(pseudo,false);
+			Scene scene = new Scene(LancerPartie());
+			primaryStage.setScene(scene);
+		});
+
+		Page.add(PseudoLabel,0,0);
+		Page.add(PseudoTextField,1, 0);
+		Page.add(valider,1,1);
+		Page.setHgap(20);
+		Page.setVgap(10);
+		Page.setAlignment(Pos.CENTER);
+		Scene scene = new Scene(Page);
 		primaryStage.setTitle("Bataille Navale");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
-		}
+	}
 
-	public void lancer() {
-		launch();
+	private Parent Popup(boolean victoire){
+		AnchorPane popup = new AnchorPane();
+		if(victoire = true){
+			Button Quitter = new Button("Quitter");
+			Label Status = new Label("Vous avez gagner");
+			Quitter.setOnAction(e -> System.exit(1));
+			VBox v = new VBox();
+			v.getChildren().addAll(Status,Quitter);
+			v.setAlignment(Pos.CENTER);
+			popup.setPrefSize(200,100);
+			popup.getChildren().add(v);
+		}
+		if(victoire = false){
+			Button Quitter = new Button("Quitter");
+			Label Status = new Label("Vous avez perdu");
+			Quitter.setOnAction(e -> System.exit(1));
+			VBox v = new VBox();
+			v.getChildren().addAll(Status,Quitter);
+			v.setAlignment(Pos.CENTER);
+			popup.setPrefSize(200,100);
+			popup.getChildren().add(v);
+		}
+		return popup;
+	}
+
+	public static void main(String[] args) {
+		launch(args);
 	}
 }

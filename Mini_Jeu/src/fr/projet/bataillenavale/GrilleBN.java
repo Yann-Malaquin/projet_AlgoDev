@@ -1,178 +1,154 @@
 package fr.projet.bataillenavale;
 
+import fr.projet.Joueur;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
-class GrilleBN extends Parent {
-	public int nbbateau = 5;
-	private VBox lignes = new VBox();
-	private boolean adversaire;
+public class GrilleBN extends Parent {
+	private GridPane grille = new GridPane();
+	private JoueurBN joueur = null;
+	private int bateau = 5;
+	Image imgbateau = new Image("fr/projet/bataillenavale/icone_bateau.png");
 
-	GrilleBN(boolean adversaire, EventHandler<? super MouseEvent> handler) {
-		this.adversaire = adversaire;
-		for (int y = 0; y < 10; y++) {
-			HBox ligne = new HBox();
-			for (int x = 0; x < 10; x++) {
-				CaseBN c = new CaseBN(x, y, this);
+	public GrilleBN(JoueurBN joueur, EventHandler<? super MouseEvent> handler){
+		this.joueur = joueur;
+		for (int y = 0; y < 10; y++){
+			for (int x = 0 ; x < 10 ; x++){
+				CaseBN c = new CaseBN(x,y,this);
 				c.setOnMouseClicked(handler);
-				ligne.getChildren().add(c);
-			}
-
-			lignes.getChildren().add(ligne);
-		}
-
-		getChildren().add(lignes);
-	}
-
-
-	private boolean VerifPlacementBateau(Bateau B, int x, int y) {
-		int taille = B.taille;
-
-		if (!B.horizontal) {
-			for (int i = y; i < y + taille; i++){
-				if (!PointExiste(x,i))
-					return false;
-
-				CaseBN box = getCase(x,i);
-				if (box.bateau != null)
-					return false;
-
-				for(CaseBN autour : getAutour(x,i)){
-					if(!PointExiste(x,i))
-						return false;
-					if (autour.bateau != null)
-						return false;
+				grille.add(c, x,y);
+				c.setStroke(Color.BLACK);
+				if (((x+y)%2) == 0){
+					c.setFill(Color.LIGHTBLUE);
 				}
-			}
-		} else {
-			for (int i = x; i< x + taille;i++){
-				if (!PointExiste(i,y))
-					return false;
-
-				CaseBN box = getCase(i,y);
-				if (box.bateau != null)
-					return false;
-
-				for (CaseBN autour : getAutour(i,y)){
-					if (!PointExiste(i,y))
-						return false;
-
-					if (autour.bateau != null)
-						return false;
+				else {
+					c.setFill(Color.ALICEBLUE);
 				}
 			}
 		}
-
-		return true;
+		getChildren().add(grille);
 	}
 
+	public boolean placerBateau(Bateau bateau, int x, int y){
+		if (VerifPlacementBateau(bateau,x,y)){
+			int taille = bateau.getTaille();
 
-	Boolean placerBateau(Bateau bateau, int x, int y) {
-		if(VerifPlacementBateau(bateau, x,y)){
-			int taille = bateau.taille;
-			if (!bateau.horizontal){
-
-				for(int i = y; i < y + taille; i++){
-					CaseBN box = getCase(x,i);
-					box.bateau = bateau;
-					if(!adversaire){
-
-						box.setFill(Color.GRAY);
-						box.setStroke(Color.BLACK);
+			if(!bateau.isHorizontal()){
+				for (int i = y; i < y + taille; i++){
+					CaseBN c = getCase(x,i);
+					c.setBateau(bateau);
+					if (!joueur.isIA()){
+						c.setFill(new ImagePattern(imgbateau));
+						c.setStroke(Color.RED);
 					}
 				}
-			} else {
-
-				for (int i = x; i< x + taille; i++){
-					CaseBN box = getCase(i,y);
-					box.bateau = bateau;
-					if(!adversaire){
-
-						box.setFill(Color.GRAY);
-						box.setStroke(Color.BLACK);
+			} else{
+				for (int i = x ; i < x + taille ; i++){
+					CaseBN c = getCase(i,y);
+					c.setBateau(bateau);
+					if(!joueur.isIA()){
+						c.setFill(new ImagePattern(imgbateau));
+						c.setStroke(Color.RED);
 					}
 				}
 			}
-
 			return true;
 		}
 		return false;
 	}
 
-	private boolean PointExiste (Point2D point){
-		return PointExiste(point.getX(), point.getY());
+	public CaseBN getCase(int x, int y) {
+		for (Node node : grille.getChildren()) {
+			if (grille.getColumnIndex(node) == x && grille.getRowIndex(node) == y)
+				return (CaseBN) node;
+		}
+		return null;
 	}
-
-	private boolean PointExiste(double x, double y) {
-		return x >= 0 && x < 10 && y >= 0 && y < 10;
-	}
-
-
-
-	CaseBN getCase(int x, int y) {
-		return (CaseBN) ((HBox) lignes.getChildren().get(y)).getChildren().get(x);
-	}
-
-	private CaseBN[] getAutour(int x, int y) {
+	/* Fonction trouvée sur internet permettant de savoir si les voisin du point sont utilisée */
+	private CaseBN[] getNeighbors(int x, int y){
 		Point2D[] points = new Point2D[]{
-				new Point2D(x - 1, y),
-				new Point2D(x + 1, y),
-				new Point2D(x, y - 1),
-				new Point2D(x, y + 1)
+				new Point2D(x-1,y),
+				new Point2D(x+1,y),
+				new Point2D(x,y-1),
+				new Point2D(x,y+1)
 		};
-
-		List<CaseBN> autour = new ArrayList<CaseBN>();
-
-		for (Point2D p : points) {
-			if (PointExiste(p)) {
-				autour.add(getCase((int) p.getX(), (int) p.getY()));
+		List<CaseBN> neighbors = new ArrayList<>();
+		for (Point2D p : points){
+			if (PointExistant(p)){
+				neighbors.add(getCase((int) p.getX(), (int) p.getY()));
 			}
 		}
-
-		return autour.toArray(new CaseBN[0]);
+		return neighbors.toArray(new CaseBN[0]);
 	}
+	/* Permet de renvoyer si un placement de bateau est possible
+		verifie si le bateau entre dans la grille, puis on verifie si il n'est pas collé a un bateau
+	 */
+	private boolean VerifPlacementBateau(Bateau bateau, int x, int y){
+		int taille = bateau.getTaille();
 
-	class CaseBN extends Rectangle {
-		int x, y;
-		Bateau bateau = null;
-		boolean utilise = false;
-		private GrilleBN grille;
+		if(!bateau.isHorizontal()){
+			for (int i = y; i < y + taille; i++){
+				if (!PointExistant(x,i))
+					return false;
 
-		CaseBN(int x, int y, GrilleBN grille){
-			super(30, 30);
-			this.x = x;
-			this.y = y;
-			this.grille = grille;
-			setFill(Color.valueOf("#1C046B"));
-			setStroke(Color.BLACK);
-		}
+				CaseBN c = getCase(x,i);
+				if(c.getBateau() != null)
+					return false;
 
-		boolean tire(){
-
-			utilise = true;
-			setFill(Color.BLACK);
-
-			if(bateau != null){
-				bateau.toucher();
-				setFill(Color.RED);
-				if(!bateau.vivant()){
-					grille.nbbateau--;
+				for (CaseBN neighbor : getNeighbors(x,i)){
+					if(!PointExistant(x,i))
+						return false;
+					if(neighbor.getBateau() != null)
+						return false;
 				}
-				return true;
 			}
+		} else {
+			for (int i = x; i < x + taille; i++){
+				if (!PointExistant(i,y))
+					return false;
 
-			return false;
+				CaseBN c = getCase(i,y);
+				if (c.getBateau() != null)
+					return false;
+
+				for (CaseBN neighbor : getNeighbors(i,y)){
+					if(!PointExistant(i,y))
+						return false;
+					if (neighbor.getBateau() != null)
+						return false;
+				}
+			}
 		}
+		return true;
+	}
+
+	private boolean PointExistant(Point2D point) {
+		return PointExistant(point.getX(), point.getY());
+	}
+
+	private boolean PointExistant(double x, double y) {
+		if (x >= 0 && x < 10 && y >= 0 && y < 10)
+			return true;
+		return false;
 
 	}
+
+	int getBateau(){
+		return this.bateau;
+	}
+
+	void setBateau(int i){
+		this.bateau = i;
+	}
+
 }

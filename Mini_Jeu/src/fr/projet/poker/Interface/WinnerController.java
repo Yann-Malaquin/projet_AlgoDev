@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -47,7 +46,7 @@ public class WinnerController {
         //nameW = (Label) ((AnchorPane) root.getChildren().get(0)).getChildren().get(3);
         //nameW.setText(this.getWinner());
         fenetre = (AnchorPane) root.getChildren().get(0);
-        InputStream cup = this.getClass().getResourceAsStream("/resources/Poker/win.png");
+        InputStream cup = this.getClass().getResourceAsStream("/resources/poker/win.png");
         ImageView iw = new ImageView(new Image(cup));
         iw.setFitWidth(400);iw.setFitHeight(400);
         Label cupI = new Label();

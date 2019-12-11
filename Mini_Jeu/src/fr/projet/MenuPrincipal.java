@@ -1,7 +1,8 @@
 package fr.projet;
 
 import fr.projet.bataillenavale.Partie;
-import fr.projet.poker.Interface.Main;
+import fr.projet.loto.Depart_Loto;
+import fr.projet.poker.Interface.PartiePoker;
 import fr.projet.sudoku.Sudoku;
 
 import javax.swing.*;
@@ -10,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
 import java.net.URL;
 
 public class MenuPrincipal implements ActionListener {
@@ -54,14 +54,14 @@ public class MenuPrincipal implements ActionListener {
         public void paintComponent(Graphics g)
         {
             super.paintComponent(g);
-            URL imageURL = this.getClass().getResource("/resources/Fond_Menu.jpg");
+            URL imageURL = this.getClass().getResource("/resources/menuprincipal/Fond_Menu.jpg");
             g.drawImage(new ImageIcon(imageURL).getImage(), 0, 0, getWidth(), getHeight(), null);
         }
     };
     private JPanel pan = new JPanel(){
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            URL imageURL = this.getClass().getResource("/resources/Fond_Jeux.jpg");
+            URL imageURL = this.getClass().getResource("/resources/menuprincipal/Fond_Jeux.jpg");
             g.drawImage(new ImageIcon(imageURL).getImage(), 0, 0, getWidth(), getHeight(), null);
         }
     };
@@ -235,26 +235,26 @@ public class MenuPrincipal implements ActionListener {
         pan.add(TBN);
 
 
-        URL imageURL1 = this.getClass().getResource("/resources/Sudoku.jpg");
+        URL imageURL1 = this.getClass().getResource("/resources/menuprincipal/Sudoku.jpg");
         Sudo.setIcon(new ImageIcon(imageURL1));
         Sudo.setText("Sudoku");
         Sudo.addActionListener(this);
         pan.add(Sudo);
 
-        URL imageURL2 = this.getClass().getResource("/resources/Loto.jpg");
+        URL imageURL2 = this.getClass().getResource("/resources/menuprincipal/Loto.jpg");
         Loto.setIcon(new ImageIcon(imageURL2));
         Loto.setText("Loto");
         Loto.addActionListener(this);
         pan.add(Loto);
 
-        URL imageURL3 = this.getClass().getResource("/resources/Poker.jpg");
+        URL imageURL3 = this.getClass().getResource("/resources/menuprincipal/Poker.jpg");
         Poker.setIcon(new ImageIcon(imageURL3));
         Poker.setText("Poker");
         Poker.addActionListener(this);
         pan.add(Poker);
 
 
-        URL imageURL4 = this.getClass().getResource("/resources/BN.jpg");
+        URL imageURL4 = this.getClass().getResource("/resources/menuprincipal/BN.jpg");
         BN.setIcon(new ImageIcon(imageURL4));
         BN.setText("BN");
         BN.addActionListener(this);
@@ -391,8 +391,8 @@ public class MenuPrincipal implements ActionListener {
         global.add(quitter,BorderLayout.NORTH);
 
         c.ChargerClassement(c,c.FichierSauvegarde);
-        //if(tri==1) c.TrierSelonPseudo();
-        //if(tri==2 || tri==3 || tri==4|| tri==5 || tri==6) c.TrierListeSelonScore(tri-1);
+        if(tri==1) c.TrierSelonPseudo();
+        if(tri==2 || tri==3 || tri==4|| tri==5 || tri==6) c.TrierListeSelonScore(tri-1);
 
         int nbligne = c.ClassementGlobal.size();
         Dimension d = new Dimension(fenetre1.getWidth()/6-20,50);
@@ -449,30 +449,30 @@ public class MenuPrincipal implements ActionListener {
         for(int lign=0;lign<nbligne;lign++)
         {
 
-                JLabel nom = new JLabel(c.ClassementGlobal.get(lign).getPseudo(),JLabel.CENTER);
-                nom.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
-                nom.setPreferredSize(d);
-                JLabel scoreS = new JLabel(String.valueOf(c.ClassementGlobal.get(lign).getScoreSudo()),JLabel.CENTER);
-                scoreS.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
-                scoreS.setPreferredSize(d);
-                JLabel scoreL = new JLabel(String.valueOf(c.ClassementGlobal.get(lign).getScoreLoto()),JLabel.CENTER);
-                scoreL.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
-                scoreL.setPreferredSize(d);
-                JLabel scoreP = new JLabel(String.valueOf(c.ClassementGlobal.get(lign).getScorePoker()),JLabel.CENTER);
-                scoreP.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
-                scoreP.setPreferredSize(d);
-                JLabel scoreB = new JLabel(String.valueOf(c.ClassementGlobal.get(lign).getScoreBN()),JLabel.CENTER);
-                scoreB.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
-                scoreB.setPreferredSize(d);
-                JLabel score = new JLabel(String.valueOf(c.ClassementGlobal.get(lign).getScore()),JLabel.CENTER);
-                score.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
-                score.setPreferredSize(d);
-                classement.add(nom);
-                classement.add(scoreS);
-                classement.add(scoreL);
-                classement.add(scoreP);
-                classement.add(scoreB);
-                classement.add(score);
+            JLabel nom = new JLabel(c.ClassementGlobal.get(lign).getPseudo(),JLabel.CENTER);
+            nom.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
+            nom.setPreferredSize(d);
+            JLabel scoreS = new JLabel(String.valueOf(c.ClassementGlobal.get(lign).getScoreSudo()),JLabel.CENTER);
+            scoreS.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
+            scoreS.setPreferredSize(d);
+            JLabel scoreL = new JLabel(String.valueOf(c.ClassementGlobal.get(lign).getScoreLoto()),JLabel.CENTER);
+            scoreL.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
+            scoreL.setPreferredSize(d);
+            JLabel scoreP = new JLabel(String.valueOf(c.ClassementGlobal.get(lign).getScorePoker()),JLabel.CENTER);
+            scoreP.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
+            scoreP.setPreferredSize(d);
+            JLabel scoreB = new JLabel(String.valueOf(c.ClassementGlobal.get(lign).getScoreBN()),JLabel.CENTER);
+            scoreB.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
+            scoreB.setPreferredSize(d);
+            JLabel score = new JLabel(String.valueOf(c.ClassementGlobal.get(lign).getScore()),JLabel.CENTER);
+            score.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
+            score.setPreferredSize(d);
+            classement.add(nom);
+            classement.add(scoreS);
+            classement.add(scoreL);
+            classement.add(scoreP);
+            classement.add(scoreB);
+            classement.add(score);
         }
         for(int i=0;i<6-nbligne;i++) // cas ou le classement contient trop peu de valeurs
         {
@@ -686,7 +686,7 @@ public class MenuPrincipal implements ActionListener {
         Procédure qui gère les actions en fonction des entrées graphiques
      */
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e)  {
         Object source = e.getSource();
         if(source==quitter) // retour au menu principal
         {
@@ -779,26 +779,25 @@ public class MenuPrincipal implements ActionListener {
         {
             fenetre1.dispose();
             Sudoku s = new Sudoku();
-            try {
-                s.Jouer();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            s.Jouer();
         }
         if(source==suivantL)
         {
             fenetre1.dispose();
-            //lancement loto
+            Depart_Loto loto = new Depart_Loto();
+            loto.main();
         }
         if(source==suivantP)
         {
             fenetre1.dispose();
-            //lancement Poker
+            PartiePoker poker = new PartiePoker();
+            poker.main();
         }
         if(source==suivantB)
         {
             fenetre1.dispose();
-            //lancement bataille navale
+            Partie p = new Partie();
+            p.main();
         }
         if(source==menuP) // retour menu principal
         {

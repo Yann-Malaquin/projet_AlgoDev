@@ -16,4 +16,8 @@ public class Depart_Loto extends Application {
         Controller_sample pd = new Controller_sample();
         pd.Pagedepart(fenetre);
     }
+
+    public static void main() {
+        launch();
+    }
     }

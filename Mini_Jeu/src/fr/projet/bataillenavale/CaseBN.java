@@ -5,6 +5,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
+import java.io.InputStream;
+
 public class CaseBN extends Rectangle {
     private int x, y;
     private Bateau bateau = null;
@@ -20,12 +22,14 @@ public class CaseBN extends Rectangle {
 
     public boolean tirer() {
         utilise = true;
-        setFill(new ImagePattern(new Image("fr/projet/bataillenavale/icone_louper.png")));
+        InputStream input = this.getClass().getResourceAsStream("/resources/bataillenavale/icone_louper.png");
+        setFill(new ImagePattern(new Image(input)));
 
         if (bateau != null) {
+            input = this.getClass().getResourceAsStream("/resources/bataillenavale/icone_toucher.png");
             bateau.touche();
             setStroke(Color.RED);
-            setFill(new ImagePattern(new Image("fr/projet/bataillenavale/icone_toucher.png")));
+            setFill(new ImagePattern(new Image(input)));
             if (!bateau.estVivant()) {
                 grille.setBateau((grille.getBateau())-1);
             }

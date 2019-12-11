@@ -172,7 +172,7 @@ public class Partie extends Application {
 		return popup;
 	}
 
-	public static void main(String[] args) {
-		launch(args);
+	public static void main() {
+		launch();
 	}
 }

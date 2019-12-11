@@ -41,10 +41,7 @@ public class MenuController {
         primaryStage.show();
     }
 
-
-    @FXML
-    private void MenuJoueur() {
-        Stage primaryStage = (Stage) Jouer.getScene().getWindow();
+    public void MenuJoueur(Stage primaryStage) {
         Group root = new Group(), interieurFenetre = new Group();
         AnchorPane fenetre = new AnchorPane();
         try {
@@ -59,14 +56,14 @@ public class MenuController {
         double w = 0, h = 0;
         fenetre = (AnchorPane) root.getChildren().get(0);
 
-        InputStream input = this.getClass().getResourceAsStream("/resources/Poker/Fond_JPoker.jpg");
+        InputStream input = this.getClass().getResourceAsStream("/resources/poker/Fond_JPoker.jpg");
         w = primaryStage.getWidth();
         h = primaryStage.getHeight();
         fenetre.setPrefSize(w, h);
         Image im = new Image(input, w, h, false, false);
 
         Font f;
-        InputStream input1 = this.getClass().getResourceAsStream("/resources/Poker/SaloonExt Th.ttf");
+        InputStream input1 = this.getClass().getResourceAsStream("/resources/poker/SaloonExt Th.ttf");
         f = Font.loadFont(input1, 14);
         Label l = new Label();
 

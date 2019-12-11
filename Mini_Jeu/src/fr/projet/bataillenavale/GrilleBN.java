@@ -1,6 +1,5 @@
 package fr.projet.bataillenavale;
 
-import fr.projet.Joueur;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -11,6 +10,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +18,9 @@ public class GrilleBN extends Parent {
 	private GridPane grille = new GridPane();
 	private JoueurBN joueur = null;
 	private int bateau = 5;
-	Image imgbateau = new Image("fr/projet/bataillenavale/icone_bateau.png");
+
+	InputStream input = this.getClass().getResourceAsStream("/resources/bataillenavale/icone_bateau.png");
+	Image imgbateau = new Image(input);
 
 	public GrilleBN(JoueurBN joueur, EventHandler<? super MouseEvent> handler){
 		this.joueur = joueur;

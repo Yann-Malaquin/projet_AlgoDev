@@ -132,7 +132,7 @@ public class TableController extends Thread {
         double w, h;
 
         //on charge l'image de fond.
-        InputStream input = this.getClass().getResourceAsStream("/resources/Poker/table_poker.png");
+        InputStream input = this.getClass().getResourceAsStream("/resources/poker/table_poker.png");
         try {
             //on charge le fichier Table.FXML puisque l'on travail dessus.
             root = FXMLLoader.load(this.getClass().getResource("Table.fxml"));
@@ -221,7 +221,7 @@ public class TableController extends Thread {
 
         Carte c = new Carte(_figure, _couleur, _valeur);
         //chargement de l'image
-        InputStream couleur = this.getClass().getResourceAsStream("/resources/Poker/Couleur_" + _couleur + ".png");
+        InputStream couleur = this.getClass().getResourceAsStream("/resources/poker/Couleur_" + _couleur + ".png");
 
         c.setId("Carte_" + _figure + "_" + _couleur);
 
@@ -341,7 +341,7 @@ public class TableController extends Thread {
         Group joueur;
         Label name;
         Font f;
-        InputStream input1 = this.getClass().getResourceAsStream("/resources/Poker/SaloonExt Th.ttf");
+        InputStream input1 = this.getClass().getResourceAsStream("/resources/poker/SaloonExt Th.ttf");
 
         f = Font.loadFont(input1, 18);
 
@@ -553,7 +553,7 @@ public class TableController extends Thread {
                 joueur = (Group) allJoueur.getChildren().get(pdonneur);
                 carteJ = (AnchorPane) joueur.getChildren().get(i);
                 jp = lJP.get(pdonneur);
-                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 Image im = new Image(input);
                 ImageView iw = new ImageView(im);
                 iw.setFitHeight(85);
@@ -664,7 +664,7 @@ public class TableController extends Thread {
                 this.tapis(allJoueur, (Group) allJoueur.getChildren().get(indexJoueur), this.getlJP().get(indexJoueur));
             }
             if (indexJoueur + 1 == this.getlJP().size()) {
-                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 Image im = new Image(input);
                 ImageView iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -675,7 +675,7 @@ public class TableController extends Thread {
                 AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                 i.getChildren().add(iw);
 
-                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 im = new Image(input);
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -698,7 +698,7 @@ public class TableController extends Thread {
                 i = (AnchorPane) carteJ.getChildren().get(0);
                 i.getChildren().remove(i.getChildren().get(1));
             } else {
-                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 Image im = new Image(input);
                 ImageView iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -709,7 +709,7 @@ public class TableController extends Thread {
                 AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                 i.getChildren().add(iw);
 
-                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 im = new Image(input);
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -758,7 +758,7 @@ public class TableController extends Thread {
 
                 if ((this.getFinTour().size() == this.getlJP().size() - 1) && (((Label) joueur.getChildren().get(1)).getText().compareTo("PB /S") == 0)) {
 
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -769,7 +769,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -820,7 +820,7 @@ public class TableController extends Thread {
                     turn++;
                 } else if (this.getFinTour().size() == (this.getlJP().size() - 1)) {
 
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -831,7 +831,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -880,7 +880,7 @@ public class TableController extends Thread {
                     }
                     turn++;
                 } else if (indexJoueur == this.getlJP().size() - 1) {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -891,7 +891,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -916,7 +916,7 @@ public class TableController extends Thread {
                     i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().remove(i.getChildren().get(1));
                 } else {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -927,7 +927,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -955,7 +955,7 @@ public class TableController extends Thread {
             } else if (turn == 2) {
                 if (this.getFinTour().size() == (this.getlJP().size() - 1)) {
 
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -966,7 +966,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1015,7 +1015,7 @@ public class TableController extends Thread {
                     }
                     turn++;
                 } else if (indexJoueur == this.getlJP().size() - 1) {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1026,7 +1026,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1051,7 +1051,7 @@ public class TableController extends Thread {
                     i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().remove(i.getChildren().get(1));
                 } else {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1062,7 +1062,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1090,7 +1090,7 @@ public class TableController extends Thread {
             } else if (turn == 3) {
                 if (this.getFinTour().size() == (this.getlJP().size() - 1)) {
 
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1101,7 +1101,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1150,7 +1150,7 @@ public class TableController extends Thread {
                     }
                     turn++;
                 } else if (indexJoueur == this.getlJP().size() - 1) {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1161,7 +1161,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1186,7 +1186,7 @@ public class TableController extends Thread {
                     i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().remove(i.getChildren().get(1));
                 } else {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1197,7 +1197,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1225,7 +1225,7 @@ public class TableController extends Thread {
             } else if (turn == 4) {
                 if (this.getFinTour().size() == (this.getlJP().size() - 1)) {
 
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1236,7 +1236,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1255,7 +1255,7 @@ public class TableController extends Thread {
                     delay.play();
                     this.clearTable(allJoueur);
                 } else if (indexJoueur == this.getlJP().size() - 1) {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1266,7 +1266,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1291,7 +1291,7 @@ public class TableController extends Thread {
                     i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().remove(i.getChildren().get(1));
                 } else {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1302,7 +1302,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1346,7 +1346,7 @@ public class TableController extends Thread {
                 joueur = (Group) allJoueur.getChildren().get(indexJoueur);
 
                 if ((this.getFinTour().size() == this.getlJP().size() - 1) && (((Label) joueur.getChildren().get(1)).getText().compareTo("PB /S") == 0)) {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1357,7 +1357,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1371,7 +1371,7 @@ public class TableController extends Thread {
                     indexJoueur = (initJoueur + 1);
                     turn++;
                 } else if (this.getFinTour().size() == (this.getlJP().size() - 1)) {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1382,7 +1382,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1397,7 +1397,7 @@ public class TableController extends Thread {
                     indexJoueur = (initJoueur + 1);
                     turn++;
                 } else if (indexJoueur == this.getlJP().size() - 1) {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1408,7 +1408,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1427,7 +1427,7 @@ public class TableController extends Thread {
                     i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().remove(i.getChildren().get(1));
                 } else {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1438,7 +1438,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1460,7 +1460,7 @@ public class TableController extends Thread {
                 }
             } else if (this.getFinTour().size() == (this.getlJP().size() - 1)) {
                 if (turn == 2) {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1471,7 +1471,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1486,7 +1486,7 @@ public class TableController extends Thread {
                     indexJoueur = (initJoueur + 1);
                     turn++;
                 } else if (turn == 3) {
-                    InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     Image im = new Image(input);
                     ImageView iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1497,7 +1497,7 @@ public class TableController extends Thread {
                     AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                     i.getChildren().add(iw);
 
-                    input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                    input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                     im = new Image(input);
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
@@ -1522,7 +1522,7 @@ public class TableController extends Thread {
                     turn = 1;
                 }
             } else if (indexJoueur == this.getlJP().size() - 1) {
-                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 Image im = new Image(input);
                 ImageView iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -1533,7 +1533,7 @@ public class TableController extends Thread {
                 AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                 i.getChildren().add(iw);
 
-                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 im = new Image(input);
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -1552,7 +1552,7 @@ public class TableController extends Thread {
                 i = (AnchorPane) carteJ.getChildren().get(0);
                 i.getChildren().remove(i.getChildren().get(1));
             } else {
-                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 Image im = new Image(input);
                 ImageView iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -1563,7 +1563,7 @@ public class TableController extends Thread {
                 AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                 i.getChildren().add(iw);
 
-                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 im = new Image(input);
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -1608,7 +1608,7 @@ public class TableController extends Thread {
             }
 
             if ((indexJoueur + 1) == this.getlJP().size()) {
-                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 Image im = new Image(input);
                 ImageView iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -1619,7 +1619,7 @@ public class TableController extends Thread {
                 AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                 i.getChildren().add(iw);
 
-                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 im = new Image(input);
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -1638,7 +1638,7 @@ public class TableController extends Thread {
                 i = (AnchorPane) carteJ.getChildren().get(0);
                 i.getChildren().remove(i.getChildren().get(1));
             } else {
-                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 Image im = new Image(input);
                 ImageView iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -1649,7 +1649,7 @@ public class TableController extends Thread {
                 AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                 i.getChildren().add(iw);
 
-                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 im = new Image(input);
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -1686,7 +1686,7 @@ public class TableController extends Thread {
             this.tapis(allJoueur, (Group) allJoueur.getChildren().get(indexJoueur), this.getlJP().get(indexJoueur));
 
             if ((indexJoueur + 1) == this.getlJP().size()) {
-                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 Image im = new Image(input);
                 ImageView iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -1697,7 +1697,7 @@ public class TableController extends Thread {
                 AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                 i.getChildren().add(iw);
 
-                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 im = new Image(input);
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -1716,7 +1716,7 @@ public class TableController extends Thread {
                 i = (AnchorPane) carteJ.getChildren().get(0);
                 i.getChildren().remove(i.getChildren().get(1));
             } else {
-                InputStream input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 Image im = new Image(input);
                 ImageView iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -1727,7 +1727,7 @@ public class TableController extends Thread {
                 AnchorPane i = (AnchorPane) carteJ.getChildren().get(0);
                 i.getChildren().add(iw);
 
-                input = this.getClass().getResourceAsStream("/resources/Poker/arriere_carte.jpg");
+                input = this.getClass().getResourceAsStream("/resources/poker/arriere_carte.jpg");
                 im = new Image(input);
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
@@ -1747,7 +1747,6 @@ public class TableController extends Thread {
                 i.getChildren().remove(i.getChildren().get(1));
 
             }
-
 
             this.getFinTour().clear();
         });

@@ -75,14 +75,14 @@
                               <Group fx:id="Plateau" layoutX="144.0" layoutY="69.0">
                                  <children>
                                     <AnchorPane fx:id="CarteP" layoutX="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="760.0" />
-                                    <Button fx:id="afficher" layoutX="280.0" layoutY="300.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" />
-                                    <Button fx:id="distribuer" layoutX="280.0" layoutY="300.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" />
-                                    <Button fx:id="SeCoucher" layoutX="90.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" text="Se coucher" />
-                                    <Button fx:id="Suivre" layoutX="210.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" text="Suivre" />
-                                    <Button fx:id="Relancer" layoutX="300.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" text="Relancer" />
-                                    <Button fx:id="Miser" layoutX="405.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" text="Miser" />
-                                    <Button fx:id="Tapis" layoutX="490.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" text="Tapis" />
-                                    <Button fx:id="Check" layoutX="575.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" text="Check" />
+                                    <Button fx:id="afficher" layoutX="280.0" layoutY="300.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" />
+                                    <Button fx:id="distribuer" layoutX="280.0" layoutY="300.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" />
+                                    <Button fx:id="SeCoucher" layoutX="90.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" text="Se coucher" />
+                                    <Button fx:id="Suivre" layoutX="210.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" text="Suivre" />
+                                    <Button fx:id="Relancer" layoutX="300.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" text="Relancer" />
+                                    <Button fx:id="Miser" layoutX="405.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" text="Miser" />
+                                    <Button fx:id="Tapis" layoutX="490.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" text="Tapis" />
+                                    <Button fx:id="Check" layoutX="575.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" text="Check" />
                                     <TextField fx:id="Mise" layoutX="300.0" layoutY="250.0" />
                                     <Label fx:id="Pot" layoutX="320.0" layoutY="60.0" text="Total pot : 0 € " textFill="WHITE">
                                        <font>

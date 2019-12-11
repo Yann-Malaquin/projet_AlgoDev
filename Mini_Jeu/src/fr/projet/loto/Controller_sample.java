@@ -2,6 +2,8 @@ package fr.projet.loto;
 
 import fr.projet.Classement;
 import fr.projet.Joueur;
+import fr.projet.MenuPrincipal;
+import fr.projet.MiniJeux;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -130,7 +132,7 @@ public class Controller_sample {
             nbc.setLayoutX(width / 2 - 220);
             Save = (Button) A2.getChildren().get(6);
             Save.setLayoutX(width / 2 + 148.8);
-            InputStream input = this.getClass().getResourceAsStream("/resources/Lotto2-1080x675.jpg");
+            InputStream input = this.getClass().getResourceAsStream("/loto/Lotto2-1080x675.jpg");
             Image im = new Image(input,width,height,false,false);
             BackgroundImage myBI = new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
             A2.setBackground(new Background(myBI));
@@ -164,7 +166,7 @@ public class Controller_sample {
                 unegrillesolo = (AnchorPane) root.getChildren().get(0);
                 unegrillesolo.setPrefHeight(height);
                 unegrillesolo.setPrefWidth(width);
-                InputStream input = this.getClass().getResourceAsStream("/resources/Lotto2-1080x675.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/loto/Lotto2-1080x675.jpg");
                 Image im = new Image(input,width,height,false,false);
                 BackgroundImage myBI = new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
                 unegrillesolo.setBackground(new Background(myBI));
@@ -205,7 +207,7 @@ public class Controller_sample {
                 deuxgrillesolo = (AnchorPane) root.getChildren().get(1);
                 deuxgrillesolo.setPrefHeight(height);
                 deuxgrillesolo.setPrefWidth(width);
-                InputStream input = this.getClass().getResourceAsStream("/resources/Lotto2-1080x675.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/loto/Lotto2-1080x675.jpg");
                 Image im = new Image(input,width,height,false,false);
                 BackgroundImage myBI = new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
                 deuxgrillesolo.setBackground(new Background(myBI));
@@ -277,7 +279,7 @@ public class Controller_sample {
                 troisgrillesolo = (AnchorPane) root.getChildren().get(2);
                 troisgrillesolo.setPrefHeight(height);
                 troisgrillesolo.setPrefWidth(width);
-                InputStream input = this.getClass().getResourceAsStream("/resources/Lotto2-1080x675.jpg");
+                InputStream input = this.getClass().getResourceAsStream("/loto/Lotto2-1080x675.jpg");
                 Image im = new Image(input,width,height,false,false);
                 BackgroundImage myBI = new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
                 troisgrillesolo.setBackground(new Background(myBI));
@@ -743,9 +745,10 @@ public class Controller_sample {
         Quitter=(Button) first.getChildren().get(3);
         Quitter.setLayoutX(width/2 -45.2);
         Quitter.setOnAction((event) -> {
-            fenetre.close();
+            MenuPrincipal e = new MenuPrincipal();
+            e.affichageMenuPrincipal();
         });
-            InputStream input = this.getClass().getResourceAsStream("/resources/Lotto2-1080x675.jpg");
+            InputStream input = this.getClass().getResourceAsStream("/loto/Lotto2-1080x675.jpg");
             Image im = new Image(input,width,height,false,false);
             BackgroundImage myBI = new BackgroundImage(im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
             first.setBackground(new Background(myBI));

@@ -1,5 +1,6 @@
 package fr.projet.loto;
 
+import fr.projet.Classement;
 import fr.projet.Joueur;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

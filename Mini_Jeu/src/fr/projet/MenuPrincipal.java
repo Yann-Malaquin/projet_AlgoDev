@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.net.URL;
 
 public class MenuPrincipal implements ActionListener {
@@ -390,8 +391,8 @@ public class MenuPrincipal implements ActionListener {
         global.add(quitter,BorderLayout.NORTH);
 
         c.ChargerClassement(c,c.FichierSauvegarde);
-        if(tri==1) c.TrierSelonPseudo();
-        if(tri==2 || tri==3 || tri==4|| tri==5 || tri==6) c.TrierListeSelonScore(tri-1);
+        //if(tri==1) c.TrierSelonPseudo();
+        //if(tri==2 || tri==3 || tri==4|| tri==5 || tri==6) c.TrierListeSelonScore(tri-1);
 
         int nbligne = c.ClassementGlobal.size();
         Dimension d = new Dimension(fenetre1.getWidth()/6-20,50);
@@ -778,7 +779,11 @@ public class MenuPrincipal implements ActionListener {
         {
             fenetre1.dispose();
             Sudoku s = new Sudoku();
-            s.Jouer();
+            try {
+                s.Jouer();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
         if(source==suivantL)
         {

@@ -172,7 +172,7 @@ public class Partie extends Application {
 		return popup;
 	}
 
-	public static void main() {
+	public void lancer() {
 		launch();
 	}
 }

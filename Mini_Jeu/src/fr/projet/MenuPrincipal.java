@@ -4,6 +4,7 @@ import fr.projet.bataillenavale.Partie;
 import fr.projet.loto.Depart_Loto;
 import fr.projet.poker.Interface.PartiePoker;
 import fr.projet.sudoku.Sudoku;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -785,19 +786,19 @@ public class MenuPrincipal implements ActionListener {
         {
             fenetre1.dispose();
             Depart_Loto loto = new Depart_Loto();
-            loto.main();
+            loto.lancer();
         }
         if(source==suivantP)
         {
             fenetre1.dispose();
-            PartiePoker poker = new PartiePoker();
-            poker.main();
+            PartiePoker p = new PartiePoker();
+            p.lancer();
         }
         if(source==suivantB)
         {
             fenetre1.dispose();
             Partie p = new Partie();
-            p.main();
+            p.lancer();
         }
         if(source==menuP) // retour menu principal
         {

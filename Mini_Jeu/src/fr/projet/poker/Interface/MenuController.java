@@ -41,7 +41,8 @@ public class MenuController {
         primaryStage.show();
     }
 
-    public void MenuJoueur(Stage primaryStage) {
+    public void MenuJoueur() {
+        Stage primaryStage = new Stage();
         Group root = new Group(), interieurFenetre = new Group();
         AnchorPane fenetre = new AnchorPane();
         try {

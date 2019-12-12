@@ -7,12 +7,16 @@ public class PartiePoker extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         MenuController controller = new MenuController();
-        controller.MenuJoueur(primaryStage);
+        controller.MenuJoueur();
     }
 
-    public static void main() {
+    /*public static void main() {
         launch();
-    }
+    }*/
 
+    public void lancer() {
+        launch();
+
+    }
 
 }

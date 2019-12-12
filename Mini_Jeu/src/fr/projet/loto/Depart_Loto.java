@@ -1,14 +1,7 @@
 package fr.projet.loto;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
-import javafx.scene.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
 
 public class Depart_Loto extends Application {
 
@@ -17,7 +10,7 @@ public class Depart_Loto extends Application {
         pd.Pagedepart(fenetre);
     }
 
-    public static void main() {
+    public void lancer() {
         launch();
     }
-    }
+}

@@ -159,10 +159,14 @@ public class TableController extends Thread {
         w = primaryStage.getWidth();
         h = primaryStage.getHeight();
 
-        table.setLayoutX(200);
-        table.setLayoutY(100);
+        table.setLayoutX(w/2 - 500);
+        table.setLayoutY(h/2 - 350);
+        Group tmp = (Group)((AnchorPane)((AnchorPane)((Group)root.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).getChildren().get(0);
+        Group tmp2 = (Group)((AnchorPane)((AnchorPane)((Group)root.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).getChildren().get(0);
+
+
         //on modifie le background de notre fenetre
-        Image im = new Image(input, w - (w * 0.20), h - (h * 0.20), false, false);
+        Image im = new Image(input, 1000, 500, false, false);
         BackgroundImage myBI = new BackgroundImage(im,
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
@@ -1362,6 +1366,12 @@ public class TableController extends Thread {
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
                     iw.setFitHeight(85);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i = (AnchorPane) carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
                     this.displayCardT(allJoueur, 0, 3);
                     bnMiser.setVisible(true);
                     bnSuivre.setVisible(false);
@@ -1387,6 +1397,13 @@ public class TableController extends Thread {
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
                     iw.setFitHeight(85);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i = (AnchorPane) carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+
                     this.displayCardT(allJoueur, 0, 3);
                     bnMiser.setVisible(true);
                     bnSuivre.setVisible(false);
@@ -1413,6 +1430,12 @@ public class TableController extends Thread {
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
                     iw.setFitHeight(85);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i = (AnchorPane) carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
                     indexJoueur = 0;
                     joueur = (Group) allJoueur.getChildren().get(indexJoueur);
 
@@ -1443,6 +1466,11 @@ public class TableController extends Thread {
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
                     iw.setFitHeight(85);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i = (AnchorPane) carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
 
                     indexJoueur++;
                     joueur = (Group) allJoueur.getChildren().get(indexJoueur);
@@ -1476,6 +1504,13 @@ public class TableController extends Thread {
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
                     iw.setFitHeight(85);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i = (AnchorPane) carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
+
                     this.displayCardT(allJoueur, 3, 4);
                     bnMiser.setVisible(true);
                     bnSuivre.setVisible(false);
@@ -1502,6 +1537,12 @@ public class TableController extends Thread {
                     iw = new ImageView(im);
                     iw.setFitWidth(54);
                     iw.setFitHeight(85);
+
+                    carteJ = (AnchorPane) joueur.getChildren().get(4);
+                    i = new AnchorPane();
+                    i = (AnchorPane) carteJ.getChildren().get(0);
+                    i.getChildren().add(iw);
+
                     this.displayCardT(allJoueur, 4, 5);
                     bnMiser.setVisible(true);
                     bnSuivre.setVisible(false);
@@ -1538,6 +1579,12 @@ public class TableController extends Thread {
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
                 iw.setFitHeight(85);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i = (AnchorPane) carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
                 indexJoueur = 0;
                 joueur = (Group) allJoueur.getChildren().get(indexJoueur);
 
@@ -1568,6 +1615,12 @@ public class TableController extends Thread {
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
                 iw.setFitHeight(85);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i = (AnchorPane) carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
                 indexJoueur++;
                 joueur = (Group) allJoueur.getChildren().get(indexJoueur);
 
@@ -1624,6 +1677,12 @@ public class TableController extends Thread {
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
                 iw.setFitHeight(85);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i = (AnchorPane) carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
                 indexJoueur = 0;
                 joueur = (Group) allJoueur.getChildren().get(indexJoueur);
 
@@ -1654,6 +1713,12 @@ public class TableController extends Thread {
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
                 iw.setFitHeight(85);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i = (AnchorPane) carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
                 indexJoueur++;
                 joueur = (Group) allJoueur.getChildren().get(indexJoueur);
 
@@ -1702,6 +1767,12 @@ public class TableController extends Thread {
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
                 iw.setFitHeight(85);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i = (AnchorPane) carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
                 indexJoueur = 0;
                 joueur = (Group) allJoueur.getChildren().get(indexJoueur);
 
@@ -1732,6 +1803,12 @@ public class TableController extends Thread {
                 iw = new ImageView(im);
                 iw.setFitWidth(54);
                 iw.setFitHeight(85);
+
+                carteJ = (AnchorPane) joueur.getChildren().get(4);
+                i = new AnchorPane();
+                i = (AnchorPane) carteJ.getChildren().get(0);
+                i.getChildren().add(iw);
+
                 indexJoueur++;
                 joueur = (Group) allJoueur.getChildren().get(indexJoueur);
 

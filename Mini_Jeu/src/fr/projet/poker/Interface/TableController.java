@@ -292,7 +292,7 @@ public class TableController extends Thread {
         // tableau regroupant toutes les figures
         String figure[] = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "As"};
         //tableau regroupant les 4 couleurs
-        String couleur[] = {"carreau", "coeur", "trefle", "pique"};
+        String couleur[] = {"Carreau", "Coeur", "Trefle", "Pique"};
 
         int x = 0, y = 0;
         int _valeur = 2;

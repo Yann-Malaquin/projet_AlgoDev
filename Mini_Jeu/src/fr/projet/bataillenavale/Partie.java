@@ -58,17 +58,25 @@ public class Partie extends Application {
 			tourAdverse = !c.tirer();
 
 			if (grilleIA.getBateau() == 0) {
+				/* Ajout du joueur au classement */
+
 				jClassement.setPseudo(joueur1.getPseudo());
 				Classement C = new Classement();
 				C.ChargerClassement(C,C.FichierSauvegarde);
 				C.DonnerPointAUnJoueur(jClassement,1,4);
 				C.SauvegardeClassement(C.FichierSauvegarde);
+
+				/* On affiche la PopUp et on ferme la page principale */
+
 				Scene scene = new Scene(Popup(true));
 				Stage popup = new Stage();
+				Stage a = (Stage) pageprinc.getScene().getWindow();
+				a.close();
 				popup.setScene(scene);
 				popup.centerOnScreen();
 				popup.setResizable(false);
 				popup.show();
+
 
 			}
 
@@ -108,11 +116,14 @@ public class Partie extends Application {
 			tourAdverse = c.tirer();
 
 			if (grilleJoueur.getBateau() == 0) {
+				/* Ajout du joueur au classement */
 				jClassement.setPseudo(joueur1.getPseudo());
 				Classement C = new Classement();
 				C.ChargerClassement(C,C.FichierSauvegarde);
 				C.DonnerPointAUnJoueur(jClassement,1,4);
 				C.SauvegardeClassement(C.FichierSauvegarde);
+
+				/* On affiche la PopUp et on ferme la page principale */
 				Scene scene = new Scene(Popup(false));
 				Stage popup = new Stage();
 				popup.setScene(scene);
@@ -155,6 +166,7 @@ public class Partie extends Application {
 			joueur1 = new JoueurBN(pseudo,false);
 			Scene scene = new Scene(LancerPartie());
 			primaryStage.setScene(scene);
+
 		});
 
 		Page.add(PseudoLabel,0,0);
@@ -180,6 +192,8 @@ public class Partie extends Application {
 			Quitter.setOnAction(e -> {
 				MenuPrincipal menu = new MenuPrincipal();
 				menu.affichageMenuPrincipal();
+				Stage quitter = (Stage) Quitter.getScene().getWindow();
+				quitter.close();
 				});
 
 
@@ -199,6 +213,8 @@ public class Partie extends Application {
 			Quitter.setOnAction(e -> {
 				MenuPrincipal menu = new MenuPrincipal();
 				menu.affichageMenuPrincipal();
+				Stage quitter = (Stage) Quitter.getScene().getWindow();
+				quitter.close();
 				});
 
 			VBox v = new VBox();

@@ -747,6 +747,8 @@ public class Controller_sample {
         Quitter.setOnAction((event) -> {
             MenuPrincipal e = new MenuPrincipal();
             e.affichageMenuPrincipal();
+            Stage leave = (Stage) Quitter.getScene().getWindow();
+            leave.close();
         });
             InputStream input = this.getClass().getResourceAsStream("/loto/Lotto2-1080x675.jpg");
             Image im = new Image(input,width,height,false,false);

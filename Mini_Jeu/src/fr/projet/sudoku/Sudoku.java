@@ -240,10 +240,7 @@ public class Sudoku {
             }
         }
 
-        if(ZonePseudo.getText().length()>0 && ZonePseudo.getText()!=null) {
-            pseudo = ZonePseudo.getText();
-        }
-        else{ pseudo="Anonyme";}
+
         cd.setVisible(true);
         fenetre.setContentPane(cd);
         fenetre.repaint();
@@ -280,8 +277,10 @@ public class Sudoku {
                 premierChar = premierChar + tmp;
                 if (ZonePseudo.getText().length() > 0 && ZonePseudo.getText() != null) {
                     pseudo = ZonePseudo.getText();
+                    joueur.setPseudo(pseudo);
                 } else {
                     pseudo = "Anonyme";
+                    joueur.setPseudo(pseudo);
                 }
 
                 grille.getT()[LigneChoisie][ColonneChoisie].setVal("");
@@ -299,7 +298,9 @@ public class Sudoku {
                         int score = 0;
                         if(CptErreur<erreurMax) score += calculScore(difficulte);
                         joueur.setScore(score);
+
                         Classement C = new Classement();
+
                         C.ChargerClassement(C,C.FichierSauvegarde);
                         C.DonnerPointAUnJoueur(joueur,score,1);
                         C.SauvegardeClassement(C.FichierSauvegarde);
@@ -316,6 +317,7 @@ public class Sudoku {
                         int score = 0;
                         if(CptErreur<erreurMax) score += calculScore(difficulte);
                         joueur.setScore(score);
+
                         Classement C = new Classement();
                         C.ChargerClassement(C,C.FichierSauvegarde);
                         C.DonnerPointAUnJoueur(joueur,score,1);

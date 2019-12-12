@@ -11,13 +11,13 @@
    <children>
       <Group>
          <children>
-            <AnchorPane fx:id="Fenetre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1700.0">
+            <AnchorPane fx:id="Fenetre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="933.0">
                <children>
-                  <AnchorPane fx:id="Table" layoutX="100.0" layoutY="100.0" prefHeight="800.0" prefWidth="1500.0">
+                  <AnchorPane fx:id="Table" prefHeight="600.0" prefWidth="933.0">
                      <children>
-                        <Group fx:id="AllJoueur" layoutX="234.0" layoutY="105.0">
+                        <Group fx:id="AllJoueur" layoutX="-41.0" layoutY="-33.0">
                            <children>
-                              <Group fx:id="Joueur1" layoutX="935.0" layoutY="-6.0">
+                              <Group fx:id="Joueur1" layoutX="831.0" layoutY="123.0">
                                  <children>
                                     <Label fx:id="NomJ1" alignment="CENTER" layoutX="-55.0" layoutY="117.0" prefHeight="27.0" prefWidth="131.0" rotate="30.0" style="-fx-background-color: sienna; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 10; -fx-background-radius: 10;" textAlignment="CENTER" textFill="WHITE">
                                        <font>
@@ -28,7 +28,7 @@
                                     <Label fx:id="BankJ1" layoutX="-28.0" layoutY="144.0" textFill="WHITE" />
                                  </children>
                               </Group>
-                              <Group fx:id="Joueur2" layoutX="927.0" layoutY="434.0">
+                              <Group fx:id="Joueur2" layoutX="831.0" layoutY="392.0">
                                  <children>
                                     <Label fx:id="NomJ2" alignment="CENTER" layoutX="-57.0" layoutY="-2.0" prefHeight="27.0" prefWidth="131.0" rotate="-30.0" style="-fx-background-color: sienna; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 10; -fx-background-radius: 10;" textAlignment="CENTER" textFill="WHITE">
                                        <font>
@@ -39,7 +39,7 @@
                                     <Label fx:id="BankJ2" layoutX="-55.0" layoutY="-19.0" rotate="-56.3" textFill="WHITE" />
                                  </children>
                               </Group>
-                              <Group fx:id="Joueur3" layoutX="438.0" layoutY="455.0">
+                              <Group fx:id="Joueur3" layoutX="433.0" layoutY="426.0">
                                  <children>
                                     <Label fx:id="NomJ3" alignment="CENTER" layoutY="7.0" prefHeight="29.0" prefWidth="182.0" style="-fx-background-color: sienna; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 10; -fx-background-radius: 10;" textFill="WHITE">
                                        <font>
@@ -50,7 +50,7 @@
                                     <Label fx:id="BankJ3" layoutX="94.0" layoutY="-11.0" textFill="WHITE" />
                                  </children>
                               </Group>
-                              <Group fx:id="Joueur4" layoutX="8.0" layoutY="423.0">
+                              <Group fx:id="Joueur4" layoutX="127.0" layoutY="394.0">
                                  <children>
                                     <Label fx:id="NomJ4" alignment="CENTER" layoutX="15.0" layoutY="6.0" prefHeight="27.0" prefWidth="143.0" rotate="30.0" style="-fx-background-color: sienna; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 10; -fx-background-radius: 10;" textAlignment="CENTER" textFill="WHITE">
                                        <font>
@@ -61,7 +61,7 @@
                                     <Label fx:id="BankJ4" layoutX="127.0" layoutY="-22.0" rotate="56.3" textFill="WHITE" />
                                  </children>
                               </Group>
-                              <Group fx:id="Joueur5" layoutX="2.0" layoutY="-6.0">
+                              <Group fx:id="Joueur5" layoutX="138.0" layoutY="123.0">
                                  <children>
                                     <Label fx:id="NomJ5" alignment="CENTER" layoutX="14.0" layoutY="114.0" prefHeight="27.0" prefWidth="130.0" rotate="-30.0" style="-fx-background-color: sienna; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 10; -fx-background-radius: 10;" textAlignment="CENTER" textFill="WHITE">
                                        <font>
@@ -72,17 +72,17 @@
                                     <Label fx:id="BankJ5" layoutX="108.0" layoutY="149.0" rotate="-27.0" textFill="WHITE" />
                                  </children>
                               </Group>
-                              <Group fx:id="Plateau" layoutX="144.0" layoutY="69.0">
+                              <Group fx:id="Plateau" layoutX="154.0" layoutY="126.0">
                                  <children>
                                     <AnchorPane fx:id="CarteP" layoutX="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="760.0" />
-                                    <Button fx:id="afficher" layoutX="280.0" layoutY="300.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" />
-                                    <Button fx:id="distribuer" layoutX="280.0" layoutY="300.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" />
-                                    <Button fx:id="SeCoucher" layoutX="90.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" text="Se coucher" />
-                                    <Button fx:id="Suivre" layoutX="210.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" text="Suivre" />
-                                    <Button fx:id="Relancer" layoutX="300.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" text="Relancer" />
-                                    <Button fx:id="Miser" layoutX="405.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" text="Miser" />
-                                    <Button fx:id="Tapis" layoutX="490.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" text="Tapis" />
-                                    <Button fx:id="Check" layoutX="575.0" mnemonicParsing="false" stylesheets="@../../../../resources/poker/stylesheet.css" text="Check" />
+                                    <Button fx:id="afficher" layoutX="300.0" layoutY="243.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" />
+                                    <Button fx:id="distribuer" layoutX="300.0" layoutY="243.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" />
+                                    <Button fx:id="SeCoucher" layoutX="90.0" layoutY="-10.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" text="Se coucher" />
+                                    <Button fx:id="Suivre" layoutX="210.0" layoutY="-10.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" text="Suivre" />
+                                    <Button fx:id="Relancer" layoutX="300.0" layoutY="-10.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" text="Relancer" />
+                                    <Button fx:id="Miser" layoutX="405.0" layoutY="-10.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" text="Miser" />
+                                    <Button fx:id="Tapis" layoutX="490.0" layoutY="-10.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" text="Tapis" />
+                                    <Button fx:id="Check" layoutX="575.0" layoutY="-10.0" mnemonicParsing="false" stylesheets="@../../../../resources/Poker/stylesheet.css" text="Check" />
                                     <TextField fx:id="Mise" layoutX="300.0" layoutY="250.0" />
                                     <Label fx:id="Pot" layoutX="320.0" layoutY="60.0" text="Total pot : 0 € " textFill="WHITE">
                                        <font>

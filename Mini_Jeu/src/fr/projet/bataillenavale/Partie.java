@@ -1,5 +1,8 @@
 package fr.projet.bataillenavale;
 
+import fr.projet.Classement;
+import fr.projet.Joueur;
+import fr.projet.MenuPrincipal;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -19,21 +22,30 @@ import java.util.Random;
 
 
 public class Partie extends Application {
+	/* le Booleen qui va permettre de lancer la partie */
 	private boolean lancer = false;
+
+	/* Les deux grilles qui vont être affichée */
 	private GrilleBN grilleIA;
 	private GrilleBN grilleJoueur;
+
+	/* Le nombre de bateau à placer */
 	private int nbBateau = 5;
+
+	/* Le booleen qui va permettre de savoir si c'est à l'IA de jouer ou non */
 	private boolean tourAdverse = false;
+	/* les Attributs de joueurs joueur 1 joueur 2 et le joueur qui va aller dans le classement */
 	private JoueurBN joueur1;
 	private JoueurBN joueur2 = new JoueurBN("",true);
+	private Joueur jClassement = new Joueur();
 
 	private Random random = new Random();
-	private boolean victoire = Boolean.parseBoolean(null);
 
 	private Parent LancerPartie() {
-		AnchorPane root = new AnchorPane();
-		root.setPrefSize(800, 600);
-		root.setStyle(String.valueOf(Color.valueOf("#E6E6FA")));
+
+		AnchorPane pageprinc = new AnchorPane();
+		pageprinc.setPrefSize(800, 600);
+		pageprinc.setStyle(String.valueOf(Color.valueOf("#E6E6FA")));
 
 		grilleIA = new GrilleBN(joueur2, event -> {
 			if (!lancer)
@@ -41,18 +53,23 @@ public class Partie extends Application {
 
 			CaseBN c = (CaseBN) event.getSource();
 			if (c.isUtilise())
-				return;
+			return;
 
 			tourAdverse = !c.tirer();
 
 			if (grilleIA.getBateau() == 0) {
-				victoire = true;
-				Scene scene = new Scene(Popup(victoire));
+				jClassement.setPseudo(joueur1.getPseudo());
+				Classement C = new Classement();
+				C.ChargerClassement(C,C.FichierSauvegarde);
+				C.DonnerPointAUnJoueur(jClassement,1,4);
+				C.SauvegardeClassement(C.FichierSauvegarde);
+				Scene scene = new Scene(Popup(true));
 				Stage popup = new Stage();
 				popup.setScene(scene);
 				popup.centerOnScreen();
 				popup.setResizable(false);
 				popup.show();
+
 			}
 
 			if (tourAdverse)
@@ -72,11 +89,12 @@ public class Partie extends Application {
 		});
 
 		HBox hbox = new HBox(50, grilleJoueur, grilleIA);
-		root.getChildren().add(hbox);
+		pageprinc.getChildren().add(hbox);
 		hbox.setLayoutX(55);
 		hbox.setLayoutY(140);
-		return root;
+		return pageprinc;
 	}
+
 	/*  Genere des coups aléatoire pour l'IA */
 	private void CoupIA() {
 		while (tourAdverse) {
@@ -90,7 +108,12 @@ public class Partie extends Application {
 			tourAdverse = c.tirer();
 
 			if (grilleJoueur.getBateau() == 0) {
-				Scene scene = new Scene(Popup(victoire));
+				jClassement.setPseudo(joueur1.getPseudo());
+				Classement C = new Classement();
+				C.ChargerClassement(C,C.FichierSauvegarde);
+				C.DonnerPointAUnJoueur(jClassement,1,4);
+				C.SauvegardeClassement(C.FichierSauvegarde);
+				Scene scene = new Scene(Popup(false));
 				Stage popup = new Stage();
 				popup.setScene(scene);
 				popup.centerOnScreen();
@@ -149,23 +172,41 @@ public class Partie extends Application {
 
 	private Parent Popup(boolean victoire){
 		AnchorPane popup = new AnchorPane();
-		if(victoire = true){
+		if(victoire == true){
+
 			Button Quitter = new Button("Quitter");
-			Label Status = new Label("Vous avez gagner");
-			Quitter.setOnAction(e -> System.exit(1));
+			Label Status = new Label("Vous avez gagné");
+
+			Quitter.setOnAction(e -> {
+				MenuPrincipal menu = new MenuPrincipal();
+				menu.affichageMenuPrincipal();
+				});
+
+
 			VBox v = new VBox();
 			v.getChildren().addAll(Status,Quitter);
 			v.setAlignment(Pos.CENTER);
+			v.setLayoutX(50);
+			v.setLayoutY(25);
+			v.setSpacing(10);
 			popup.setPrefSize(200,100);
 			popup.getChildren().add(v);
 		}
-		if(victoire = false){
+		if(victoire == false){
 			Button Quitter = new Button("Quitter");
 			Label Status = new Label("Vous avez perdu");
-			Quitter.setOnAction(e -> System.exit(1));
+
+			Quitter.setOnAction(e -> {
+				MenuPrincipal menu = new MenuPrincipal();
+				menu.affichageMenuPrincipal();
+				});
+
 			VBox v = new VBox();
 			v.getChildren().addAll(Status,Quitter);
 			v.setAlignment(Pos.CENTER);
+			v.setLayoutX(50);
+			v.setLayoutY(25);
+			v.setSpacing(10);
 			popup.setPrefSize(200,100);
 			popup.getChildren().add(v);
 		}

@@ -28,32 +28,33 @@ public class Classement implements Serializable{
     }
 
     // jeu = 1 Sudoku / 2 Loto / 3 Poker / 4 BN (comme dansle menu du main)
-    public void DonnerPointAUnJoueur(Joueur J, int points, int jeu){
-        int indiceJoueur=-1;
+    public void DonnerPointAUnJoueur(Joueur J, int points, int jeu) {
+            int indiceJoueur = -1;
+            if(J.getPseudo().equals(null)){ System.out.println("PSEUDO WAS NULL");J.setPseudo("Anonyme");}
         //Recherche de l'indice du Joueur J
-        for(int i=0; i<ClassementGlobal.size();i++){
-            if(ClassementGlobal.get(i).getPseudo().equals(J.getPseudo()))
-                indiceJoueur=i;
+
+
+            for (int i = 0; i < ClassementGlobal.size(); i++) {
+                if (ClassementGlobal.get(i).getPseudo().equals(J.getPseudo()))
+                    indiceJoueur = i;
+            }
+            // S'il n'existe pas alors on ajoute le joueur J au classement
+            if (indiceJoueur == -1) {
+                ClassementGlobal.add(J);
+                indiceJoueur = ClassementGlobal.indexOf(J);
+            }
+            //Ajout des points selon le jeu
+            if (jeu == 1) {
+                ClassementGlobal.get(indiceJoueur).ajoutScoreSudo(points);
+            } else if (jeu == 2) {
+                ClassementGlobal.get(indiceJoueur).ajoutScoreLoto(points);
+            } else if (jeu == 3) {
+                ClassementGlobal.get(indiceJoueur).ajoutScorePoker(points);
+            } else if (jeu == 4) {
+                ClassementGlobal.get(indiceJoueur).ajoutScoreBN(points);
+            }
         }
-        // S'il n'existe pas alors on ajoute le joueur J au classement
-        if(indiceJoueur==-1){
-            ClassementGlobal.add(J);
-            indiceJoueur=ClassementGlobal.indexOf(J);
-        }
-        //Ajout des points selon le jeu
-        if(jeu==1) {
-            ClassementGlobal.get(indiceJoueur).ajoutScoreSudo(points);
-        }
-        else if(jeu==2) {
-            ClassementGlobal.get(indiceJoueur).ajoutScoreLoto(points);
-        }
-        else if(jeu==3) {
-            ClassementGlobal.get(indiceJoueur).ajoutScorePoker(points);
-        }
-        else if(jeu==4) {
-            ClassementGlobal.get(indiceJoueur).ajoutScoreBN(points);
-        }
-    }
+
     //Methode d'affichage console du classement
     public void afficherClassement() {
         for (fr.projet.Joueur P : this.ClassementGlobal) {

@@ -88,15 +88,15 @@ public class Joueur implements Serializable {
 
 	public void ajoutScorePoker(int points){
 		this.scorePoker+=points;
-		this.score+=points;
+		this.score+=400*points;
 	}
 	public void ajoutScoreBN(int points){
 		this.scoreBN+=points;
-		this.score+=100*points;
+		this.score+=1000*points;
 	}
 	public void ajoutScoreLoto(int points){
 		this.scoreLoto+=points;
-		this.score+=100*points;
+		this.score+=1000*points;
 	}
 
 	public void afficherJoueur(){

@@ -7,7 +7,7 @@ import java.util.Collections;
 public class Classement implements Serializable{
 
     public ArrayList<Joueur> ClassementGlobal=new ArrayList<Joueur>();
-    public String FichierSauvegarde="Classement.txt";
+    public String FichierSauvegarde="/resources/menuprincipal/Classement.txt";
 
 
     public Classement() {

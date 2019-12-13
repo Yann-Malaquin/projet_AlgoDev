@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="Mini_Jeu:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/Mini_Jeu_jar</output-path>
+    <output-path>$PROJECT_DIR$/..</output-path>
     <root id="archive" name="Mini_Jeu.jar">
       <element id="module-output" name="Mini_Jeu" />
       <element id="extracted-dir" path="$Path_FX$/javafx-swt.jar" path-in-jar="/" />
